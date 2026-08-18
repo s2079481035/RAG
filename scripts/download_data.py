@@ -127,7 +127,8 @@ def download_hotpotqa():
             continue
 
         questions.append({"qid": f"hotpot_{scanned:06d}", "question": q,
-                          "answer": item["answer"], "gold_docs": gold_ids})
+                          "answer": item["answer"], "gold_docs": gold_ids,
+                          "type": item["type"], "n_supporting": len(gold_ids)})
 
     # KB: gold docs + random fill to HOTPOT_KB_SIZE
     rng = random.Random(SEED)

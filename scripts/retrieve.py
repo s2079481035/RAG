@@ -28,9 +28,10 @@ INDEX_DIR = DATA / "indices"
 RESULTS_DIR = ROOT / "results"
 
 DENSE_MODEL = "BAAI/bge-large-en-v1.5"
-RERANK_MODEL = "BAAI/bge-reranker-base"
+RERANK_MODELS = {"base": "BAAI/bge-reranker-base", "v2m3": "BAAI/bge-reranker-v2-m3"}
 RRF_K = 60
 COARSE_K = 20
+DEFAULT_MAX_LEN = 512
 STOPWORDS = set("a an the and or but if because as of at by for with about to in on is are was were be been it its this that these those".split())
 TOKEN_RE = re.compile(r"[a-z0-9][a-z0-9\-']*")
 
@@ -75,6 +76,8 @@ def main():
     parser.add_argument("--dataset", required=True, choices=["nq", "hotpotqa"])
     parser.add_argument("--phase", required=True, choices=["dense", "hybrid", "rerank"])
     parser.add_argument("--ks", default="3,5,10,20")
+    parser.add_argument("--reranker", default="v2m3", choices=["base", "v2m3"])
+    parser.add_argument("--max-len", type=int, default=DEFAULT_MAX_LEN)
     args = parser.parse_args()
     ks = [int(x) for x in args.ks.split(",")]
 
@@ -88,9 +91,6 @@ def main():
     q_model = SentenceTransformer(DENSE_MODEL)
     q_embs = q_model.encode([q["question"] for q in questions],
                             normalize_embeddings=True, batch_size=64, show_progress_bar=True)
-
-    bm25_corpus = [doc_ids.index(d) for d in doc_ids]  # placeholder; bm25 uses own index
-    bm25_scores_all = bm25.get_scores([None])  # placeholder
 
     # per-query retrieval
     results = []
@@ -112,7 +112,7 @@ def main():
             results.append({"qid": questions[qi]["qid"], "gold": questions[qi]["gold_docs"],
                             "ranked": ranked})
         if args.phase == "rerank":
-            reranker = CrossEncoder(RERANK_MODEL, max_length=512)
+            reranker = CrossEncoder(RERANK_MODELS[args.reranker], max_length=args.max_len)
             for qi, r in enumerate(results):
                 pairs = [(questions[qi]["question"], kb[d]) for d in r["ranked"]]
                 scores = reranker.predict(pairs)
@@ -122,7 +122,10 @@ def main():
                     logger.info(f"rerank {qi + 1}/{len(results)}")
 
     RESULTS_DIR.mkdir(exist_ok=True)
-    out = RESULTS_DIR / f"{args.dataset}_{args.phase}.json"
+    if args.phase == "rerank":
+        out = RESULTS_DIR / f"{args.dataset}_{args.phase}_{args.reranker}.json"
+    else:
+        out = RESULTS_DIR / f"{args.dataset}_{args.phase}.json"
     with open(out, "w", encoding="utf-8") as f:
         json.dump({"ks": ks, "results": results}, f, ensure_ascii=False, indent=2)
     logger.info(f"Saved → {out}")

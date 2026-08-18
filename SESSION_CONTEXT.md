@@ -26,29 +26,35 @@
 - `results/recall_matrix.md` + 6 个结果 JSON（已入库）
 - 首次推送：`git push -u origin master` 成功（commit: retrieval-budget pilot）
 
-## 结果矩阵（Recall@K，已修复 RRF bug 后）
+## 结果矩阵（Recall@K，reranker 已升级为 bge-reranker-v2-m3）
 | 数据集 | 检索器 | @3 | @5 | @10 | @20 |
 |---|---|---|---|---|---|
 | NQ | dense | 0.834 | 0.886 | 0.925 | 0.962 |
 | NQ | hybrid | 0.851 | 0.905 | 0.938 | 0.970 |
-| NQ | rerank | 0.772 | 0.843 | 0.909 | 0.970 |
+| NQ | rerank | 0.860 | 0.914 | 0.951 | 0.970 |
 | HotpotQA | dense | 0.833 | 0.881 | 0.912 | 0.934 |
 | HotpotQA | hybrid | 0.846 | 0.893 | 0.929 | 0.956 |
-| HotpotQA | rerank | 0.872 | 0.919 | 0.943 | 0.956 |
+| HotpotQA | rerank | 0.891 | 0.931 | 0.948 | 0.956 |
 
 HotpotQA Hit@3 = 0.981（几乎全部问题 top-3 命中首个证据）。
 
-## 关键发现
-1. **Hybrid > Dense**：两数据集一致（+1~3pp）
-2. **Reranker 收益方向相反**：NQ @3 0.772 < dense 0.834（-6pp，有害）；HotpotQA @3 0.872 > dense（+4pp，有益）——「不同复杂度问题需要不同检索策略」的初步证据
-3. NQ/HotpotQA Recall@K 曲线斜率接近（@3→@10 增量 ~0.08-0.09），但 HotpotQA 覆盖全部证据需更大 K
+## 关键发现（分层分析，results/stratify.md）
+1. **rerank 对两个数据集均有益**：v2-m3 替换 base 后，NQ rerank@3 0.860 > hybrid 0.851、@10 0.951 > 0.938；HotpotQA @3 0.891 > 0.846。原「rerank 伤害 NQ」是 bge-reranker-base（280M，弱）的假象——base 曾把 160 个 hybrid@1 的 gold 降级。
+2. **rerank 收益集中在 bridge 型多跳问题**（HotpotQA）：bridge 上 rerank@3 0.871 vs dense 0.800（+7.1pp）；comparison 本身近饱和（dense@3 0.973，rerank 0.976），且 hybrid 对 comparison 有害（0.944 < dense 0.973）。
+3. **按难度分层（retrieval-based）**：Easy(93.4% NQ / 84.8% HP) rerank 仍稳增；Medium 上 rerank 大胜（NQ @5 0.462 vs dense 0.308；HP @10 0.915 vs 0.796）；Hard 组（NQ 2.7% / HP 8.1%）所有策略 Recall 都差（HP @5 仅 ~0.49），是真正的 coverage 瓶颈，且 NQ hard 上 dense@20 (0.370) > hybrid@20 (0.259)——RRF 融合会压掉词面不相似的 gold。
+4. **Oracle Adaptive**：若按「覆盖全部 gold 的最便宜策略」路由，NQ 平均成本级 1.30（vs 固定 dense@3 成本 1 但 Recall 0.834；rerank@20 成本 7 才到 0.970），oracle 达 0.974；HotpotQA oracle 成本 1.51 达 0.960。→ 覆盖率几乎打平固定最优，但预算平均省 ~4-5 个成本级。这证明 adaptive budget 的「效率」价值；覆盖率上限由候选池（top-20）决定。
+5. 复杂度分组：HotpotQA bridge 813 / comparison 187；n_sent 2(703) / 3+(297)，n_sent=3+ 时 rerank@3 0.914 > 2 的 0.881。
 
 ## 已修 Bug
 - Hybrid RRF dense 权重错位（scores 是排名序非位置序，须用 `idxs[0]`）——修复后 hybrid @3 0.49→0.85
 - NQ 文档未截断导致 489MB（截断 1024 token → 56MB）
 - HotpotQA context/supporting_facts 为 dict 结构
+- HotpotQA 下载脚本未保留 type 字段 → 已重建 data/hotpotqa.json（kb 与旧版逐字节一致，索引复用），新增 type/n_supporting/n_sent
+- retrieve.py 支持 `--reranker base|v2m3`、`--max-len`；rerank 结果存 `*_rerank_{variant}.json`
+- eval_recall.py 优先读取 v2m3 结果
 
 ## Next Move
-1. 复杂度细分分析：重新生成 HotpotQA 数据（保留 `type` 字段），NQ 用难度代理（问题-文档重叠度 / 答案在文档中的位置），按复杂度分组画 Recall@K 曲线，验证「rerank 简单问题有害、复杂问题有益」是否由复杂度驱动
-2. 若现象成立 → 进入 LLM 阶段（Qwen2.5-7B 生成，需下载）+ adaptive budget 路由
-3. 阶段性结果推送至 s2079481035/RAG
+1. LLM 阶段（Qwen2.5-7B 生成）：以 rerank@10 为主检索 → 生成 EM/F1，验证 bridge/medium 组答案质量提升
+2. Adaptive router：用 query 特征（type 标签不可用，需在线预测）做规则/轻量分类器，目标 = oracle 的预算分配（≈ rerank@3~5 主用 + hard 加大 pool）；难点：hard 组召回天花板（需扩大候选池或混合深度检索）
+3. 若需要：2WikiMultihopQA 扩展实验 + RAGAS 指标
+4. 阶段性结果推送至 s2079481035/RAG（本 session 已推一版）

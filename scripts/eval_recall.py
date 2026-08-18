@@ -53,9 +53,14 @@ def main():
 
     matrix = {}
     for name in ["nq_dense", "nq_hybrid", "nq_rerank", "hotpotqa_dense", "hotpotqa_hybrid", "hotpotqa_rerank"]:
-        p = RESULTS / f"{name}.json"
+        if name.endswith("_rerank"):
+            v2 = RESULTS / f"{name}_v2m3.json"
+            base = RESULTS / f"{name}.json"
+            p = v2 if v2.exists() else base
+        else:
+            p = RESULTS / f"{name}.json"
         if p.exists():
-            matrix[name] = eval_file(name, ks)
+            matrix[name] = eval_file(p.stem, ks)
 
     # markdown table
     lines = ["# Recall@K 矩阵 (Retrieval-Budget Pilot)", ""]
