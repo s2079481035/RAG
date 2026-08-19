@@ -58,3 +58,26 @@ HotpotQA Hit@3 = 0.981（几乎全部问题 top-3 命中首个证据）。
 2. Adaptive router：用 query 特征（type 标签不可用，需在线预测）做规则/轻量分类器，目标 = oracle 的预算分配（≈ rerank@3~5 主用 + hard 加大 pool）；难点：hard 组召回天花板（需扩大候选池或混合深度检索）
 3. 若需要：2WikiMultihopQA 扩展实验 + RAGAS 指标
 4. 阶段性结果推送至 s2079481035/RAG（本 session 已推一版）
+
+---
+
+# Phase 2 — LLM Router 实验（已冻结协议 EXPERIMENT_PROTOCOL.md）
+
+## 冻结的策略映射（由 Oracle 分布确定）
+easy→dense@3（成本1）、medium→dense@5（成本2）、hard→hybrid@20（成本6）；成本级 1-8（dense@10=3 入表）。
+
+## 结果（results/router_eval.md）
+| 系统 | NQ R@10 | HP R@10 | NQ成本 | HP成本 | NQ Acc | HP Acc |
+|---|---|---|---|---|---|---|
+| dense@10 | 0.925 | 0.912 | 10.0 | 10.0 | - | - |
+| hybrid@10 | 0.938 | 0.929 | 10.0 | 10.0 | - | - |
+| rerank@10 | 0.951 | 0.948 | 10.0 | 10.0 | - | - |
+| rerank@20 | 0.951 | 0.948 | 20.0 | 20.0 | - | - |
+| rule | 0.834 | 0.886 | 3.03 | 9.55 | 0.927 | 0.235 |
+| llm | 0.844 | 0.882 | 3.52 | 7.73 | 0.806 | 0.310 |
+| oracle | 0.973 | 0.959 | 3.71 | 4.17 | - | - |
+
+结论：**LLM Router 目前不能接近 Oracle Recall**。NQ：成本与 oracle 相当（3.52 vs 3.71）但 Recall 掉 ~13pp（@10 0.844 vs 0.973）；HotpotQA：Recall 与固定 rerank@10 差 ~6.6pp（0.882 vs 0.948），成本还高（7.73）。根因是**难度判断与 retrieval-based oracle 定义不一致**：LLM 对 HotpotQA 过度判 medium/hard（50.4% vs oracle 7.1%），对 NQ 误把真正 medium/hard 判 easy。按协议不迭代调 prompt，如实记录。
+- LLM 曾因未加 chat template 导致 43% 输出不可解析（已修复：`apply_chat_template`，unparsed=0）
+- 运行细节：Qwen2.5-7B-Instruct fp16（14.2GB）device_map=auto 于 GPU1，batch 1（GPU1 与 yangcc 共享，OOM 过 3 次：4bit+acc1.14 不兼容 → fp16；chunk 切片 bug → 改 1）
+- 原始输出在 results/router_llm_raw.json
