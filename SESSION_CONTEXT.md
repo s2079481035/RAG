@@ -81,3 +81,26 @@ easy→dense@3（成本1）、medium→dense@5（成本2）、hard→hybrid@20�
 - LLM 曾因未加 chat template 导致 43% 输出不可解析（已修复：`apply_chat_template`，unparsed=0）
 - 运行细节：Qwen2.5-7B-Instruct fp16（14.2GB）device_map=auto 于 GPU1，batch 1（GPU1 与 yangcc 共享，OOM 过 3 次：4bit+acc1.14 不兼容 → fp16；chunk 切片 bug → 改 1）
 - 原始输出在 results/router_llm_raw.json
+# Phase 2b — Oracle Early Stopping（决策门实验，已冻结协议第 9 节）
+
+## 结果（results/early_stop.md + latency.md）
+| 系统 | HP Recall@final | HP FullCov | HP 平均文档成本 | HP 平均延迟(ms) |
+|---|---|---|---|---|
+| rerank@10 (fixed) | 0.948 | 0.897 | 10.0 | 220.9 |
+| rerank@20 (fixed) | 0.956 | 0.914 | 20.0 | 220.9 |
+| oracleES-A (dense@3→hybrid@5→hybrid@10→rerank@10→rerank@20) | **0.959** | 0.919 | **5.39** | **66.9** |
+| oracleES-B (dense@10→hybrid@10→rerank@10→rerank@20) | 0.962 | 0.926 | 10.82 | 52.3 |
+
+NQ: ES-A 0.972@4.07docs；ES-B 0.980@10.27docs（fixed rerank@20 = 0.970@20docs）。
+HotpotQA ES-A 停止分布：S1 68.4% / S2 14.6% / S3 4.6% / S4 3.3% / S5 9.1%（S5 ≈ 不可充分满足的 hard 查询 81 个）。
+False Early Stop（oracle 口径）= 0（按构造）。
+
+## 决策门结论 ✅
+**Oracle Early Stopping 明显优于固定策略：Recall ≥ fixed（0.959 vs 0.956）且成本 3.7x 更低（5.39 vs 20 docs）、延迟 3.3x 更低。方向成立 → 值得训练 Retrieval Sufficiency Critic。**
+
+## 下一阶段（Critic，未开始，等待确认）
+1. 训练集构造：用 train 划分的 HotpotQA，gold-grounded 充分性标签（当前 top-K 是否覆盖全部 supporting facts）。⚠️ 严格 train/validation/test 划分，test 的 gold 只用于评估 oracle/标签验证，不得进入训练
+2. Critic 输入：query + 当前 retrieved docs（text），输出 Sufficient/Insufficient；轻量（DeBERTa/roberta-base 或复用 embedding）
+3. 评估：在 ES ladder 上接 Critic 早停 → Recall/Cost/Latency/False Early Stop（Critic 判 sufficient 但 gold 未覆盖）
+4. LogicRAG 的 reasoning depth / subquestion count 仅保留为后续 error analysis 变量，不做主路由器
+5. 不做 RAFT/DAG Cache/Web Search/HyDE/Query Decomposition

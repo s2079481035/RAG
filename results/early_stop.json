@@ -1,0 +1,60 @@
+{
+  "nq": {
+    "es_A": {
+      "recall": 0.972,
+      "full_cov": 0.972,
+      "avg_docs": 4.067,
+      "avg_level": 1.333,
+      "never_sufficient": 28,
+      "stage_dist": {
+        "1": 834,
+        "2": 89,
+        "5": 35,
+        "3": 22,
+        "4": 20
+      }
+    },
+    "es_B": {
+      "recall": 0.98,
+      "full_cov": 0.98,
+      "avg_docs": 10.27,
+      "avg_level": 1.141,
+      "never_sufficient": 20,
+      "stage_dist": {
+        "1": 925,
+        "2": 36,
+        "4": 27,
+        "3": 12
+      }
+    }
+  },
+  "hotpotqa": {
+    "es_A": {
+      "recall": 0.9585,
+      "full_cov": 0.919,
+      "avg_docs": 5.392,
+      "avg_level": 1.701,
+      "never_sufficient": 81,
+      "stage_dist": {
+        "1": 684,
+        "2": 146,
+        "5": 91,
+        "3": 46,
+        "4": 33
+      }
+    },
+    "es_B": {
+      "recall": 0.962,
+      "full_cov": 0.926,
+      "avg_docs": 10.82,
+      "avg_level": 1.355,
+      "never_sufficient": 74,
+      "stage_dist": {
+        "1": 833,
+        "4": 82,
+        "2": 61,
+        "3": 24
+      }
+    }
+  }
+}

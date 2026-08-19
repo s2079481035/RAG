@@ -108,3 +108,25 @@ Question: {query}
 - 映射表在 Router 运行前冻结（本文档）
 - 本阶段不迭代调 Router；如 LLM 表现差，如实记录，进入下一阶段再分析原因
 - 所有结果输出 `results/router_eval.md` + `results/router_eval.json`，入 git
+## 9. 冻结的 Oracle Early Stopping 实验（Phase 2b，训练 Critic 前的决策门）
+
+**目的**：若 Oracle Early Stopping 的 Recall ≈ 固定 rerank 且成本大幅下降，则「动态早停」方向有价值，值得训练 Critic 自动判定「当前阶段证据是否充分」；否则说明 escalation ladder 设计本身有问题，不训练 Critic。
+
+**Oracle 充分性判定**（gold-grounded）：当前阶段 top-K 列表覆盖该 query 的**全部** gold 文档即充分；否则升级下一阶段，直到最高阶段。
+
+**Escalation Ladder（两个版本都跑）**：
+
+- Ladder A（方法+深度同时升级）：
+  S1 dense@3 → S2 hybrid@5 → S3 hybrid@10 → S4 rerank@10 → S5 rerank@20
+- Ladder B（方法升级，深度固定 10）：
+  S1 dense@10 → S2 hybrid@10 → S3 rerank@10 → S4 rerank@20
+
+**指标**（NQ 与 HotpotQA 分别报告）：
+1. Recall@final = 停止阶段列表覆盖 gold 的比例（多 gold 取平均覆盖，含不可达查询的损失）
+2. Full Coverage Rate = 停止时全部 gold 都被覆盖的查询占比
+3. 平均文档成本 = 停止阶段返回的文档数均值（主要成本代理）
+4. 平均阶梯级 = 停止阶段等级均值（A 为 1-5，B 为 1-4）
+5. 各阶段停止比例分布
+6. 与固定 rerank@10 / rerank@20 对比
+
+**约束**：Oracle 由 gold 构造，不存在 False Early Stop（如实注明）；本实验不调任何检索参数。结果入 `results/early_stop.md`。
