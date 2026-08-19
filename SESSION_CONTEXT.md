@@ -104,3 +104,17 @@ False Early Stop（oracle 口径）= 0（按构造）。
 3. 评估：在 ES ladder 上接 Critic 早停 → Recall/Cost/Latency/False Early Stop（Critic 判 sufficient 但 gold 未覆盖）
 4. LogicRAG 的 reasoning depth / subquestion count 仅保留为后续 error analysis 变量，不做主路由器
 5. 不做 RAFT/DAG Cache/Web Search/HyDE/Query Decomposition
+
+# Phase 3 — Learned Retrieval Sufficiency Critic（已完成）
+
+## 结果（results/critic_eval.md）
+- Critic（bge-reranker-base 二分类，train 5405q×3阶段，val 选优 F1=0.9386@ep2）
+- 离线 F1：dense@3 0.887 / hybrid@5 0.923 / rerank@20 0.958
+- E2E：Fixed rerank@20 (0.956, 20.0docs, 220.9ms) vs Oracle ES-3 (0.959, 6.18, 72.8) vs **Critic (0.915, 6.46, 82.9, FES 9.6%)**
+- 结论：Critic 成本/延迟逼近 Oracle（6.46 vs 6.18 docs），但 False Early Stop 9.6%（96 查询，误停点平均覆盖 0.495）导致 Recall 掉 4.3pp
+- 待探索：提高阈值牺牲少量成本换 Recall；或 stage 3 前强制再检索
+
+## 关键经验
+- 数据集离线模式（HF_HUB_OFFLINE=1）下 datasets 库无法解析数据集，须 HF_ENDPOINT=https://hf-mirror.com
+- bge-reranker-base checkpoint 是 num_labels=1，加载 2 类头须先加载再替换 classifier.out_proj（ignore_mismatched_sizes 对该模型无效）
+- test 1000 与已有实验完全一致（KB 逐字节相同、shuffle 需复刻 extra 消耗的 RNG 状态）

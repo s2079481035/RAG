@@ -1,3 +1,5 @@
 data/indices/
 logs_*.txt
 __pycache__/
+models/*.pt
+models/*.bin

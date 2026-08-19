@@ -1,0 +1,7 @@
+{
+  "model": "BAAI/bge-reranker-base",
+  "best_epoch": 2,
+  "val_f1": 0.9386146827042721,
+  "max_len": 512,
+  "doc_max_words": 48
+}
