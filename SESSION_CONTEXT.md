@@ -118,3 +118,20 @@ False Early Stop（oracle 口径）= 0（按构造）。
 - 数据集离线模式（HF_HUB_OFFLINE=1）下 datasets 库无法解析数据集，须 HF_ENDPOINT=https://hf-mirror.com
 - bge-reranker-base checkpoint 是 num_labels=1，加载 2 类头须先加载再替换 classifier.out_proj（ignore_mismatched_sizes 对该模型无效）
 - test 1000 与已有实验完全一致（KB 逐字节相同、shuffle 需复刻 extra 消耗的 RNG 状态）
+
+# Phase 3b — Validation-set 阈值策略优化（已完成）
+
+## 方法
+- 只在 val(1000q) 上 sweep 与选择；test 仅报告选定配置一次（无 test 泄漏）
+- 全局 t=0.30~0.95 (step .05) + 分阶段 grid (d∈{.55...95}, h∈{.35...75})
+
+## 结果（results/critic_policy.md, 曲线 recall_cost_curve.png）
+- val 约束 Recall≥0.94 下最小成本配置：**d0.95/h0.65**（val R=0.941, cost 7.01）
+- test @d0.95/h0.65: R=0.929, FullCov=0.861, cost 7.23, lat 96.4ms, FES 6.4%（vs t=0.5: R=0.915/FES 9.6%）
+- **val→test 有 ~1.2pp 泛化差**；阈值调优只能部分修复 FES
+
+## FES 诊断（results/fes_queries_test_t05.json，96 条 test@t=0.5 误停查询）
+- 停止阶段：dense=70 / hybrid=26；99% 停止时只覆盖 1/2 gold docs
+- 停止点 critic 概率 mean=0.845、max=0.999 → 大部分是"高置信误判"，非低置信边界样本
+- 仅 18/96 在 t=0.8 下会继续升级 → 单纯提阈值上限有限
+- 这些查询 rerank@20 覆盖率均值 0.938 → 升级后大多可恢复
