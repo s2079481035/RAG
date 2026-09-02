@@ -1,0 +1,222 @@
+{
+  "schema_version": 1,
+  "label_order": [
+    "insufficient",
+    "partial",
+    "sufficient"
+  ],
+  "stage_order": [
+    "dense@5",
+    "dense@10",
+    "hybrid@5",
+    "hybrid@10",
+    "rerank@20"
+  ],
+  "gold_supporting_fact_count": {
+    "2": 4990,
+    "3": 1774,
+    "4": 537,
+    "5": 80,
+    "6": 14,
+    "7": 9,
+    "8": 1
+  },
+  "by_split_stage": {
+    "train": {
+      "dense@5": {
+        "sufficient": 4131,
+        "partial": 1209,
+        "insufficient": 65
+      },
+      "dense@10": {
+        "sufficient": 4491,
+        "partial": 882,
+        "insufficient": 32
+      },
+      "hybrid@5": {
+        "sufficient": 4275,
+        "partial": 1093,
+        "insufficient": 37
+      },
+      "hybrid@10": {
+        "sufficient": 4645,
+        "partial": 745,
+        "insufficient": 15
+      },
+      "rerank@20": {
+        "sufficient": 4895,
+        "partial": 506,
+        "insufficient": 4
+      }
+    },
+    "dev": {
+      "dense@5": {
+        "sufficient": 785,
+        "partial": 202,
+        "insufficient": 13
+      },
+      "dense@10": {
+        "sufficient": 852,
+        "partial": 139,
+        "insufficient": 9
+      },
+      "hybrid@5": {
+        "sufficient": 818,
+        "partial": 177,
+        "insufficient": 5
+      },
+      "hybrid@10": {
+        "sufficient": 875,
+        "partial": 121,
+        "insufficient": 4
+      },
+      "rerank@20": {
+        "sufficient": 919,
+        "partial": 79,
+        "insufficient": 2
+      }
+    },
+    "test": {
+      "dense@5": {
+        "sufficient": 779,
+        "partial": 207,
+        "insufficient": 14
+      },
+      "dense@10": {
+        "sufficient": 833,
+        "partial": 159,
+        "insufficient": 8
+      },
+      "hybrid@5": {
+        "sufficient": 798,
+        "partial": 197,
+        "insufficient": 5
+      },
+      "hybrid@10": {
+        "sufficient": 863,
+        "partial": 133,
+        "insufficient": 4
+      },
+      "rerank@20": {
+        "sufficient": 915,
+        "partial": 83,
+        "insufficient": 2
+      }
+    }
+  },
+  "overall_by_split": {
+    "train": {
+      "insufficient": 153,
+      "partial": 4435,
+      "sufficient": 22437
+    },
+    "dev": {
+      "insufficient": 33,
+      "partial": 718,
+      "sufficient": 4249
+    },
+    "test": {
+      "insufficient": 33,
+      "partial": 779,
+      "sufficient": 4188
+    }
+  },
+  "trajectories": {
+    "train": {
+      "sufficient -> sufficient -> sufficient -> sufficient -> sufficient": 3808,
+      "partial -> partial -> partial -> partial -> partial": 394,
+      "partial -> sufficient -> sufficient -> sufficient -> sufficient": 243,
+      "partial -> partial -> sufficient -> sufficient -> sufficient": 208,
+      "sufficient -> sufficient -> partial -> sufficient -> sufficient": 173,
+      "partial -> partial -> partial -> sufficient -> sufficient": 136,
+      "sufficient -> sufficient -> partial -> partial -> sufficient": 109,
+      "partial -> partial -> partial -> partial -> sufficient": 100,
+      "partial -> sufficient -> partial -> sufficient -> sufficient": 53,
+      "sufficient -> sufficient -> partial -> partial -> partial": 38,
+      "partial -> sufficient -> partial -> partial -> partial": 32,
+      "partial -> sufficient -> partial -> partial -> sufficient": 26,
+      "insufficient -> insufficient -> partial -> partial -> partial": 15,
+      "insufficient -> partial -> sufficient -> sufficient -> sufficient": 11,
+      "insufficient -> partial -> partial -> partial -> partial": 11,
+      "partial -> partial -> insufficient -> partial -> sufficient": 4,
+      "partial -> partial -> insufficient -> sufficient -> sufficient": 4,
+      "insufficient -> insufficient -> insufficient -> partial -> partial": 4,
+      "insufficient -> insufficient -> insufficient -> insufficient -> partial": 3,
+      "insufficient -> insufficient -> insufficient -> insufficient -> insufficient": 3,
+      "partial -> partial -> insufficient -> insufficient -> partial": 3,
+      "insufficient -> sufficient -> sufficient -> sufficient -> sufficient": 3,
+      "partial -> partial -> insufficient -> insufficient -> sufficient": 2,
+      "insufficient -> insufficient -> insufficient -> partial -> sufficient": 2,
+      "partial -> partial -> insufficient -> partial -> partial": 2,
+      "insufficient -> insufficient -> sufficient -> sufficient -> sufficient": 2,
+      "insufficient -> partial -> partial -> partial -> sufficient": 2,
+      "insufficient -> sufficient -> partial -> partial -> partial": 2,
+      "sufficient -> sufficient -> insufficient -> insufficient -> sufficient": 1,
+      "partial -> sufficient -> insufficient -> partial -> sufficient": 1,
+      "insufficient -> partial -> partial -> sufficient -> sufficient": 1,
+      "sufficient -> sufficient -> insufficient -> sufficient -> sufficient": 1,
+      "sufficient -> sufficient -> insufficient -> partial -> sufficient": 1,
+      "insufficient -> insufficient -> insufficient -> insufficient -> sufficient": 1,
+      "insufficient -> insufficient -> partial -> sufficient -> sufficient": 1,
+      "insufficient -> partial -> insufficient -> partial -> partial": 1,
+      "partial -> partial -> insufficient -> insufficient -> insufficient": 1,
+      "insufficient -> insufficient -> insufficient -> sufficient -> sufficient": 1,
+      "insufficient -> partial -> insufficient -> insufficient -> partial": 1,
+      "insufficient -> partial -> insufficient -> partial -> sufficient": 1
+    },
+    "dev": {
+      "sufficient -> sufficient -> sufficient -> sufficient -> sufficient": 737,
+      "partial -> partial -> partial -> partial -> partial": 61,
+      "partial -> sufficient -> sufficient -> sufficient -> sufficient": 46,
+      "partial -> partial -> sufficient -> sufficient -> sufficient": 30,
+      "partial -> partial -> partial -> sufficient -> sufficient": 27,
+      "sufficient -> sufficient -> partial -> sufficient -> sufficient": 23,
+      "partial -> partial -> partial -> partial -> sufficient": 19,
+      "sufficient -> sufficient -> partial -> partial -> sufficient": 17,
+      "sufficient -> sufficient -> partial -> partial -> partial": 7,
+      "partial -> sufficient -> partial -> sufficient -> sufficient": 7,
+      "partial -> sufficient -> partial -> partial -> partial": 6,
+      "partial -> sufficient -> partial -> partial -> sufficient": 6,
+      "insufficient -> insufficient -> partial -> partial -> partial": 3,
+      "insufficient -> sufficient -> sufficient -> sufficient -> sufficient": 2,
+      "insufficient -> insufficient -> insufficient -> insufficient -> insufficient": 2,
+      "insufficient -> partial -> sufficient -> sufficient -> sufficient": 2,
+      "insufficient -> insufficient -> sufficient -> sufficient -> sufficient": 1,
+      "insufficient -> insufficient -> insufficient -> partial -> partial": 1,
+      "sufficient -> sufficient -> insufficient -> insufficient -> sufficient": 1,
+      "insufficient -> insufficient -> insufficient -> insufficient -> partial": 1,
+      "insufficient -> insufficient -> partial -> partial -> sufficient": 1
+    },
+    "test": {
+      "sufficient -> sufficient -> sufficient -> sufficient -> sufficient": 726,
+      "partial -> partial -> partial -> partial -> partial": 65,
+      "partial -> sufficient -> sufficient -> sufficient -> sufficient": 37,
+      "partial -> partial -> sufficient -> sufficient -> sufficient": 33,
+      "sufficient -> sufficient -> partial -> sufficient -> sufficient": 30,
+      "partial -> partial -> partial -> partial -> sufficient": 29,
+      "partial -> partial -> partial -> sufficient -> sufficient": 24,
+      "sufficient -> sufficient -> partial -> partial -> sufficient": 16,
+      "partial -> sufficient -> partial -> sufficient -> sufficient": 7,
+      "sufficient -> sufficient -> partial -> partial -> partial": 6,
+      "partial -> sufficient -> partial -> partial -> partial": 5,
+      "insufficient -> insufficient -> partial -> partial -> partial": 4,
+      "partial -> sufficient -> partial -> partial -> sufficient": 4,
+      "insufficient -> insufficient -> partial -> sufficient -> sufficient": 2,
+      "insufficient -> partial -> partial -> partial -> sufficient": 2,
+      "insufficient -> partial -> partial -> partial -> partial": 2,
+      "partial -> partial -> insufficient -> insufficient -> insufficient": 1,
+      "insufficient -> partial -> partial -> sufficient -> sufficient": 1,
+      "insufficient -> partial -> sufficient -> sufficient -> sufficient": 1,
+      "insufficient -> insufficient -> sufficient -> sufficient -> sufficient": 1,
+      "insufficient -> insufficient -> insufficient -> insufficient -> insufficient": 1,
+      "partial -> sufficient -> insufficient -> insufficient -> sufficient": 1,
+      "partial -> partial -> insufficient -> insufficient -> partial": 1,
+      "sufficient -> sufficient -> insufficient -> sufficient -> sufficient": 1
+    }
+  },
+  "non_monotonic_trajectories": {
+    "train": 456,
+    "dev": 67,
+    "test": 72
+  }
+}

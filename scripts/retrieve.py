@@ -19,6 +19,8 @@ import faiss
 from sentence_transformers import SentenceTransformer, CrossEncoder
 from rank_bm25 import BM25Okapi
 
+from retrieval_utils import rrf_fuse_indices
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger(__name__)
 
@@ -59,16 +61,13 @@ def load_bm25(name):
 
 def rrf_merge(dense_scores, dense_idx, bm25_scores, bm25_idx, k=RRF_K, top=20):
     """dense: scores[0] 按排名排列, idxs[0] 是文档位置; bm25: scores 按文档位置排列。"""
-    n = len(dense_scores)
-    rrf = np.zeros(n)
-    d_ord = dense_idx[:200]          # 文档位置
-    b_ord = np.argsort(-bm25_scores)[:200]  # 文档位置
-    for rank, i in enumerate(d_ord):
-        rrf[i] += 1.0 / (k + rank + 1)
-    for rank, i in enumerate(b_ord):
-        rrf[i] += 1.0 / (k + rank + 1)
-    top_idx = np.argsort(-rrf)[:top]
-    return top_idx, rrf
+    return rrf_fuse_indices(
+        dense_idx,
+        bm25_scores,
+        n_docs=len(dense_scores),
+        rrf_k=k,
+        top=top,
+    )
 
 
 def main():

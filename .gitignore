@@ -3,3 +3,7 @@ logs_*.txt
 __pycache__/
 models/*.pt
 models/*.bin
+data/source/
+data/sufficiency/*.jsonl
+experiments/
+results/critic/**/per_sample.jsonl
