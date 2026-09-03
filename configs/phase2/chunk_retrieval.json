@@ -1,0 +1,90 @@
+{
+  "experiment_name": "phase2_chunk_retrieval_v1",
+  "seed": 42,
+  "phase1_frozen_commit": "702bfc3",
+  "dataset": {
+    "name": "hotpotqa",
+    "source": "hotpotqa/hotpot_qa",
+    "source_config": "distractor",
+    "source_split": "validation",
+    "legacy_all_questions": "data/hotpotqa_all.json",
+    "legacy_test": "data/hotpotqa.json",
+    "phase1_metadata": "data/sufficiency/hotpotqa_metadata.json"
+  },
+  "corpus_scope": {
+    "source": "frozen_phase1_hotpotqa_all_kb",
+    "description": "shared gold-context pool from all 7405 questions, not the full distractor-context pool",
+    "reason": "hold corpus membership fixed while isolating chunk granularity"
+  },
+  "canonicalization": {
+    "article_identity": "exact_document_title_plus_exact_joined_text",
+    "different_titles_are_distinct": true,
+    "same_title_different_texts_are_distinct": true
+  },
+  "invalid_gold_policy": {
+    "preserve_original_annotation": true,
+    "mark_question_invalid": true,
+    "exclude_invalid_training_labels": true,
+    "fail_if_dev_or_test_invalid": true
+  },
+  "chunking": {
+    "tokenizer": "BAAI/bge-large-en-v1.5",
+    "include_special_tokens_in_budget": false,
+    "sentence_separator": " ",
+    "overlap_sentences": 0,
+    "variants": [
+      {"name": "sentence_128", "target_tokens": 128},
+      {"name": "sentence_256", "target_tokens": 256}
+    ],
+    "default_candidate": "sentence_256",
+    "paragraph_variant": "unavailable_no_paragraph_boundaries_in_hotpotqa_context"
+  },
+  "retrieval": {
+    "dense_model": "BAAI/bge-large-en-v1.5",
+    "document_text": "title_and_chunk_text",
+    "document_text_template": "[TITLE] {document_title} [TEXT] {chunk_text}",
+    "query_instruction": null,
+    "dense_normalize_embeddings": true,
+    "faiss_index": "IndexFlatIP",
+    "bm25_implementation": "rank_bm25.BM25Okapi",
+    "bm25_parameters": "library_defaults",
+    "rrf_k": 60,
+    "dense_candidate_k": 200,
+    "bm25_candidate_k": 200,
+    "hybrid_candidate_k": 20,
+    "reranker_model": "BAAI/bge-reranker-v2-m3",
+    "reranker_max_length": 512,
+    "saved_ranking_depth": 20
+  },
+  "retrieval_evaluation": {
+    "methods": ["dense", "bm25", "hybrid", "rerank"],
+    "ks": [5, 10, 20],
+    "selection_variants": ["sentence_128", "sentence_256"],
+    "selection_split": "dev",
+    "selection_rule": {
+      "method": "rerank",
+      "k": 20,
+      "primary_maximize": "complete_evidence_coverage",
+      "secondary_maximize": "supporting_fact_recall",
+      "tertiary_minimize": "average_latency_ms",
+      "final_tiebreak": "variant_name_ascending"
+    },
+    "selected_variant_after_dev": null
+  },
+  "stages": [
+    {"name": "dense@5", "method": "dense", "k": 5},
+    {"name": "dense@10", "method": "dense", "k": 10},
+    {"name": "hybrid@5", "method": "hybrid", "k": 5},
+    {"name": "hybrid@10", "method": "hybrid", "k": 10},
+    {"name": "rerank@20", "method": "rerank", "k": 20}
+  ],
+  "controller_ladder": ["dense@5", "hybrid@10", "rerank@20"],
+  "selection_split": "dev",
+  "test_is_evaluation_only": true,
+  "outputs": {
+    "data_dir": "data/phase2",
+    "result_dir": "results/phase2",
+    "chunking_audit": "docs/chunking_audit.md",
+    "dedup_audit": "docs/kb_dedup_audit.md"
+  }
+}
