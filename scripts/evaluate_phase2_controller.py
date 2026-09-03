@@ -15,7 +15,7 @@ from critic_metrics import binary_stop_metrics
 from evidence_utils import unique_supporting_facts
 from experiment_utils import portable_path, utc_now, write_json_atomic
 from phase2_controller_inputs import EVIDENCE_BASELINES, evidence_key, prepare_nonhierarchical_input
-from phase2_model import load_binary_sequence_classifier
+from phase2_model import configure_cublas_workspace, load_binary_sequence_classifier
 from train_phase2_controller import (
     attach_diagnostics,
     collate_batch,
@@ -115,11 +115,13 @@ def main() -> None:
     evidence_mode = resolved["evidence_mode"]
     if any(condition != "original" for condition in conditions) and baseline not in EVIDENCE_BASELINES:
         raise ValueError("Evidence counterfactuals require an evidence-input baseline")
+    configure_cublas_workspace(config["training"]["cublas_workspace_config"])
 
     import torch
     from torch.utils.data import DataLoader
     from transformers import AutoTokenizer
 
+    torch.use_deterministic_algorithms(True)
     backbone = resolved["backbone"]
     load_kwargs = {"local_files_only": not args.allow_download}
     tokenizer = AutoTokenizer.from_pretrained(backbone, **load_kwargs)

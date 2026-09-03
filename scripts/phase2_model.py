@@ -2,8 +2,22 @@
 
 from __future__ import annotations
 
+import os
+
 
 BINARY_LABEL_NAMES = {0: "continue", 1: "stop"}
+
+
+def configure_cublas_workspace(value: str, environ=None) -> str:
+    """Set and audit the CUDA deterministic-matmul workspace before torch use."""
+    environment = os.environ if environ is None else environ
+    existing = environment.get("CUBLAS_WORKSPACE_CONFIG")
+    if existing is not None and existing != value:
+        raise ValueError(
+            f"CUBLAS_WORKSPACE_CONFIG={existing!r} conflicts with configured {value!r}"
+        )
+    environment["CUBLAS_WORKSPACE_CONFIG"] = value
+    return value
 
 
 def replace_with_binary_output_head(model, torch_module) -> dict:

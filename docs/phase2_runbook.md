@@ -13,12 +13,15 @@ export PYTHON_BIN=python3.12
 export GPU_ID=0
 export HF_HUB_OFFLINE=1
 export TOKENIZERS_PARALLELISM=false
+export CUBLAS_WORKSPACE_CONFIG=:4096:8
 export SOURCE_PARQUET=/path/to/hotpotqa/distractor/validation/0000.parquet
 ```
 
 The required packages are PyTorch, Transformers, sentence-transformers, FAISS, rank-bm25, NumPy, scikit-learn, pyarrow or datasets, and matplotlib. The model cache must contain `BAAI/bge-large-en-v1.5`, `BAAI/bge-reranker-v2-m3`, and `BAAI/bge-reranker-base` when offline mode is enabled.
 
 The Controller loads `BAAI/bge-reranker-base` with its native scalar reranking head and then explicitly reinitializes only `classifier.out_proj` for two-class Continue/Stop prediction. The resolved config records this strategy. This avoids version-dependent `ignore_mismatched_sizes` failures for the 1-to-2 bias shape while preserving the pretrained encoder and classification-head dense layer.
+
+Controller training and evaluation require `CUBLAS_WORKSPACE_CONFIG=:4096:8` before CUDA initialization. The Python entry points enforce the configured value and record it in each training manifest; this is required for the deterministic CUDA matrix multiplications requested by the experiment protocol.
 
 Dense, BM25, and reranker all consume the same `[TITLE] title [TEXT] chunk_text` representation. Scores and per-query timings are preserved in the ignored ranking JSONL and summarized in tracked manifests/results.
 

@@ -21,7 +21,7 @@ from phase2_controller_inputs import (
     NON_EVIDENCE_BASELINES,
     prepare_nonhierarchical_input,
 )
-from phase2_model import load_binary_sequence_classifier
+from phase2_model import configure_cublas_workspace, load_binary_sequence_classifier
 
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -189,6 +189,9 @@ def main() -> None:
             config["training"]["threshold_selection_split"],
         ]
     )
+    cublas_workspace_config = configure_cublas_workspace(
+        config["training"]["cublas_workspace_config"]
+    )
 
     import torch
     from torch.utils.data import DataLoader
@@ -196,7 +199,7 @@ def main() -> None:
 
     seed = int(config["seed"])
     set_global_seed(seed)
-    torch.use_deterministic_algorithms(True, warn_only=True)
+    torch.use_deterministic_algorithms(True)
     backbone = args.model or config["backbone"]["name"]
     load_kwargs = {"local_files_only": not args.allow_download}
     tokenizer = AutoTokenizer.from_pretrained(backbone, **load_kwargs)
@@ -272,6 +275,7 @@ def main() -> None:
         "representation": resolved_representation,
         "evidence_mode": args.evidence_mode,
         "seed": seed,
+        "cublas_workspace_config": cublas_workspace_config,
         "environment": collect_environment(ROOT),
     }
     write_json_atomic(run_dir / "run_manifest.json", manifest)

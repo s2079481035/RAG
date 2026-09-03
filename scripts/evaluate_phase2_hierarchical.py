@@ -10,6 +10,7 @@ from pathlib import Path
 
 from critic_metrics import binary_stop_metrics
 from experiment_utils import portable_path, utc_now, write_json_atomic
+from phase2_model import configure_cublas_workspace
 from train_phase2_controller import attach_diagnostics, write_jsonl_atomic
 from train_phase2_hierarchical import (
     build_model,
@@ -54,11 +55,13 @@ def main() -> None:
         )
         if retrieval_config["retrieval_evaluation"]["selected_variant_after_dev"] != variant:
             raise ValueError("Test evaluation is locked to the dev-selected chunk variant")
+    configure_cublas_workspace(config["training"]["cublas_workspace_config"])
 
     import torch
     from torch.utils.data import DataLoader
     from transformers import AutoTokenizer
 
+    torch.use_deterministic_algorithms(True)
     backbone = resolved["backbone"]
     load_kwargs = {"local_files_only": not args.allow_download}
     tokenizer = AutoTokenizer.from_pretrained(backbone, **load_kwargs)

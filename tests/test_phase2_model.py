@@ -1,6 +1,6 @@
 import unittest
 
-from scripts.phase2_model import replace_with_binary_output_head
+from scripts.phase2_model import configure_cublas_workspace, replace_with_binary_output_head
 
 
 class FakeLinear:
@@ -39,6 +39,18 @@ class FakeModel:
 
 
 class Phase2ModelTests(unittest.TestCase):
+    def test_cublas_workspace_is_set_before_torch_use(self):
+        environment = {}
+
+        value = configure_cublas_workspace(":4096:8", environment)
+
+        self.assertEqual(value, ":4096:8")
+        self.assertEqual(environment["CUBLAS_WORKSPACE_CONFIG"], ":4096:8")
+
+    def test_conflicting_cublas_workspace_is_rejected(self):
+        with self.assertRaises(ValueError):
+            configure_cublas_workspace(":4096:8", {"CUBLAS_WORKSPACE_CONFIG": ":16:8"})
+
     def test_scalar_reranker_head_is_reinitialized_for_binary_controller(self):
         model = FakeModel()
 

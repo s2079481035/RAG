@@ -5,6 +5,7 @@ PYTHON_BIN="${PYTHON_BIN:-python3.12}"
 GPU_ID="${GPU_ID:-0}"
 export HF_HUB_OFFLINE="${HF_HUB_OFFLINE:-1}"
 export TOKENIZERS_PARALLELISM="${TOKENIZERS_PARALLELISM:-false}"
+export CUBLAS_WORKSPACE_CONFIG="${CUBLAS_WORKSPACE_CONFIG:-:4096:8}"
 export CUDA_VISIBLE_DEVICES="$GPU_ID"
 
 SELECTED_VARIANT="$("$PYTHON_BIN" -c 'import json; print(json.load(open("configs/phase2/chunk_retrieval.json"))["retrieval_evaluation"]["selected_variant_after_dev"] or "")')"
