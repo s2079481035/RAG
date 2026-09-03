@@ -1,0 +1,43 @@
+{
+  "experiment_name": "hotpotqa_three_class_sufficiency_v1",
+  "seed": 42,
+  "model": {
+    "name": "BAAI/bge-reranker-base",
+    "revision": null,
+    "num_labels": 3,
+    "max_length": 512
+  },
+  "data": {
+    "directory": "data/sufficiency",
+    "train": "train.jsonl",
+    "dev": "dev.jsonl",
+    "test": "test.jsonl",
+    "label_names": ["insufficient", "partial", "sufficient"],
+    "stages": ["dense@5", "dense@10", "hybrid@5", "hybrid@10", "rerank@20"]
+  },
+  "evidence": {
+    "document_separator": " [SEP] ",
+    "truncation": "tokenizer_longest_first",
+    "record_token_lengths": true,
+    "record_truncation": true
+  },
+  "training": {
+    "loss": "unweighted_cross_entropy",
+    "optimizer": "AdamW",
+    "epochs": 4,
+    "batch_size": 16,
+    "eval_batch_size": 64,
+    "learning_rate": 2e-5,
+    "weight_decay": 0.0,
+    "warmup_ratio": 0.05,
+    "num_workers": 4,
+    "selection_metric": "macro_f1",
+    "selection_split": "dev"
+  },
+  "evaluation": {
+    "decision_threshold": 0.5,
+    "threshold_selection_split": "dev",
+    "test_is_evaluation_only": true,
+    "bad_case_count": 20
+  }
+}

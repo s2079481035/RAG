@@ -1,0 +1,52 @@
+{
+  "accuracy": 0.8782,
+  "macro_f1": 0.7256850737817263,
+  "sufficient_threshold": 0.5,
+  "sufficient_auroc_ovr": 0.9440719672910167,
+  "false_stop_count": 130,
+  "actual_non_sufficient_count": 812,
+  "false_stop_rate": 0.16009852216748768,
+  "per_class": {
+    "insufficient": {
+      "precision": 0.6956521739130435,
+      "recall": 0.48484848484848486,
+      "f1": 0.5714285714285714,
+      "support": 33
+    },
+    "partial": {
+      "precision": 0.5763016157989228,
+      "recall": 0.8241335044929397,
+      "f1": 0.6782884310618067,
+      "support": 779
+    },
+    "sufficient": {
+      "precision": 0.9663473983950298,
+      "recall": 0.8913562559694365,
+      "f1": 0.9273382188548006,
+      "support": 4188
+    }
+  },
+  "confusion_matrix": [
+    [
+      16,
+      17,
+      0
+    ],
+    [
+      7,
+      642,
+      130
+    ],
+    [
+      0,
+      455,
+      3733
+    ]
+  ],
+  "input_mode": "query_evidence",
+  "samples": 5000,
+  "mean_inference_latency_ms": 8.445528800599277,
+  "truncated_samples": 4395,
+  "truncation_ratio": 0.879,
+  "bad_cases_saved": 20
+}

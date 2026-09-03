@@ -1,0 +1,44 @@
+{
+  "experiment_name": "hotpotqa_sentence_level_baselines_v1",
+  "seed": 42,
+  "dataset": {
+    "name": "hotpotqa",
+    "source": "hotpotqa/hotpot_qa",
+    "source_config": "distractor",
+    "source_split": "validation",
+    "legacy_test_data": "data/hotpotqa.json",
+    "all_questions_data": "data/hotpotqa_all.json",
+    "metadata": "data/sufficiency/hotpotqa_metadata.json"
+  },
+  "retrieval": {
+    "dense_model": "BAAI/bge-large-en-v1.5",
+    "dense_normalize_embeddings": true,
+    "faiss_index": "IndexFlatIP",
+    "bm25_implementation": "rank_bm25.BM25Okapi",
+    "bm25_parameters": "library_defaults",
+    "rrf_k": 60,
+    "rrf_dense_depth": 200,
+    "rrf_bm25_depth": 200,
+    "reranker_model": "BAAI/bge-reranker-v2-m3",
+    "reranker_max_length": 512,
+    "reranker_candidate_k": 20
+  },
+  "baselines": [
+    {"name": "dense@5", "stage": "dense", "k": 5, "result": "results/hotpotqa_dense.json"},
+    {"name": "dense@10", "stage": "dense", "k": 10, "result": "results/hotpotqa_dense.json"},
+    {"name": "hybrid@5", "stage": "hybrid", "k": 5, "result": "results/hotpotqa_hybrid.json"},
+    {"name": "hybrid@10", "stage": "hybrid", "k": 10, "result": "results/hotpotqa_hybrid.json"},
+    {"name": "rerank@20", "stage": "rerank", "k": 20, "result": "results/hotpotqa_rerank_v2m3.json"}
+  ],
+  "legacy_latency_ms": {
+    "dense": 31.5,
+    "hybrid": 93.5,
+    "rerank": 220.9,
+    "source": "server stage means measured 2026-08-19; estimates, not per-sample measurements"
+  },
+  "output": {
+    "summary": "results/baselines/baseline_summary.csv",
+    "per_sample_dir": "results/baselines/per_sample"
+  }
+}
+

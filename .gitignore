@@ -3,3 +3,15 @@ logs_*.txt
 __pycache__/
 models/*.pt
 models/*.bin
+data/source/
+data/sufficiency/*.jsonl
+experiments/
+results/critic/**/per_sample.jsonl
+data/phase2/**/*.jsonl
+data/phase2/questions.json
+data/phase2/chunk_manifest.json
+data/phase2/indices/
+data/phase2/controller/**/*.jsonl
+results/phase2/**/*.jsonl
+results/phase2/**/rankings/
+experiments/phase2/

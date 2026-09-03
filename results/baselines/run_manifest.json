@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-02T11:37:21.304033+00:00",
+  "config": "configs/retrieval/unified_hotpotqa.json",
+  "git_commit": "e6a87cf89f51a62a7f49fd314bdb64a1e78571d1",
+  "seed": 42,
+  "latency_note": "server stage means measured 2026-08-19; estimates, not per-sample measurements",
+  "environment": {
+    "python": "3.14.4 (tags/v3.14.4:23116f9, Apr  7 2026, 14:10:54) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "torch": "2.11.0",
+      "transformers": "5.7.0",
+      "sentence-transformers": "5.4.1",
+      "datasets": null,
+      "faiss-cpu": "1.14.2",
+      "faiss-gpu": null,
+      "rank-bm25": "0.2.2",
+      "numpy": "2.4.4",
+      "scikit-learn": "1.8.0"
+    },
+    "git_commit": "e6a87cf89f51a62a7f49fd314bdb64a1e78571d1",
+    "cuda_visible_devices": null,
+    "cuda": null,
+    "gpus": [],
+    "torch_runtime_error": "[WinError 1114] 动态链接库(DLL)初始化例程失败。 Error loading \"C:\\Users\\sun\\AppData\\Roaming\\Python\\Python314\\site-packages\\torch\\lib\\c10.dll\" or one of its dependencies."
+  },
+  "summaries": [
+    {
+      "baseline": "dense@5",
+      "questions": 1000,
+      "supporting_fact_recall": 0.8830499999999998,
+      "complete_evidence_coverage": 0.779,
+      "average_retrieved_chunks": 5.0,
+      "average_unique_documents": 4.536,
+      "average_latency_ms": 31.5,
+      "latency_source": "legacy_stage_mean_estimate",
+      "average_reranker_calls": 0,
+      "answer_em": "not_evaluated",
+      "answer_f1": "not_evaluated"
+    },
+    {
+      "baseline": "dense@10",
+      "questions": 1000,
+      "supporting_fact_recall": 0.9138166666666665,
+      "complete_evidence_coverage": 0.833,
+      "average_retrieved_chunks": 10.0,
+      "average_unique_documents": 8.939,
+      "average_latency_ms": 31.5,
+      "latency_source": "legacy_stage_mean_estimate",
+      "average_reranker_calls": 0,
+      "answer_em": "not_evaluated",
+      "answer_f1": "not_evaluated"
+    },
+    {
+      "baseline": "hybrid@5",
+      "questions": 1000,
+      "supporting_fact_recall": 0.8975666666666664,
+      "complete_evidence_coverage": 0.798,
+      "average_retrieved_chunks": 5.0,
+      "average_unique_documents": 4.603,
+      "average_latency_ms": 93.5,
+      "latency_source": "legacy_stage_mean_estimate",
+      "average_reranker_calls": 0,
+      "answer_em": "not_evaluated",
+      "answer_f1": "not_evaluated"
+    },
+    {
+      "baseline": "hybrid@10",
+      "questions": 1000,
+      "supporting_fact_recall": 0.9303999999999999,
+      "complete_evidence_coverage": 0.863,
+      "average_retrieved_chunks": 10.0,
+      "average_unique_documents": 9.116,
+      "average_latency_ms": 93.5,
+      "latency_source": "legacy_stage_mean_estimate",
+      "average_reranker_calls": 0,
+      "answer_em": "not_evaluated",
+      "answer_f1": "not_evaluated"
+    },
+    {
+      "baseline": "rerank@20",
+      "questions": 1000,
+      "supporting_fact_recall": 0.9567499999999999,
+      "complete_evidence_coverage": 0.915,
+      "average_retrieved_chunks": 20.0,
+      "average_unique_documents": 18.234,
+      "average_latency_ms": 220.9,
+      "latency_source": "legacy_stage_mean_estimate",
+      "average_reranker_calls": 1,
+      "answer_em": "not_evaluated",
+      "answer_f1": "not_evaluated"
+    }
+  ]
+}

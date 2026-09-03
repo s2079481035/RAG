@@ -1,0 +1,808 @@
+{
+  "input": "results/hotpotqa_rerank_k10_generated.json",
+  "n": 100,
+  "em": 0.08,
+  "f1": 0.2055350979387615,
+  "details": [
+    {
+      "qid": "hotpot_004473",
+      "question": "What nationality was the Jaguar R2 driver, Eddie Irvine?",
+      "generated": "Eddie Irvine was British.",
+      "gold": "British racing driver",
+      "em": 0,
+      "f1": 0.28571428571428575
+    },
+    {
+      "qid": "hotpot_003989",
+      "question": "Which radio station did Nic Nolan Programme Director for? ",
+      "generated": "Nic Nolan was Programme Director of Adelaide's number one Newstalk radio station 5AA (FIVEaa) from 2004 to 2008.",
+      "gold": "5AA",
+      "em": 0,
+      "f1": 0.10526315789473684
+    },
+    {
+      "qid": "hotpot_002957",
+      "question": "did Robert Wise have more award nominations than Zoltan Korda?",
+      "generated": "To answer this question, we need to compare the number of award nominations Robert Wise and Zoltan Korda received based on the information provided.\n\nFrom the context:\n- Robert Wise won Academy Awards for Best Director and Best Picture for \"West Side Story\" (1961) and \"The Sound of Music\" (1965). He was also nominated for Best Film Editing for \"Citizen Kane\" (1941) and directed and produced \"The Sand Pebbles\" (1966), which was nominated for Best Picture. This gives us at least 2 wins and 2 nominations.\n- Z",
+      "gold": "yes",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_000085",
+      "question": "What was the name of a woman from the book titled \"Their Lives: The Women Targeted by the Clinton Machine \" and was also a former white house intern?",
+      "generated": "Monica Lewinsky",
+      "gold": "Monica Lewinsky",
+      "em": 1,
+      "f1": 1.0
+    },
+    {
+      "qid": "hotpot_000728",
+      "question": "Michael Pollock was was a senior officer in the United Kingdom's naval warfare force, also known as the what?",
+      "generated": "Royal Navy",
+      "gold": "Royal Navy",
+      "em": 1,
+      "f1": 1.0
+    },
+    {
+      "qid": "hotpot_003264",
+      "question": "In which tier of the English football league system does the team which competed against Notts County in the 1894 FA Cup Final currently compete? ",
+      "generated": "cannot determine\n\nThe provided context does not specify which team from the given list competed against Notts County in the 1894 FA Cup Final. Therefore, it is not possible to determine the current tier of the English football league system in which the opposing team competes.",
+      "gold": "second",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_007017",
+      "question": "Which is a comedy film, The Million Dollar Duck or Don Quixote?",
+      "generated": "The Million Dollar Duck is a comedy film, while Don Quixote is a novel and later an opera.",
+      "gold": "The Million Dollar Duck",
+      "em": 0,
+      "f1": 0.35294117647058826
+    },
+    {
+      "qid": "hotpot_001215",
+      "question": "Jullian Allen a Brittish-American Illustrator had some of his Illustration published appear in Queen magazine. In 1970 the magazines name was changed to Harper's and Queen. What is the name of the magazine now ?",
+      "generated": "cannot determine",
+      "gold": "Harper's Bazaar",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_000244",
+      "question": "Salisbury Woodland Gardens links a zoo with a park designed and built under the watchful eye of who?",
+      "generated": "Salisbury Woodland Gardens links Blackpool Zoo with Stanley Park, which was designed and built under the watchful eye of Thomas Mawson.",
+      "gold": "Thomas Mawson",
+      "em": 0,
+      "f1": 0.18181818181818182
+    },
+    {
+      "qid": "hotpot_001352",
+      "question": "Are Black and New Found Glory from the same country?",
+      "generated": "No, Black and New Found Glory are not from the same country. New Found Glory is an American rock band from Coral Springs, Florida, while Black is a Bangladeshi rock band formed in Dhaka, Bangladesh.",
+      "gold": "no",
+      "em": 0,
+      "f1": 0.06060606060606061
+    },
+    {
+      "qid": "hotpot_000150",
+      "question": "Which song was behind the third single on the album  \"A Lot About Livin' (And a Little 'bout Love)\" for two weeks on the country charts?",
+      "generated": "\"Chattahoochee\" by Alan Jackson was behind \"We'll Burn That Bridge\" by Brooks & Dunn for two weeks on the country charts. However, the question asks which song was behind Alan Jackson's third single from the album \"A Lot About Livin' (And a Little 'bout Love)\" for two weeks on the country charts. Based on the information provided, \"Chattahoochee\" was Alan Jackson's third single from that album and it peaked at #1, so there is no other song mentioned as being behind it for two weeks. Therefore, the correct answer cannot be determined from the given context.",
+      "gold": "\"We'll Burn That Bridge\"",
+      "em": 0,
+      "f1": 0.08888888888888888
+    },
+    {
+      "qid": "hotpot_006028",
+      "question": "What organization affiliated with the National Collegiate Athletic Association Division were the 2012 Hawaii Warriors football team first year members of?",
+      "generated": "The 2012 Hawaii Warriors football team was first year members of the Mountain West Conference, which is affiliated with the National Collegiate Athletic Association (NCAA) Division I Football Bowl Subdivision (FBS).",
+      "gold": "Mountain West Conference",
+      "em": 0,
+      "f1": 0.19354838709677416
+    },
+    {
+      "qid": "hotpot_002237",
+      "question": "Where was the Barbadian singer which Rihanna was his then girlfriend raised in ",
+      "generated": "Bridgetown",
+      "gold": "Bridgetown",
+      "em": 1,
+      "f1": 1.0
+    },
+    {
+      "qid": "hotpot_000234",
+      "question": "Which case came first, Craig v. Boren or United States v. Paramount Pictures, Inc.?",
+      "generated": "United States v. Paramount Pictures, Inc. came first. The context states that United States v. Paramount Pictures, Inc. was decided in 1948, while Craig v. Boren was decided in 1976, which is later than 1948.",
+      "gold": "Craig v. Boren",
+      "em": 0,
+      "f1": 0.1621621621621622
+    },
+    {
+      "qid": "hotpot_006561",
+      "question": "Which ocean would the ingredients likely come from for the She-crab soup?",
+      "generated": "The ingredients for She-crab soup would likely come from the Atlantic Ocean. This is based on the context provided, which mentions that the soup is a regional specialty from the Tidewater area of Virginia, the South Carolina Lowcountry, and Georgia coast. These locations are on the eastern seaboard of the United States, which borders the Atlantic Ocean. Additionally, Long Island Sound, which is mentioned in the context, is also connected to the Atlantic Ocean. Therefore, the Atlantic Ocean is the most probable source for the seafood and other ingredients used in She-crab soup.",
+      "gold": "Atlantic Ocean",
+      "em": 0,
+      "f1": 0.05
+    },
+    {
+      "qid": "hotpot_006438",
+      "question": "Which film was released first, Laura's Star or Wonder Woman?",
+      "generated": "Laura's Star was released in 2004, while Wonder Woman was released in 2017. Therefore, Laura's Star was released first.",
+      "gold": "Laura's Star",
+      "em": 0,
+      "f1": 0.1904761904761905
+    },
+    {
+      "qid": "hotpot_005823",
+      "question": "What relationship did Gordon Banks have to the person who killed American recording artist Marvin Gaye?",
+      "generated": "cannot determine",
+      "gold": "brother-in-law",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_002643",
+      "question": "Party of Syrian Unity was established in the wake of a public statement that announced what ?",
+      "generated": "Party of Syrian Unity was established in the wake of the Balfour Declaration, which announced support for the establishment of a \"national home for the Jewish people\" in Palestine.",
+      "gold": "support for the establishment of a \"national home for the Jewish people\" in Palestine",
+      "em": 0,
+      "f1": 0.6285714285714286
+    },
+    {
+      "qid": "hotpot_005788",
+      "question": "Between Parsifal and Saul og David which opera has more acts?",
+      "generated": "Parsifal has 3 acts, while Saul og David has 4 acts. Therefore, Saul og David has more acts than Parsifal.",
+      "gold": "Saul og David",
+      "em": 0,
+      "f1": 0.2608695652173913
+    },
+    {
+      "qid": "hotpot_003938",
+      "question": "Where did the tribe Mato-tope chief over reside?",
+      "generated": "The tribe Mato-tope chief over resided in the area of the upper Missouri River in what is now North Dakota. Specifically, Mato-tope was a chief of the Mandan tribe, and the Mandan are a Native American tribe residing in North Dakota.",
+      "gold": "North Dakota",
+      "em": 0,
+      "f1": 0.1111111111111111
+    },
+    {
+      "qid": "hotpot_004939",
+      "question": "In between Thomas Anders and Micky Dolenz, who was the a vocalist of the Monkees?",
+      "generated": "cannot determine",
+      "gold": "George Michael Dolenz",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_004353",
+      "question": "Walt Disney World Quest: Magical Racing Tour includes the space-themed roller coaster that was opened on what date?",
+      "generated": "Walt Disney World Quest: Magical Racing Tour includes the space-themed roller coaster, Space Mountain, which was opened on January 15, 1975.",
+      "gold": "January 15, 1975",
+      "em": 0,
+      "f1": 0.2608695652173913
+    },
+    {
+      "qid": "hotpot_006839",
+      "question": "What is the origin of the name of the neighbourhood in which the building at 359 Broadway is located ?",
+      "generated": "The name of the neighborhood in which the building at 359 Broadway is located, Tribeca, originated from a syllabic abbreviation of \"Triangle Below Canal Street.\"",
+      "gold": "a syllabic abbreviation from \"Triangle Below Canal Street",
+      "em": 0,
+      "f1": 0.5
+    },
+    {
+      "qid": "hotpot_003916",
+      "question": "Between Amazing Stories and Aquarium Fish International, which magazine is devoted more to hobbies related to physical activities?",
+      "generated": "cannot determine",
+      "gold": "Aquarium Fish International",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_000613",
+      "question": "Are Distortion Mirrors and OK Go both considered rock bands?",
+      "generated": "Yes, both Distortion Mirrors and OK Go are considered rock bands. Distortion Mirrors is described as an English alternative rock band, and OK Go is mentioned as an American rock band.",
+      "gold": "yes",
+      "em": 0,
+      "f1": 0.06666666666666667
+    },
+    {
+      "qid": "hotpot_003576",
+      "question": "What animated movie, starring Danny Devito, featured music written and produced by Kool Kojak?",
+      "generated": "cannot determine",
+      "gold": "The Lorax",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_002555",
+      "question": "Whose former city palace did Erna Flegel work at?",
+      "generated": "cannot determine",
+      "gold": "Prince Antoni Radziwiłł",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_003777",
+      "question": "Who was born first, Nellee Hooper or Baz Luhrmann?",
+      "generated": "Nellee Hooper was born first. Nellee Hooper was born on 15 March 1963, while Baz Luhrmann was born on 17 September 1962.",
+      "gold": "\"Baz\" Luhrmann",
+      "em": 0,
+      "f1": 0.16666666666666669
+    },
+    {
+      "qid": "hotpot_005825",
+      "question": "\"The Simpson's\" episode featuring the  \"Itchy & Scratchy & Poochie\" show satirized the world of television production just as the episode featuring the \"Itchy & Scratchy & Marge\" satirized what type of issue?",
+      "generated": "The episode featuring \"Itchy & Scratchy & Poochie\" satirized the world of television production, while \"Itchy & Scratchy & Marge\" satirized censorship issues.",
+      "gold": "censorship",
+      "em": 0,
+      "f1": 0.1111111111111111
+    },
+    {
+      "qid": "hotpot_007357",
+      "question": "The 1994 \"The Shadow\" co-stars Lone, Penelope Ann Miller, Peter Boyle, Jonathan Winters, Tim Curry and an actor that has received how many Emmy Award nominations?",
+      "generated": "cannot determine\n\nThe provided context lists the co-stars of \"The Shadow\" (1994) but does not provide information about the number of Emmy Award nominations any of these actors have received. Therefore, based on the given information, it is not possible to determine the number of Emmy Award nominations for any specific co-star mentioned.",
+      "gold": "five",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_005011",
+      "question": "Luis Gianneo was teacher of which chief exponent of Argentine folk music?",
+      "generated": "Ariel Ramírez was the chief exponent of Argentine folk music and was a student of Luis Gianneo.",
+      "gold": "Ariel Ramírez",
+      "em": 0,
+      "f1": 0.23529411764705882
+    },
+    {
+      "qid": "hotpot_006515",
+      "question": "On which television network did Joe Penny play an investigator named Jake Styles?",
+      "generated": "Based on the context provided, Joe Penny played an investigator named Jake Styles in the television crime drama \"Jake and the Fatman\". However, the context does not specify which television network aired this show. Therefore, the answer is:\n\ncannot determine",
+      "gold": "CBS",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_004980",
+      "question": "Which party dominated the last three elections of the state in which Arataca is a municipality?",
+      "generated": "cannot determine",
+      "gold": "Workers' Party",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_001421",
+      "question": "What is the size of the hydroelectric dam that will inundate part of Bui National Park?",
+      "generated": "cannot determine",
+      "gold": "400 MW",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_005744",
+      "question": "Which battle came first, the Battle of Okinawa or Operation Diadem?",
+      "generated": "The Battle of Okinawa took place from April 1 until June 22, 1945. Operation Diadem, also known as the Fourth Battle of Monte Cassino, occurred in May 1944. Therefore, Operation Diadem came first.",
+      "gold": "Operation Diadem",
+      "em": 0,
+      "f1": 0.12121212121212122
+    },
+    {
+      "qid": "hotpot_005977",
+      "question": "How many different schools does the university, in which Andrew J. Elliot is a professor of psychology, have?",
+      "generated": "Six schools. The University of Rochester, where Andrew J. Elliot is a professor of psychology, has six schools and various interdisciplinary programs.",
+      "gold": "six",
+      "em": 0,
+      "f1": 0.09523809523809523
+    },
+    {
+      "qid": "hotpot_005003",
+      "question": "Rex Salas is an American record producer who worked with an American singer and actress who has been described as embodying female autonomy in a male-dominated industry, and is sometimes referred to as what?",
+      "generated": "Goddess of Pop",
+      "gold": "Goddess of Pop",
+      "em": 1,
+      "f1": 1.0
+    },
+    {
+      "qid": "hotpot_006806",
+      "question": "A man who played in the 1986 FIFA world cup played for what team during the 1982 Scottish League Cup Final?",
+      "generated": "Based on the information provided, Charlie Nicholas played in the 1986 FIFA World Cup and also played for Celtic during the 1982 Scottish League Cup Final. Therefore, the answer is Celtic.",
+      "gold": "Celtic",
+      "em": 0,
+      "f1": 0.07142857142857142
+    },
+    {
+      "qid": "hotpot_001616",
+      "question": "How are Ceephax Acid Crew  and Squarepusher's music similar?",
+      "generated": "Ceephax Acid Crew and Squarepusher's music share similarities in that both artists incorporate a blend of electronic sound sources with live instrumental playing. Their compositions draw from various influences, including acid techno/drum and bass, acid house, jazz, and other electronic music styles. Both artists also utilize digital signal processing in their work.",
+      "gold": "drum and bass electronic musician",
+      "em": 0,
+      "f1": 0.10714285714285714
+    },
+    {
+      "qid": "hotpot_001086",
+      "question": "What are both Camel Up and Outrage!?",
+      "generated": "Both Camel Up and Outrage! are board games. Camel Up is a camel race betting game, while Outrage! is described as \"the official Tower of London board game.\"",
+      "gold": "board game",
+      "em": 0,
+      "f1": 0.14285714285714288
+    },
+    {
+      "qid": "hotpot_003874",
+      "question": "What other notable role did the star actor from Jeremy perform? ",
+      "generated": "cannot determine",
+      "gold": "the voice of The Beast",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_005705",
+      "question": "Meet Market is a 2004 film starring which son of a former prime minister?",
+      "generated": "Julian McMahon, who starred in the 2004 film \"Meet Market,\" is the son of Sir William McMahon, a former Prime Minister of Australia.",
+      "gold": "Julian McMahon",
+      "em": 0,
+      "f1": 0.18181818181818182
+    },
+    {
+      "qid": "hotpot_001625",
+      "question": "How many seasons has a popular tv show had, in which one of the episodes is called Moho House?",
+      "generated": "The Simpsons has had 32 seasons as of the information provided, and one of its episodes is called \"Moho House,\" which is part of its 28th season.",
+      "gold": "28",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_000722",
+      "question": "Who was the director of the 2000 American comedy film in which the actress, whose first role in film was in director Martin Kunert's film \"Campfire Tales\", played a role?",
+      "generated": "Based on the information provided, the actress whose first role in film was in director Martin Kunert's film \"Campfire Tales\" is Amy Lysle Smart. The 2000 American comedy film mentioned in the question is \"Road Trip,\" which was directed by Todd Phillips. Therefore, the director of the 2000 American comedy film in which Amy Lysle Smart played a role is Todd Phillips.",
+      "gold": "Todd Phillips",
+      "em": 0,
+      "f1": 0.07017543859649122
+    },
+    {
+      "qid": "hotpot_002449",
+      "question": "Who is younger Kirk Humphreys or Tom Coburn?",
+      "generated": "Kirk Humphreys was born on September 13, 1950, while Tom Coburn was born on March 14, 1948. Therefore, Tom Coburn is younger than Kirk Humphreys.",
+      "gold": "Kirk Humphreys",
+      "em": 0,
+      "f1": 0.14814814814814814
+    },
+    {
+      "qid": "hotpot_004506",
+      "question": "Where has Kerwin Swint's work appeared that draws 20.5 million unique visitors a month?",
+      "generated": "cannot determine\n\nThe provided context mentions that Kerwin Swint's work has appeared in various media outlets, but it does not specify that any of these outlets draw 20.5 million unique visitors a month. The figure of 20.5 million unique users a month is associated with the website mentalfloss.com, which is mentioned in the context, but this is not attributed to Kerwin Swint's work.",
+      "gold": "Mental Floss",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_006385",
+      "question": "What type of tours does the host of Tosh.0 conduct?",
+      "generated": "Based on the given context, the host of Tosh.0, Daniel Tosh, does not conduct any specific type of tours mentioned in the provided information. Therefore, the answer is:\n\ncannot determine",
+      "gold": "stand-up comedy",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_004460",
+      "question": "Where was the opera, which was the subject of After Aida, first performed?",
+      "generated": "The opera which was the subject of \"After Aida,\" \"Otello,\" was first performed at the Teatro alla Scala in Milan on 5 February 1887.",
+      "gold": "Teatro alla Scala",
+      "em": 0,
+      "f1": 0.25
+    },
+    {
+      "qid": "hotpot_004545",
+      "question": "SkyJump Las Vegas is located at a hotel on what street?",
+      "generated": "SkyJump Las Vegas is located at Stratosphere Las Vegas, which is on Las Vegas Boulevard.",
+      "gold": "Las Vegas Boulevard",
+      "em": 0,
+      "f1": 0.33333333333333337
+    },
+    {
+      "qid": "hotpot_004823",
+      "question": "What was the occupation of the man who played a leading role in developing a man-portable recoilless anti-tank rocket launcher weapon?",
+      "generated": "The occupation of the man who played a leading role in developing a man-portable recoilless anti-tank rocket launcher weapon, specifically the Bazooka, was an American rocket engineer. This refers to Colonel Leslie Alfred Skinner LOM.",
+      "gold": "American rocket engineer",
+      "em": 0,
+      "f1": 0.1875
+    },
+    {
+      "qid": "hotpot_003243",
+      "question": "Was the famous opera comique that was based on a Prosper Merimee novella a comedy or a tragedy? ",
+      "generated": "Based on the information provided, the famous opera comique \"Carmen,\" which was based on a novella by Prosper Mérimée, is a tragedy.",
+      "gold": "\"Carmen\", perhaps the most famous \"opéra comique\", is a tragedy",
+      "em": 0,
+      "f1": 0.3846153846153846
+    },
+    {
+      "qid": "hotpot_004102",
+      "question": "In which war was the Meuse-Argonne Offensive executed?",
+      "generated": "The Meuse-Argonne Offensive was executed during World War I.",
+      "gold": "World War I.",
+      "em": 0,
+      "f1": 0.5454545454545454
+    },
+    {
+      "qid": "hotpot_000027",
+      "question": "The 2011–12 VCU Rams men's basketball team, led by third year head coach Shaka Smart, represented Virginia Commonwealth University which was founded in what year?",
+      "generated": "1838",
+      "gold": "1838",
+      "em": 1,
+      "f1": 1.0
+    },
+    {
+      "qid": "hotpot_004886",
+      "question": "Multiculturalism in the Netherlands reached new heights following the murder in 2002, in part, with what Dutch politician, civil servant, socialogist and professor who formed his own party?",
+      "generated": "Pim Fortuyn",
+      "gold": "Wilhelmus Simon Petrus Fortuijn, known as Pim Fortuyn",
+      "em": 0,
+      "f1": 0.4
+    },
+    {
+      "qid": "hotpot_006965",
+      "question": "When was the British economic historian who established \"The Economic History Review\" born? ",
+      "generated": "Eileen Edna LePoer Power, who established \"The Economic History Review,\" was born on 9 January 1889.",
+      "gold": "9 January 18898",
+      "em": 0,
+      "f1": 0.2222222222222222
+    },
+    {
+      "qid": "hotpot_007149",
+      "question": "Marwan Hage played for a college team that sponsors how many varsity sports teams?",
+      "generated": "The Colorado Buffaloes, the athletic teams that represent the University of Colorado Boulder, sponsor 17 varsity sports teams. Therefore, Marwan Hage played for a college team that sponsors 17 varsity sports teams.",
+      "gold": "17",
+      "em": 0,
+      "f1": 0.0689655172413793
+    },
+    {
+      "qid": "hotpot_003062",
+      "question": "Which of the actors starred in \"Sollathaan Ninaikkiren\" was born in 7 November 1954?",
+      "generated": "Kamal Haasan was born on 7 November 1954 and starred in \"Sollathaan Ninaikkiren\".",
+      "gold": "Kamal Haasan",
+      "em": 0,
+      "f1": 0.2666666666666667
+    },
+    {
+      "qid": "hotpot_002192",
+      "question": "Where is the American honky tonk country band, whose first studio album was Honky Tonks and Cheap Motels, based?",
+      "generated": "Flint, Michigan, United States.",
+      "gold": "Flint, Michigan, United States",
+      "em": 1,
+      "f1": 1.0
+    },
+    {
+      "qid": "hotpot_000062",
+      "question": "What is the name of the executive producer of the film that has a score composed by Jerry Goldsmith?",
+      "generated": "cannot determine",
+      "gold": "Ronald Shusett",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_003135",
+      "question": "Knockout song was from which album of Lil Wayne on Cash Money Records ?",
+      "generated": "Knockout song was from the album \"Rebirth\" of Lil Wayne on Cash Money Records.",
+      "gold": "Rebirth",
+      "em": 0,
+      "f1": 0.14285714285714288
+    },
+    {
+      "qid": "hotpot_003479",
+      "question": "What actress with the last name Saravanan starred in the 2004 Tamil film Arul?",
+      "generated": "cannot determine",
+      "gold": "Jyothika Saravanan",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_007389",
+      "question": "Terence Richard \"Terry\" Norris starred in a 2007 Australian drama film that was directed by Richard Roxburgh, and was based on a memoir by who?",
+      "generated": "Raimond Gaita\n\nThe context states that \"Romulus, My Father\" is a 2007 Australian drama film directed by Richard Roxburgh, based on the memoir by Raimond Gaita. Terry Norris is mentioned as an Australian actor who starred in this film among others.",
+      "gold": "Raimond Gaita",
+      "em": 0,
+      "f1": 0.10256410256410257
+    },
+    {
+      "qid": "hotpot_000259",
+      "question": "Who is known for producing the documentary television series based on the book by science historian James Burke?",
+      "generated": "James Burke is known for producing the documentary television series based on the book \"Connections,\" which he wrote and presented.",
+      "gold": "James Burke",
+      "em": 0,
+      "f1": 0.19999999999999998
+    },
+    {
+      "qid": "hotpot_005408",
+      "question": "The transnational lottery Les Scadding won in 2009 held it's first draw on what date?",
+      "generated": "The transnational lottery Les Scadding won in 2009 held its first draw on 13 February 2004.",
+      "gold": "13 February 2004",
+      "em": 0,
+      "f1": 0.33333333333333337
+    },
+    {
+      "qid": "hotpot_004701",
+      "question": "The Midland Regional Hospital in managed by what cabinet that exercises executive authority in the Republic of Ireland?",
+      "generated": "The Midlands Regional Hospital in Portlaoise is managed by the Health Service Executive, which is not directly mentioned as being exercised by a specific cabinet that exercises executive authority in the Republic of Ireland in the given context. However, the executive authority in the Republic of Ireland is exercised by the Government of Ireland, which includes the Health Service Executive under its purview. Therefore, the Midlands Regional Hospital is indirectly managed by the Government of Ireland, which exercises executive authority in the Republic of Ireland.",
+      "gold": "managed by the Irish Government's Health Service Executive",
+      "em": 0,
+      "f1": 0.125
+    },
+    {
+      "qid": "hotpot_006905",
+      "question": "Which was built first Woolworth Building or 1 New York Plaza?",
+      "generated": "The Woolworth Building was built first. The Woolworth Building was constructed between 1910 and 1912, whereas 1 New York Plaza was built in 1969.",
+      "gold": "Woolworth Building",
+      "em": 0,
+      "f1": 0.16666666666666669
+    },
+    {
+      "qid": "hotpot_002437",
+      "question": "Name the 500 year-old-republic that Florentius was a praetorian prefect for. ",
+      "generated": "cannot determine",
+      "gold": "Roman Empire",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_003584",
+      "question": "Which film was released first, Those Calloways or The Happiest Millionaire?",
+      "generated": "Those Calloways was released in 1965, while The Happiest Millionaire was released in 1967. Therefore, Those Calloways was released first.",
+      "gold": "Those Calloways",
+      "em": 0,
+      "f1": 0.1904761904761905
+    },
+    {
+      "qid": "hotpot_001893",
+      "question": "Matilda of Chester, Countess of Huntingdon's father was the son of which woman?",
+      "generated": "Hugh de Kevelioc, 5th Earl of Chester, the father of Matilda of Chester, Countess of Huntingdon, was the son of Ranulf de Gernon, 4th Earl of Chester, and Maud of Gloucester. Maud of Gloucester was the daughter of Robert, 1st Earl of Gloucester, who was the illegitimate son of Henry I of England. Therefore, Matilda of Chester, Countess of Huntingdon's father was the son of Henry I of England's granddaughter, Maud of Gloucester.",
+      "gold": "Maud of Gloucester",
+      "em": 0,
+      "f1": 0.08450704225352113
+    },
+    {
+      "qid": "hotpot_003302",
+      "question": "which  American conglomerate company is  a subsidiary of Trump Entertainment Resorts ",
+      "generated": "cannot determine",
+      "gold": "Icahn Enterprises L.P.",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_004084",
+      "question": "Were Max Jacob and Connie May Fowler both memoirists?",
+      "generated": "No, Max Jacob and Connie May Fowler were not both memoirists. Max Jacob was a French poet, painter, writer, and critic, but there is no information provided indicating that he was a memoirist. Connie May Fowler is described as an American novelist, essayist, memoirist, screenwriter, and poet, so she is indeed a memoirist.",
+      "gold": "no",
+      "em": 0,
+      "f1": 0.039999999999999994
+    },
+    {
+      "qid": "hotpot_001129",
+      "question": "Where was the film set in which the daughter of Shashi Kapoor, along side Sarat Pujari and Navni Parihar, set?",
+      "generated": "The film \"Aranyaka (A Trip Into the Jungle)\" is set in rural Orissa.",
+      "gold": "Orissa",
+      "em": 0,
+      "f1": 0.18181818181818182
+    },
+    {
+      "qid": "hotpot_003614",
+      "question": "When is the football club which Stan Spinks played for founded",
+      "generated": "cannot determine",
+      "gold": "in 1902",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_005087",
+      "question": "Why is Bangor Daily News talkin about Sawin Millett?",
+      "generated": "The Bangor Daily News mentioned H. Sawin Millett Jr. in December 2011 when they ranked him as the ninth most influential person in Maine politics. Therefore, the Bangor Daily News was talking about Sawin Millett because he was considered influential in Maine politics at that time.",
+      "gold": "Commissioner by the Maine Senate",
+      "em": 0,
+      "f1": 0.0425531914893617
+    },
+    {
+      "qid": "hotpot_007329",
+      "question": "When was the producer of  Michel'le born? ",
+      "generated": "cannot determine",
+      "gold": "February 18, 1965",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_003143",
+      "question": "What is the capitol of the district that also includes the village of Shienga?",
+      "generated": "cannot determine",
+      "gold": "Gambaga",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_007143",
+      "question": "What was the MGM Grand Garden Arena in which Britney Spears recorded fourth video album originally known as?",
+      "generated": "The MGM Grand Garden Arena, in which Britney Spears recorded her fourth video album, was originally known as the MGM Grand Garden Special Events Center.",
+      "gold": "Grand Garden Special Events Center",
+      "em": 0,
+      "f1": 0.3571428571428571
+    },
+    {
+      "qid": "hotpot_002326",
+      "question": "Jim Jeffcoat is currently an assistant football coach in a university that was founded how many month before Colorado was admitted to the Union ?",
+      "generated": "cannot determine",
+      "gold": "five months",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_003149",
+      "question": "What was the most famous post of the man who commanded American and French troops against German positions during the Battle of Saint-Mihiel?",
+      "generated": "The most famous post of the man who commanded American and French troops against German positions during the Battle of Saint-Mihiel was the commander of the American Expeditionary Force (AEF) on the Western Front in World War I, 1917–18. This commander was General John J. Pershing.",
+      "gold": "commander of the American Expeditionary Force (AEF) on the Western Front",
+      "em": 0,
+      "f1": 0.36734693877551017
+    },
+    {
+      "qid": "hotpot_003523",
+      "question": "Who is older Danny Green or James Worthy?",
+      "generated": "James Ager Worthy is older than Daniel Richard \"Danny\" Green, Jr. James Worthy was born on February 27, 1961, while Danny Green was born on June 22, 1987.",
+      "gold": "James Worthy",
+      "em": 0,
+      "f1": 0.13333333333333333
+    },
+    {
+      "qid": "hotpot_004625",
+      "question": "Matthew Wright was selected with pick #33 in the AFL draft that took place during what date in 2009?",
+      "generated": "The context states that Matthew Wright was selected with pick #33 in the 2009 Rookie Draft, which took place on 15 December 2009. Therefore, the date is December 15, 2009.",
+      "gold": "26 November",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_003256",
+      "question": "Who gained recognition earlier, Tim Roth or Polly Draper",
+      "generated": "cannot determine",
+      "gold": "Timothy Simon \"Tim\" Roth",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_002899",
+      "question": "Wrinkles is a song that was recorded by what American country and Christian country band that was founded in 1982?",
+      "generated": "Diamond Rio",
+      "gold": "Diamond Rio",
+      "em": 1,
+      "f1": 1.0
+    },
+    {
+      "qid": "hotpot_006993",
+      "question": "The actress that played  Pearl Gallagher on the tv sitcom \"Diff'rent Strokes\" is also the voice of an animated character that debuted in what year?",
+      "generated": "The actress that played Pearl Gallagher on the TV sitcom \"Diff'rent Strokes\" is Mary Jo Catlett, and she currently voices Mrs. Puff in \"SpongeBob SquarePants\", which debuted in 1999.",
+      "gold": "1999",
+      "em": 0,
+      "f1": 0.07142857142857142
+    },
+    {
+      "qid": "hotpot_005004",
+      "question": "Roy Shepherd was considered a faculty member of what combination of colleges/universities?",
+      "generated": "cannot determine",
+      "gold": "Victorian College of the Arts and Melbourne Conservatorium of Music",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_000407",
+      "question": "Which magazine is older, Gallery or Dime Magazine?",
+      "generated": "cannot determine",
+      "gold": "arose on the \"Playboy\" magazine pattern in the 1970s.",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_003581",
+      "question": "What federal agency was founded in 1935 and maintains a list of wanted persons?",
+      "generated": "The Federal Bureau of Investigation (FBI) was founded in 1935 and maintained a list of wanted persons, specifically the Ten Most Wanted Fugitives list.",
+      "gold": "the Federal Bureau of Investigation (FBI)",
+      "em": 0,
+      "f1": 0.3846153846153846
+    },
+    {
+      "qid": "hotpot_002915",
+      "question": "Is Edison Sault Power Canal somehow linked with or used with the Cayuga–Seneca Canal?",
+      "generated": "Cannot determine.\n\nThe provided context describes the Edison Sault Power Canal and the Cayuga–Seneca Canal separately, without any direct connection or link between them. Therefore, based on the given information, it cannot be determined if there is any relationship or use between these two canals.",
+      "gold": "no",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_006250",
+      "question": "Which American-Canadian actor starred in the Disney Channel's \"Good Luck Charlie, It's Christmas!\"?",
+      "generated": "Based on the information provided, Eric Allan Kramer starred in \"Good Luck Charlie, It's Christmas!\", playing the role of Bob Duncan.",
+      "gold": "Eric Allan Kramer",
+      "em": 0,
+      "f1": 0.2727272727272727
+    },
+    {
+      "qid": "hotpot_001222",
+      "question": "Brigadier Stanley James Ledger Hill was attached to the command post of which senior British Army officer born on July 10, 1886?",
+      "generated": "Brigadier Stanley James Ledger Hill was attached to the command post of Field Marshal John Standish Surtees Prendergast Vereker, 6th Viscount Gort, who was born on July 10, 1886.",
+      "gold": "Lord Gort",
+      "em": 0,
+      "f1": 0.06666666666666667
+    },
+    {
+      "qid": "hotpot_005741",
+      "question": "Does Shengzhou have more former names than Linchuan District?",
+      "generated": "Yes, Shengzhou has more former names than Linchuan District. Shengzhou was formerly known as Shengxian or Sheng County, while Linchuan District is the only district of the city of Fuzhou, Jiangxi province, and does not mention any former names in the given context.",
+      "gold": "yes",
+      "em": 0,
+      "f1": 0.04878048780487806
+    },
+    {
+      "qid": "hotpot_000550",
+      "question": "WAVN is a Gospel formatted broadcast radio station tied to which city in DeSoto County, Mississippi?",
+      "generated": "Southaven",
+      "gold": "Southaven, Mississippi",
+      "em": 0,
+      "f1": 0.6666666666666666
+    },
+    {
+      "qid": "hotpot_003748",
+      "question": "What date was the movie originally supposed to be released that was delayed due to the unlawful distribution of private photographs of Edison Chen with various women?",
+      "generated": "The movie originally set to be released in May 2008, which was delayed due to the Edison Chen photo scandal, was \"The Sniper.\"",
+      "gold": "The film was originally set to be released in May 2008",
+      "em": 0,
+      "f1": 0.6
+    },
+    {
+      "qid": "hotpot_002804",
+      "question": "What friend of a performance artist and professional wrestler has performed in the role of Tony Clifton?",
+      "generated": "Bob Zmuda has performed in the role of Tony Clifton, which was created by and primarily portrayed by the performance artist Andy Kaufman, who was also a professional wrestler.",
+      "gold": "Bob Zmuda",
+      "em": 0,
+      "f1": 0.14285714285714288
+    },
+    {
+      "qid": "hotpot_004203",
+      "question": "What judge who was on the show \"Dancing with the Stars\" was born on the 31st of March, 1963?",
+      "generated": "Paul Joseph Mercurio was born on the 31st of March, 1963, but he was not a judge on \"Dancing with the Stars.\" Therefore, cannot determine if any judge on the show was born on that date based on the provided information.",
+      "gold": "Paul Joseph Mercurio",
+      "em": 0,
+      "f1": 0.15384615384615385
+    },
+    {
+      "qid": "hotpot_003668",
+      "question": "Which is a post-punk band, Boy Hits Car or The The?",
+      "generated": "The The is a post-punk band, not Boy Hits Car. Boy Hits Car is an album by The The, not a separate band.",
+      "gold": "The The",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_003979",
+      "question": "In between Burton C. Bell and Billy Idol who is known professionally as Billy Idol?",
+      "generated": "Billy Idol is known professionally as Billy Idol.",
+      "gold": "William Michael Albert Broad",
+      "em": 0,
+      "f1": 0.0
+    },
+    {
+      "qid": "hotpot_002846",
+      "question": "Which singer is younger, Terri Nunn or Sonya Scarlet? ",
+      "generated": "To determine which singer is younger between Terri Nunn and Sonya Scarlet, we need to compare their birth dates.\n\nSonya Scarlet was born on 2 April 1980.\nTerri Kathleen Nunn was born on June 26, 1961.\n\nSince 1961 comes before 1980, Terri Nunn is younger than Sonya Scarlet.\n\nAnswer: Terri Nunn is younger than Sonya Scarlet.",
+      "gold": "Sonya Scarlet",
+      "em": 0,
+      "f1": 0.0689655172413793
+    },
+    {
+      "qid": "hotpot_002874",
+      "question": "In which state was both Rex Gene Foods and Foodtown located in?",
+      "generated": "New Jersey",
+      "gold": "New Jersey",
+      "em": 1,
+      "f1": 1.0
+    },
+    {
+      "qid": "hotpot_000820",
+      "question": "Haier has North American rights to which appliance company headquartered in Louisville, Kentucky?",
+      "generated": "Haier has North American rights to the Hotpoint appliance company, which is headquartered in Louisville, Kentucky.",
+      "gold": "GE Appliances",
+      "em": 0,
+      "f1": 0.0
+    }
+  ]
+}
