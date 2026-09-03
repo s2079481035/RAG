@@ -21,6 +21,7 @@ from phase2_controller_inputs import (
     NON_EVIDENCE_BASELINES,
     prepare_nonhierarchical_input,
 )
+from phase2_model import load_binary_sequence_classifier
 
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -191,7 +192,7 @@ def main() -> None:
 
     import torch
     from torch.utils.data import DataLoader
-    from transformers import AutoModelForSequenceClassification, AutoTokenizer, get_linear_schedule_with_warmup
+    from transformers import AutoTokenizer, get_linear_schedule_with_warmup
 
     seed = int(config["seed"])
     set_global_seed(seed)
@@ -199,12 +200,7 @@ def main() -> None:
     backbone = args.model or config["backbone"]["name"]
     load_kwargs = {"local_files_only": not args.allow_download}
     tokenizer = AutoTokenizer.from_pretrained(backbone, **load_kwargs)
-    model = AutoModelForSequenceClassification.from_pretrained(
-        backbone,
-        num_labels=2,
-        ignore_mismatched_sizes=True,
-        **load_kwargs,
-    )
+    model, classifier_initialization = load_binary_sequence_classifier(backbone, load_kwargs)
     max_length = int(config["backbone"]["max_length"])
     chunk_path = ROOT / "data" / "phase2" / "chunks" / f"{args.variant}.jsonl"
     chunk_by_id = {chunk["chunk_id"]: chunk for chunk in read_jsonl(chunk_path)}
@@ -261,6 +257,7 @@ def main() -> None:
             "backbone": backbone,
             "local_files_only": not args.allow_download,
             "model_revision": getattr(model.config, "_commit_hash", None),
+            "classifier_initialization": classifier_initialization,
         },
     }
     write_json_atomic(run_dir / "resolved_config.json", resolved)

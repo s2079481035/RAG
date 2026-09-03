@@ -18,6 +18,8 @@ export SOURCE_PARQUET=/path/to/hotpotqa/distractor/validation/0000.parquet
 
 The required packages are PyTorch, Transformers, sentence-transformers, FAISS, rank-bm25, NumPy, scikit-learn, pyarrow or datasets, and matplotlib. The model cache must contain `BAAI/bge-large-en-v1.5`, `BAAI/bge-reranker-v2-m3`, and `BAAI/bge-reranker-base` when offline mode is enabled.
 
+The Controller loads `BAAI/bge-reranker-base` with its native scalar reranking head and then explicitly reinitializes only `classifier.out_proj` for two-class Continue/Stop prediction. The resolved config records this strategy. This avoids version-dependent `ignore_mismatched_sizes` failures for the 1-to-2 bias shape while preserving the pretrained encoder and classification-head dense layer.
+
 Dense, BM25, and reranker all consume the same `[TITLE] title [TEXT] chunk_text` representation. Scores and per-query timings are preserved in the ignored ranking JSONL and summarized in tracked manifests/results.
 
 Corpus membership is intentionally held fixed to Phase 1 to isolate granularity. That frozen KB is a 14,810-instance shared gold-context pool, not all 73,700 distractor contexts from the official split. `docs/kb_dedup_audit.md` records this limitation; Phase 2 results must not be described as full-corpus HotpotQA distractor retrieval.

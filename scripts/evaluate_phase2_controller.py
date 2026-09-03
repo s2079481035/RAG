@@ -15,6 +15,7 @@ from critic_metrics import binary_stop_metrics
 from evidence_utils import unique_supporting_facts
 from experiment_utils import portable_path, utc_now, write_json_atomic
 from phase2_controller_inputs import EVIDENCE_BASELINES, evidence_key, prepare_nonhierarchical_input
+from phase2_model import load_binary_sequence_classifier
 from train_phase2_controller import (
     attach_diagnostics,
     collate_batch,
@@ -117,14 +118,12 @@ def main() -> None:
 
     import torch
     from torch.utils.data import DataLoader
-    from transformers import AutoModelForSequenceClassification, AutoTokenizer
+    from transformers import AutoTokenizer
 
     backbone = resolved["backbone"]
     load_kwargs = {"local_files_only": not args.allow_download}
     tokenizer = AutoTokenizer.from_pretrained(backbone, **load_kwargs)
-    model = AutoModelForSequenceClassification.from_pretrained(
-        backbone, num_labels=2, ignore_mismatched_sizes=True, **load_kwargs
-    )
+    model, _ = load_binary_sequence_classifier(backbone, load_kwargs)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.load_state_dict(
         torch.load(manifest["checkpoint_path"], map_location=device, weights_only=True)
