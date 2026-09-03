@@ -33,8 +33,14 @@
     "sentence_separator": " ",
     "overlap_sentences": 0,
     "variants": [
-      {"name": "sentence_128", "target_tokens": 128},
-      {"name": "sentence_256", "target_tokens": 256}
+      {
+        "name": "sentence_128",
+        "target_tokens": 128
+      },
+      {
+        "name": "sentence_256",
+        "target_tokens": 256
+      }
     ],
     "default_candidate": "sentence_256",
     "paragraph_variant": "unavailable_no_paragraph_boundaries_in_hotpotqa_context"
@@ -57,9 +63,21 @@
     "saved_ranking_depth": 20
   },
   "retrieval_evaluation": {
-    "methods": ["dense", "bm25", "hybrid", "rerank"],
-    "ks": [5, 10, 20],
-    "selection_variants": ["sentence_128", "sentence_256"],
+    "methods": [
+      "dense",
+      "bm25",
+      "hybrid",
+      "rerank"
+    ],
+    "ks": [
+      5,
+      10,
+      20
+    ],
+    "selection_variants": [
+      "sentence_128",
+      "sentence_256"
+    ],
     "selection_split": "dev",
     "selection_rule": {
       "method": "rerank",
@@ -69,16 +87,40 @@
       "tertiary_minimize": "average_latency_ms",
       "final_tiebreak": "variant_name_ascending"
     },
-    "selected_variant_after_dev": null
+    "selected_variant_after_dev": "sentence_256"
   },
   "stages": [
-    {"name": "dense@5", "method": "dense", "k": 5},
-    {"name": "dense@10", "method": "dense", "k": 10},
-    {"name": "hybrid@5", "method": "hybrid", "k": 5},
-    {"name": "hybrid@10", "method": "hybrid", "k": 10},
-    {"name": "rerank@20", "method": "rerank", "k": 20}
+    {
+      "name": "dense@5",
+      "method": "dense",
+      "k": 5
+    },
+    {
+      "name": "dense@10",
+      "method": "dense",
+      "k": 10
+    },
+    {
+      "name": "hybrid@5",
+      "method": "hybrid",
+      "k": 5
+    },
+    {
+      "name": "hybrid@10",
+      "method": "hybrid",
+      "k": 10
+    },
+    {
+      "name": "rerank@20",
+      "method": "rerank",
+      "k": 20
+    }
   ],
-  "controller_ladder": ["dense@5", "hybrid@10", "rerank@20"],
+  "controller_ladder": [
+    "dense@5",
+    "hybrid@10",
+    "rerank@20"
+  ],
   "selection_split": "dev",
   "test_is_evaluation_only": true,
   "outputs": {

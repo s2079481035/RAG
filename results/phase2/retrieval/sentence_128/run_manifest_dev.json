@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-03T03:43:10.191187+00:00",
+  "phase": 2,
+  "phase1_frozen_commit": "702bfc3",
+  "git_commit": "674137c9d595197f47cb9df4079fb705934f0e88",
+  "config": "configs/phase2/chunk_retrieval.json",
+  "variant": "sentence_128",
+  "splits": [
+    "dev"
+  ],
+  "question_counts": {
+    "dev": 1000
+  },
+  "dense_model": "BAAI/bge-large-en-v1.5",
+  "reranker_model": "BAAI/bge-reranker-v2-m3",
+  "dense_candidate_k": 200,
+  "bm25_candidate_k": 200,
+  "hybrid_candidate_k": 20,
+  "saved_ranking_depth": 20,
+  "rrf_k": 60,
+  "query_embedding_seconds": 1.2798593430779874,
+  "first_stage_seconds": 42.106607092078775,
+  "reranking_seconds": 110.56422113487497,
+  "index_chunk_sha256": "2e1465768d9b8e9e523c24cbf82934a3e86a438b188b17d786063e25f289b009",
+  "outputs": {
+    "dev": "results/phase2/retrieval/sentence_128/dev.jsonl"
+  },
+  "environment": {
+    "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.39",
+    "packages": {
+      "torch": "2.5.1+cu121",
+      "transformers": "4.44.2",
+      "sentence-transformers": "5.6.0",
+      "datasets": "5.0.0",
+      "faiss-cpu": "1.14.3",
+      "faiss-gpu": "1.14.3",
+      "rank-bm25": "0.2.2",
+      "numpy": "1.26.4",
+      "scikit-learn": "1.9.0"
+    },
+    "git_commit": "674137c9d595197f47cb9df4079fb705934f0e88",
+    "cuda_visible_devices": "0",
+    "cuda": "12.1",
+    "gpus": [
+      "NVIDIA GeForce RTX 4090"
+    ]
+  }
+}
