@@ -1,0 +1,30 @@
+{
+  "status": "complete",
+  "start_time_utc": "2026-09-02T12:56:42.882647+00:00",
+  "end_time_utc": "2026-09-02T12:57:50.009306+00:00",
+  "git_commit": "0e4d086441ea206e1758cf9f3fdaa9e74bddb17c",
+  "query_only_run": "experiments/sufficiency_critic/query_only_seed42",
+  "query_evidence_run": "experiments/sufficiency_critic/query_evidence_seed42",
+  "output_dir": "/home/sunjb/RAG/RAG_paper/results/critic/comparison_20260902T125642Z",
+  "environment": {
+    "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.39",
+    "packages": {
+      "torch": "2.5.1+cu121",
+      "transformers": "4.44.2",
+      "sentence-transformers": "5.6.0",
+      "datasets": "5.0.0",
+      "faiss-cpu": "1.14.3",
+      "faiss-gpu": "1.14.3",
+      "rank-bm25": "0.2.2",
+      "numpy": "1.26.4",
+      "scikit-learn": "1.9.0"
+    },
+    "git_commit": "0e4d086441ea206e1758cf9f3fdaa9e74bddb17c",
+    "cuda_visible_devices": "0",
+    "cuda": "12.1",
+    "gpus": [
+      "NVIDIA GeForce RTX 4090"
+    ]
+  }
+}
