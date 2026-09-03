@@ -8,6 +8,7 @@ from scripts.evidence_utils import (
     validate_tuning_splits,
 )
 from scripts.retrieval_utils import rrf_fuse_indices
+from scripts.critic_metrics import binary_stop_metrics
 from scripts.critic_metrics import classification_metrics
 
 
@@ -72,6 +73,12 @@ class RetrievalAndSplitSafetyTests(unittest.TestCase):
         validate_tuning_splits(["dev"])
         with self.assertRaises(ValueError):
             validate_tuning_splits(["dev", "test"])
+
+    def test_binary_controller_error_rates_use_their_actual_classes(self):
+        metrics, predictions = binary_stop_metrics([0, 0, 1, 1], [0.9, 0.1, 0.2, 0.8])
+        self.assertEqual(predictions.tolist(), [1, 0, 0, 1])
+        self.assertEqual(metrics["false_stop_rate"], 0.5)
+        self.assertEqual(metrics["unnecessary_escalation_rate"], 0.5)
 
     def test_false_stop_rate_uses_actual_non_sufficient_denominator(self):
         labels = np.array([0, 1, 1, 2])
