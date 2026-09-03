@@ -1,5 +1,7 @@
 import unittest
+from pathlib import Path
 
+from scripts.build_phase2_chunks import protected_build_outputs
 from scripts.phase2_chunking import canonicalize_articles, sentence_aligned_chunks
 
 
@@ -8,6 +10,18 @@ def whitespace_tokens(text):
 
 
 class Phase2ChunkingTests(unittest.TestCase):
+    def test_committed_audits_do_not_block_first_server_build(self):
+        output_dir = Path("data/phase2")
+        targets = protected_build_outputs(
+            output_dir,
+            output_dir / "chunks",
+            [{"name": "sentence_128"}, {"name": "sentence_256"}],
+        )
+
+        self.assertNotIn(Path("docs/chunking_audit.md"), targets)
+        self.assertNotIn(Path("docs/kb_dedup_audit.md"), targets)
+        self.assertIn(output_dir / "chunk_manifest.json", targets)
+
     def test_sentence_aligned_chunks_never_split_sentences(self):
         article = {
             "article_id": "article_test",

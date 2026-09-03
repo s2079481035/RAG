@@ -10,9 +10,34 @@ from pathlib import Path
 
 import numpy as np
 
-from evidence_utils import assert_disjoint_question_ids, unique_supporting_facts, validate_tuning_splits
-from experiment_utils import collect_environment, git_commit, portable_path, utc_now, write_json_atomic
-from phase2_chunking import canonicalize_articles, sentence_aligned_chunks
+try:
+    from .evidence_utils import (
+        assert_disjoint_question_ids,
+        unique_supporting_facts,
+        validate_tuning_splits,
+    )
+    from .experiment_utils import (
+        collect_environment,
+        git_commit,
+        portable_path,
+        utc_now,
+        write_json_atomic,
+    )
+    from .phase2_chunking import canonicalize_articles, sentence_aligned_chunks
+except ImportError:
+    from evidence_utils import (
+        assert_disjoint_question_ids,
+        unique_supporting_facts,
+        validate_tuning_splits,
+    )
+    from experiment_utils import (
+        collect_environment,
+        git_commit,
+        portable_path,
+        utc_now,
+        write_json_atomic,
+    )
+    from phase2_chunking import canonicalize_articles, sentence_aligned_chunks
 
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -310,6 +335,17 @@ def render_chunking_audit(stats_by_variant: dict, mapping_by_variant: dict, toke
     return "\n".join(lines)
 
 
+def protected_build_outputs(
+    output_dir: Path, chunk_dir: Path, variants: list[dict]
+) -> list[Path]:
+    """Return expensive data artifacts that an unforced build must not replace."""
+    return [
+        *(chunk_dir / f"{variant['name']}.jsonl" for variant in variants),
+        output_dir / "questions.json",
+        output_dir / "chunk_manifest.json",
+    ]
+
+
 def main() -> None:
     args = parse_args()
     config = load_json(args.config)
@@ -319,8 +355,7 @@ def main() -> None:
     chunk_dir = output_dir / "chunks"
     audit_paths = [ROOT / output_config["chunking_audit"], ROOT / output_config["dedup_audit"]]
     variants = config["chunking"]["variants"]
-    targets = [chunk_dir / f"{variant['name']}.jsonl" for variant in variants]
-    targets += [output_dir / "questions.json", output_dir / "chunk_manifest.json", *audit_paths]
+    targets = protected_build_outputs(output_dir, chunk_dir, variants)
     existing = [path for path in targets if path.exists()]
     if existing and not args.force:
         raise FileExistsError(f"Refusing to overwrite Phase 2 outputs: {[str(path) for path in existing]}")
