@@ -14,4 +14,7 @@ data/phase2/indices/
 data/phase2/controller/**/*.jsonl
 results/phase2/**/*.jsonl
 results/phase2/**/rankings/
+results/phase2/*.log
 experiments/phase2/
+results/phase3/**/*.jsonl
+results/phase3*.log

@@ -89,6 +89,12 @@ def metric_row(run: dict, split: str) -> dict:
             "mean_visible_evidence_chunk_ratio",
             metrics.get("mean_visible_evidence_chunk_ratio"),
         ),
+        "mean_fully_visible_evidence_chunk_ratio": packing.get(
+            "mean_fully_visible_evidence_chunk_ratio"
+        ),
+        "mean_visible_supporting_fact_ratio_evaluation_only": packing.get(
+            "mean_visible_supporting_fact_ratio_evaluation_only"
+        ),
         "run_dir": portable_path(run["run_dir"], ROOT),
     }
 
@@ -215,6 +221,7 @@ def build_counterfactual_rows(runs: list[dict]) -> list[dict]:
                     "baseline": run["resolved"]["baseline"],
                     "representation": run["resolved"]["representation"],
                     "evidence_mode": run["resolved"]["evidence_mode"],
+                    "split": "dev",
                     "condition": condition,
                     "samples": metrics["actual_continue_count"] + metrics["actual_stop_count"],
                     "stop_f1": metrics["stop_f1"],
@@ -273,7 +280,7 @@ def render_analysis(
     lines = [
         "# Phase 2 Analysis",
         "",
-        f"All numbers below are read from completed `{split}` prediction files. Thresholds were selected on dev and were not refit on test.",
+        f"Main Controller, packing, length, and supporting-fact results below are read from completed `{split}` prediction files. Counterfactual diagnostics are Dev-only. Thresholds were selected on Dev and were not refit on Test.",
         "",
         "## RQ1: Evidence beyond stage shortcuts",
         "",
@@ -425,6 +432,7 @@ def main() -> None:
             "schema_version": 1,
             "created_at_utc": utc_now(),
             "split": args.split,
+            "counterfactual_split": "dev",
             "variant": selected_variant,
             "runs": [portable_path(run["run_dir"], ROOT) for run in runs],
             "retrieval_source": portable_path(retrieval_source, ROOT),

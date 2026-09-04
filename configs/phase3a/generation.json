@@ -1,0 +1,21 @@
+{
+  "experiment_name": "phase3a_hotpotqa_generation_v1",
+  "selection_split": "dev",
+  "test_is_evaluation_only": true,
+  "variant": "sentence_256",
+  "evidence_mode": "cumulative",
+  "stage": "rerank@20",
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "prompt_template": "Answer the question using only the context. Return only the short final answer in English. Do not explain your answer and do not repeat the question. If the context is insufficient, return exactly: cannot determine.\n\nContext:\n{context}\n\nQuestion: {question}\n\nFinal answer:",
+  "max_input_tokens": 4096,
+  "max_new_tokens": 32,
+  "decoding": {
+    "do_sample": false,
+    "temperature": null,
+    "num_beams": 1
+  },
+  "answer_extraction": "first_nonempty_line_strip_answer_prefix",
+  "normalization": "official_hotpotqa_lower_punctuation_articles_whitespace",
+  "manual_dev_audit_count": 50,
+  "seed": 42
+}
