@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "variant": "sentence_256",
+  "ladder": [
+    "dense@5",
+    "hybrid@10",
+    "rerank@20"
+  ],
+  "primary_labels": {
+    "continue": 0,
+    "stop": 1
+  },
+  "diagnostic_labels": {
+    "insufficient": 0,
+    "partial": 1,
+    "sufficient": 2
+  },
+  "by_split": {
+    "train": {
+      "labels": {
+        "raw": {
+          "dense@5": {
+            "sufficient": 4276,
+            "stop": 4276,
+            "partial": 1094,
+            "continue": 1128,
+            "insufficient": 34
+          },
+          "hybrid@10": {
+            "sufficient": 4718,
+            "stop": 4718,
+            "partial": 674,
+            "continue": 686,
+            "insufficient": 12
+          },
+          "rerank@20": {
+            "sufficient": 4919,
+            "stop": 4919,
+            "partial": 484,
+            "continue": 485,
+            "insufficient": 1
+          }
+        },
+        "cumulative": {
+          "dense@5": {
+            "sufficient": 4276,
+            "stop": 4276,
+            "partial": 1094,
+            "continue": 1128,
+            "insufficient": 34
+          },
+          "hybrid@10": {
+            "sufficient": 4861,
+            "stop": 4861,
+            "partial": 535,
+            "continue": 543,
+            "insufficient": 8
+          },
+          "rerank@20": {
+            "sufficient": 4971,
+            "stop": 4971,
+            "partial": 432,
+            "continue": 433,
+            "insufficient": 1
+          }
+        }
+      },
+      "trajectory_monotonicity": {
+        "raw": {
+          "questions": 5404,
+          "non_monotonic": 138,
+          "ratio": 0.02553663952627683
+        },
+        "cumulative": {
+          "questions": 5404,
+          "non_monotonic": 0,
+          "ratio": 0.0
+        }
+      },
+      "invalid_gold_questions_excluded": 1
+    },
+    "dev": {
+      "labels": {
+        "raw": {
+          "dense@5": {
+            "sufficient": 819,
+            "stop": 819,
+            "partial": 173,
+            "continue": 181,
+            "insufficient": 8
+          },
+          "hybrid@10": {
+            "sufficient": 887,
+            "stop": 887,
+            "partial": 111,
+            "continue": 113,
+            "insufficient": 2
+          },
+          "rerank@20": {
+            "sufficient": 925,
+            "stop": 925,
+            "partial": 73,
+            "continue": 75,
+            "insufficient": 2
+          }
+        },
+        "cumulative": {
+          "dense@5": {
+            "sufficient": 819,
+            "stop": 819,
+            "partial": 173,
+            "continue": 181,
+            "insufficient": 8
+          },
+          "hybrid@10": {
+            "sufficient": 910,
+            "stop": 910,
+            "partial": 88,
+            "continue": 90,
+            "insufficient": 2
+          },
+          "rerank@20": {
+            "sufficient": 930,
+            "stop": 930,
+            "partial": 68,
+            "continue": 70,
+            "insufficient": 2
+          }
+        }
+      },
+      "trajectory_monotonicity": {
+        "raw": {
+          "questions": 1000,
+          "non_monotonic": 22,
+          "ratio": 0.022
+        },
+        "cumulative": {
+          "questions": 1000,
+          "non_monotonic": 0,
+          "ratio": 0.0
+        }
+      },
+      "invalid_gold_questions_excluded": 0
+    },
+    "test": {
+      "labels": {
+        "raw": {
+          "dense@5": {
+            "sufficient": 800,
+            "stop": 800,
+            "partial": 191,
+            "continue": 200,
+            "insufficient": 9
+          },
+          "hybrid@10": {
+            "sufficient": 877,
+            "stop": 877,
+            "partial": 121,
+            "continue": 123,
+            "insufficient": 2
+          },
+          "rerank@20": {
+            "sufficient": 912,
+            "stop": 912,
+            "partial": 88,
+            "continue": 88
+          }
+        },
+        "cumulative": {
+          "dense@5": {
+            "sufficient": 800,
+            "stop": 800,
+            "partial": 191,
+            "continue": 200,
+            "insufficient": 9
+          },
+          "hybrid@10": {
+            "sufficient": 900,
+            "stop": 900,
+            "partial": 99,
+            "continue": 100,
+            "insufficient": 1
+          },
+          "rerank@20": {
+            "sufficient": 922,
+            "stop": 922,
+            "partial": 78,
+            "continue": 78
+          }
+        }
+      },
+      "trajectory_monotonicity": {
+        "raw": {
+          "questions": 1000,
+          "non_monotonic": 23,
+          "ratio": 0.023
+        },
+        "cumulative": {
+          "questions": 1000,
+          "non_monotonic": 0,
+          "ratio": 0.0
+        }
+      },
+      "invalid_gold_questions_excluded": 0
+    }
+  }
+}
