@@ -43,8 +43,7 @@ Use the same local Controller checkpoint as Phase 2 when needed:
 
 ```bash
 export PYTHON_BIN=python3.12
-export GPU_ID=0
-export CUDA_VISIBLE_DEVICES="$GPU_ID"
+export GPU_ID=1
 export HF_HUB_OFFLINE=1
 export TOKENIZERS_PARALLELISM=false
 export CUBLAS_WORKSPACE_CONFIG=:4096:8
@@ -53,6 +52,8 @@ export CUBLAS_WORKSPACE_CONFIG=:4096:8
 tmux new -s phase3a
 bash run_phase3a.sh train-dev 2>&1 | tee results/phase3_train_dev.log
 ```
+
+`GPU_ID` is copied to `CUDA_VISIBLE_DEVICES` inside the run script and the selected physical GPU is printed before model loading. PyTorch will still call that one visible device `cuda:0`; use the printed physical index or `nvidia-smi` PID, not the logical PyTorch name, to verify placement.
 
 This stage trains all core seeds, performs the three-lambda Dev sweep, trains sampling/auxiliary ablations, and records the final Controller choice in `results/phase3/final_controller_selection.json`. It intentionally creates no Phase 3A Test predictions.
 

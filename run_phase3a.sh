@@ -7,6 +7,9 @@ cd "$ROOT"
 PYTHON_BIN="${PYTHON_BIN:-python3.12}"
 CONFIG="${PHASE3A_CONFIG:-configs/phase3a/controller.json}"
 GEN_CONFIG="${PHASE3A_GENERATION_CONFIG:-configs/phase3a/generation.json}"
+if [[ -n "${GPU_ID:-}" ]]; then
+  export CUDA_VISIBLE_DEVICES="$GPU_ID"
+fi
 export TOKENIZERS_PARALLELISM="${TOKENIZERS_PARALLELISM:-false}"
 export CUBLAS_WORKSPACE_CONFIG="${CUBLAS_WORKSPACE_CONFIG:-:4096:8}"
 
@@ -25,6 +28,19 @@ run_once() {
   fi
   echo "[run] $description"
   "$@"
+}
+
+require_gpu_selection() {
+  if [[ -z "${CUDA_VISIBLE_DEVICES:-}" ]]; then
+    echo "Set GPU_ID or CUDA_VISIBLE_DEVICES explicitly before GPU work." >&2
+    exit 2
+  fi
+  echo "[gpu] physical CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES (PyTorch will call the first visible card cuda:0)"
+  if command -v nvidia-smi >/dev/null 2>&1 && [[ "$CUDA_VISIBLE_DEVICES" =~ ^[0-9]+$ ]]; then
+    nvidia-smi -i "$CUDA_VISIBLE_DEVICES" \
+      --query-gpu=index,name,memory.used,memory.free,utilization.gpu \
+      --format=csv,noheader
+  fi
 }
 
 train_controller() {
@@ -123,6 +139,7 @@ close_phase2() {
 }
 
 train_dev() {
+  require_gpu_selection
   local seed lambda
   for seed in 42 123 2026; do
     train_controller "experiments/phase3a/core/query_stage/seed${seed}" query_stage score_aware_packing "$seed" 0 natural
@@ -163,6 +180,7 @@ train_dev() {
 }
 
 test_and_collect() {
+  require_gpu_selection
   if [[ ! -f results/phase3/final_controller_selection.json ]]; then
     echo "Run '$0 train-dev' before any Phase 3A test evaluation." >&2
     exit 2
@@ -209,6 +227,7 @@ case "${1:-}" in
     test_and_collect
     ;;
   generation-dev)
+    require_gpu_selection
     run_once "generate Dev answers" "results/phase3/generation/dev/generation_manifest.json" \
       "$PYTHON_BIN" scripts/generate_phase3a.py --config "$GEN_CONFIG" --split dev
     run_once "evaluate Dev answers" "results/phase3/generation/dev/evaluation_metrics.json" \
@@ -218,6 +237,7 @@ case "${1:-}" in
       "$PYTHON_BIN" scripts/build_phase3a_generation_audit.py --config "$GEN_CONFIG"
     ;;
   generation-test)
+    require_gpu_selection
     if [[ -f results/phase3/generation/dev/test_gate_approval.json ]] && \
       "$PYTHON_BIN" -c 'import json,sys; sys.exit(0 if json.load(open(sys.argv[1]))["status"] == "approved" else 1)' results/phase3/generation/dev/test_gate_approval.json; then
       echo "[skip] approved Dev generation audit"
