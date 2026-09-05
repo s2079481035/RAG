@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-04T08:58:51.924873+00:00",
+  "selection_split": "dev",
+  "test_consulted": false,
+  "selection_seed": 42,
+  "selection_rule": [
+    "maximize_macro_f1",
+    "minimize_hard_partial_false_stop_rate",
+    "maximize_auroc",
+    "minimize_lambda"
+  ],
+  "candidates_ranked": [
+    {
+      "coverage_lambda": 0.1,
+      "run_dir": "experiments/phase3a/lambda_dev/lambda_0.1_seed42",
+      "macro_f1": 0.8414747378671559,
+      "hard_partial_false_stop_rate": 0.3519736842105263,
+      "auroc": 0.9489069932360522,
+      "stop_f1": 0.9675023212627669,
+      "false_stop_rate": 0.3548387096774194,
+      "unnecessary_escalation_rate": 0.020308386611508085,
+      "coverage_mae": 0.06898021642367046,
+      "coverage_spearman": 0.48522863142124084
+    },
+    {
+      "coverage_lambda": 1.0,
+      "run_dir": "experiments/phase3a/lambda_dev/lambda_1.0_seed42",
+      "macro_f1": 0.8159396281980489,
+      "hard_partial_false_stop_rate": 0.4506578947368421,
+      "auroc": 0.8856486960127669,
+      "stop_f1": 0.9652125897294312,
+      "false_stop_rate": 0.44574780058651026,
+      "unnecessary_escalation_rate": 0.013915005641218503,
+      "coverage_mae": 0.052658788432677586,
+      "coverage_spearman": 0.4296389210219628
+    },
+    {
+      "coverage_lambda": 0.3,
+      "run_dir": "experiments/phase3a/lambda_dev/lambda_0.3_seed42",
+      "macro_f1": 0.8016787293110046,
+      "hard_partial_false_stop_rate": 0.47039473684210525,
+      "auroc": 0.9415827836407972,
+      "stop_f1": 0.9626494940202391,
+      "false_stop_rate": 0.46920821114369504,
+      "unnecessary_escalation_rate": 0.016171493042497178,
+      "coverage_mae": 0.057712234139442445,
+      "coverage_spearman": 0.48171693948418465
+    }
+  ],
+  "selected_coverage_lambda": 0.1
+}

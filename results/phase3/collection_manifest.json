@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-05T02:08:17.918529+00:00",
+  "split": "test",
+  "test_threshold_refit": false,
+  "expected_core_seeds": [
+    42,
+    123,
+    2026
+  ],
+  "protocol_signature": {
+    "variant": "sentence_256",
+    "evidence_mode": "cumulative",
+    "backbone": "BAAI/bge-reranker-base",
+    "max_length": 512,
+    "optimizer": "AdamW",
+    "epochs": 4,
+    "batch_size": 16,
+    "learning_rate": 2e-05,
+    "weight_decay": 0.0,
+    "warmup_ratio": 0.05,
+    "selection_metric": "stop_f1",
+    "threshold_grid": {
+      "start": 0.05,
+      "stop": 0.95,
+      "step": 0.01
+    }
+  },
+  "runs": [
+    "experiments/phase3a/core/query_stage/seed42",
+    "experiments/phase3a/core/query_evidence_concat/seed42",
+    "experiments/phase3a/core/score_aware_baseline/seed42",
+    "experiments/phase3a/core/query_stage/seed123",
+    "experiments/phase3a/core/query_evidence_concat/seed123",
+    "experiments/phase3a/core/score_aware_baseline/seed123",
+    "experiments/phase3a/core/query_stage/seed2026",
+    "experiments/phase3a/core/query_evidence_concat/seed2026",
+    "experiments/phase3a/core/score_aware_baseline/seed2026",
+    "experiments/phase3a/lambda_dev/lambda_0.1_seed42",
+    "experiments/phase3a/ablation/coverage_aux/seed123",
+    "experiments/phase3a/ablation/coverage_aux/seed2026",
+    "experiments/phase3a/sampling/balanced_stop_continue/seed42",
+    "experiments/phase3a/sampling/balanced_stop_continue/seed123",
+    "experiments/phase3a/sampling/balanced_stop_continue/seed2026",
+    "experiments/phase3a/ablation/hard_partial_sampling/seed42",
+    "experiments/phase3a/ablation/hard_partial_sampling/seed123",
+    "experiments/phase3a/ablation/hard_partial_sampling/seed2026",
+    "experiments/phase3a/ablation/coverage_aux_hard_partial/seed42",
+    "experiments/phase3a/ablation/coverage_aux_hard_partial/seed123",
+    "experiments/phase3a/ablation/coverage_aux_hard_partial/seed2026"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-05T02:08:53.641879+00:00",
+  "split": "test",
+  "evidence_mode": "cumulative",
+  "controller_data": "data/phase2/controller/sentence_256/test.jsonl",
+  "predictions": {
+    "QueryStage": "experiments/phase3a/core/query_stage/seed42/evaluation/test/original_predictions.jsonl",
+    "ScoreAwareBaseline": "experiments/phase3a/core/score_aware_baseline/seed42/evaluation/test/original_predictions.jsonl",
+    "FinalController": "experiments/phase3a/lambda_dev/lambda_0.1_seed42/evaluation/test/original_predictions.jsonl"
+  },
+  "within_bucket_auroc": "undefined because each requested bucket contains only Continue labels",
+  "alternative_auroc": "each Continue bucket versus all Sufficient examples"
+}
