@@ -25,6 +25,14 @@ bash run_phase3a.sh phase2-close
 
 Fill all 180 rows in `docs/manual_sufficiency_audit.csv`. Use `yes/no` for `human_sufficient_to_answer`, one of `insufficient/partial/sufficient` for `human_label`, and a fixed reviewer ID. Add `human_notes` whenever the human and automatic three-class labels disagree. Do not alter automatic fields.
 
+For easier review, start the dependency-free browser UI on the server:
+
+```bash
+python3.12 scripts/review_manual_sufficiency_audit.py --port 8765
+```
+
+Forward port `8765` with VS Code Remote SSH and open the forwarded address in a local browser. The server binds only to `127.0.0.1`. It displays one logical CSV record at a time, keeps automatic diagnostics collapsed during the initial judgment, derives the binary human label from the three-class choice, and atomically saves only the human annotation fields. Progress resumes from the saved CSV after a restart.
+
 ```bash
 export PYTHON_BIN=python3.12
 bash run_phase3a.sh manual-audit
