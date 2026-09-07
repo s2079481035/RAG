@@ -1,0 +1,10 @@
+comparison,baseline,model,metric,observed_delta,bootstrap_mean_delta,ci95_low,ci95_high,ci_excludes_zero,valid_replicates,sampling_unit
+ScoreAwareBaseline_minus_QueryStage,QueryStage,ScoreAwareBaseline,macro_f1,0.18596545414551247,0.1852042951553652,0.14818097525341,0.2198967643819512,True,2000,question_id
+ScoreAwareBaseline_minus_QueryStage,QueryStage,ScoreAwareBaseline,auroc,0.10215605438717579,0.10188851001475141,0.0730343680380726,0.12981707553065983,True,2000,question_id
+ScoreAwareBaseline_minus_QueryStage,QueryStage,ScoreAwareBaseline,false_stop_rate,-0.32275132275132273,-0.32150850787345825,-0.3874353007860861,-0.2541887866909472,True,2000,question_id
+FinalController_minus_QueryStage,QueryStage,FinalController,macro_f1,0.20683671992049057,0.20641399114702402,0.17086387692745256,0.24038911770588126,True,2000,question_id
+FinalController_minus_QueryStage,QueryStage,FinalController,auroc,0.1175543528709051,0.11735696188300915,0.0926313970594043,0.14259197138585586,True,2000,question_id
+FinalController_minus_QueryStage,QueryStage,FinalController,false_stop_rate,-0.3862433862433862,-0.38548256365428535,-0.44848973607038123,-0.3212039419998747,True,2000,question_id
+FinalController_minus_ScoreAwareBaseline,ScoreAwareBaseline,FinalController,macro_f1,0.02087126577497811,0.021209695991658832,-0.002543580220234376,0.04500820403965164,False,2000,question_id
+FinalController_minus_ScoreAwareBaseline,ScoreAwareBaseline,FinalController,auroc,0.015398298483729311,0.01546845186825773,0.002802029370247394,0.028245429007750764,True,2000,question_id
+FinalController_minus_ScoreAwareBaseline,ScoreAwareBaseline,FinalController,false_stop_rate,-0.06349206349206349,-0.06397405578082704,-0.11363636363636365,-0.01550327597379224,True,2000,question_id

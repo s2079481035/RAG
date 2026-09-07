@@ -1,0 +1,14 @@
+task,human_label,automatic_label,count
+stop_binary,continue,continue,101
+stop_binary,continue,stop,0
+stop_binary,stop,continue,0
+stop_binary,stop,stop,79
+three_class,insufficient,insufficient,12
+three_class,insufficient,partial,0
+three_class,insufficient,sufficient,0
+three_class,partial,insufficient,0
+three_class,partial,partial,89
+three_class,partial,sufficient,0
+three_class,sufficient,insufficient,0
+three_class,sufficient,partial,0
+three_class,sufficient,sufficient,79
