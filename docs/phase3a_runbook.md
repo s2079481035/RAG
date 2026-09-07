@@ -77,6 +77,8 @@ bash run_phase3a.sh test 2>&1 | tee results/phase3_test.log
 
 This evaluates all predeclared variants, collects mean and sample standard deviation across seeds, runs 2,000 paired question-level bootstrap replicates, and writes the Hard Partial analysis. Every sampled question keeps all of its stage decisions together.
 
+The paired summary reuses the same saved bootstrap draws for `ScoreAwareBaseline - QueryStage`, `FinalController - QueryStage`, and `FinalController - ScoreAwareBaseline`. It does not rerun Test inference or refit any threshold.
+
 Within Easy/Medium/Hard Continue buckets, AUROC is mathematically undefined because each bucket has one class. The report therefore records `N/A` and additionally computes each Continue bucket versus all truly Sufficient examples.
 
 ## 4. Generation Dev Gate
@@ -105,5 +107,6 @@ The command hashes the approved Dev configuration before Test generation. Any pr
 - `results/phase3/ablation_summary.csv` compares the baseline, auxiliary, Hard Partial sampling, and combined variants.
 - `results/phase3/sampling_summary.csv` compares natural, balanced Stop/Continue, and Hard-Partial-aware sampling.
 - `results/phase3/bootstrap/bootstrap_replicates.jsonl` preserves all bootstrap draws' metrics.
+- `results/phase3/bootstrap/paired_comparison_summary.csv` contains all preregistered paired differences and confidence intervals.
 - `results/phase3/hard_partial/*_samples.jsonl` preserves per-sample bucket assignments.
 - Generation preserves raw output, extracted answer, normalization inputs, and per-example EM/F1.

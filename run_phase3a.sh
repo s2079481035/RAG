@@ -206,6 +206,8 @@ test_and_collect() {
       --prediction "ScoreAwareBaseline=experiments/phase3a/core/score_aware_baseline/seed42/evaluation/test/original_predictions.jsonl" \
       --prediction "FinalController=${final_seed42}/evaluation/test/original_predictions.jsonl" \
       --compare QueryStage,FinalController --replicates 2000
+  run_once "summarize paired bootstrap comparisons" "results/phase3/bootstrap/paired_comparison_manifest.json" \
+    "$PYTHON_BIN" scripts/summarize_phase3a_bootstrap_pairs.py
   run_once "Hard Partial frozen-test analysis" "results/phase3/hard_partial/analysis_manifest.json" \
     "$PYTHON_BIN" scripts/analyze_phase3a_hard_partial.py \
       --prediction "QueryStage=experiments/phase3a/core/query_stage/seed42/evaluation/test/original_predictions.jsonl" \
