@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-08T08:52:26.062499+00:00",
+  "phase": "3B",
+  "git_commit": "9529b23b1dc80f9743ec7dac34dae19dacb1d989",
+  "split": "test",
+  "questions": 1000,
+  "warmup_questions": 5,
+  "cuda_synchronized": true,
+  "dense_model": "BAAI/bge-large-en-v1.5",
+  "reranker_model": "BAAI/bge-reranker-v2-m3",
+  "frozen_rankings": "results/phase2/retrieval/sentence_256/test.jsonl",
+  "frozen_rankings_sha256": "ec9ce93bcbe56f41ce5cd7bc356223481930654fabc77b74c11ed987a23741ac",
+  "output": "results/phase3b/latency/test_retrieval.jsonl",
+  "output_sha256": "ffff16d17d843661b3ace6db2ab209c6edc68d7af45965f5a3e0af63513c3093",
+  "summary": {
+    "query_embedding_ms": {
+      "mean_ms": 22.64147066976875,
+      "median_ms": 22.112147882580757,
+      "p95_ms": 27.64396253041923
+    },
+    "dense_search_ms": {
+      "mean_ms": 3.8879056624136865,
+      "median_ms": 3.6958404816687107,
+      "p95_ms": 4.246091726236045
+    },
+    "bm25_scoring_ms": {
+      "mean_ms": 27.79192672111094,
+      "median_ms": 26.190628530457616,
+      "p95_ms": 44.9790448648855
+    },
+    "bm25_topk_ms": {
+      "mean_ms": 0.44637870974838734,
+      "median_ms": 0.4477121401578188,
+      "p95_ms": 0.6582490867003797
+    },
+    "rrf_fusion_ms": {
+      "mean_ms": 1.0177135695703328,
+      "median_ms": 1.021381001919508,
+      "p95_ms": 1.2835632544010878
+    },
+    "reranker_ms": {
+      "mean_ms": 122.5016058771871,
+      "median_ms": 124.30950975976884,
+      "p95_ms": 154.88667462486774
+    },
+    "dense@5_ms": {
+      "mean_ms": 26.529376332182437,
+      "median_ms": 25.81020467914641,
+      "p95_ms": 32.592734321951866
+    },
+    "hybrid@10_ms": {
+      "mean_ms": 55.7853953326121,
+      "median_ms": 54.18036179617047,
+      "p95_ms": 73.81060407496989
+    },
+    "rerank@20_ms": {
+      "mean_ms": 178.2870012097992,
+      "median_ms": 178.4167201258242,
+      "p95_ms": 218.74511593487114
+    }
+  },
+  "environment": {
+    "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.39",
+    "packages": {
+      "torch": "2.5.1+cu121",
+      "transformers": "4.44.2",
+      "sentence-transformers": "5.6.0",
+      "datasets": "5.0.0",
+      "faiss-cpu": "1.14.3",
+      "faiss-gpu": "1.14.3",
+      "rank-bm25": "0.2.2",
+      "numpy": "1.26.4",
+      "scikit-learn": "1.9.0"
+    },
+    "git_commit": "9529b23b1dc80f9743ec7dac34dae19dacb1d989",
+    "cuda_visible_devices": "1",
+    "cuda": "12.1",
+    "gpus": [
+      "NVIDIA GeForce RTX 4090"
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-08T08:49:19.107936+00:00",
+  "phase": "3B",
+  "git_commit": "9529b23b1dc80f9743ec7dac34dae19dacb1d989",
+  "split": "test",
+  "source_split": "test",
+  "questions": 1000,
+  "stage_generations": 3000,
+  "stages": [
+    "dense@5",
+    "hybrid@10",
+    "rerank@20"
+  ],
+  "source": "data/phase2/controller/sentence_256/test.jsonl",
+  "output": "results/phase3b/generation/test/stage_generations.jsonl",
+  "output_sha256": "00a55a27e8931d508234dd9337bfb82d8e702fad8623b20d335645ca4adfe993",
+  "phase3b_config": "configs/phase3b/protocol.json",
+  "phase3b_config_sha256": "ffc57b751b468bbd3e4e922a9ae32ff27e2475b3124b1836bef92c651dd7f3e0",
+  "frozen_generation_config": "configs/phase3a/generation.json",
+  "frozen_generation_config_sha256": "76df4cbd8517f6acffdda6befa3ac5fde78db6e36281c892c06b4d224e308bbf",
+  "phase3a_approval_sha256": "1cce633aab6f99edd3d927d37055b1124075b1fa8ee187e8bb03b5155ab038f7",
+  "phase3b_test_gate_sha256": "2b147dba5b675b704a9d4fb0068defa1ae6d70f0e41f6ab89201c8c63158459b",
+  "model": "/home/sunjb/RAG/ekrag/ekrag/models/Qwen2.5-7B-Instruct",
+  "model_revision": null,
+  "decoding": {
+    "do_sample": false,
+    "temperature": null,
+    "num_beams": 1
+  },
+  "answer_extraction": "first_nonempty_line_strip_answer_prefix",
+  "normalization": "official_hotpotqa_lower_punctuation_articles_whitespace",
+  "warmup_questions": 5,
+  "generation_latency_cuda_synchronized": true,
+  "environment": {
+    "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.39",
+    "packages": {
+      "torch": "2.5.1+cu121",
+      "transformers": "4.44.2",
+      "sentence-transformers": "5.6.0",
+      "datasets": "5.0.0",
+      "faiss-cpu": "1.14.3",
+      "faiss-gpu": "1.14.3",
+      "rank-bm25": "0.2.2",
+      "numpy": "1.26.4",
+      "scikit-learn": "1.9.0"
+    },
+    "git_commit": "9529b23b1dc80f9743ec7dac34dae19dacb1d989",
+    "cuda_visible_devices": "1",
+    "cuda": "12.1",
+    "gpus": [
+      "NVIDIA GeForce RTX 4090"
+    ]
+  }
+}

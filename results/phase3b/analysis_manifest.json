@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-08T09:36:50.735811+00:00",
+  "phase": "3B",
+  "git_commit": "684c9e3f310701f69cbd92dd97bc296e03426337",
+  "positive_claim_decision": "GO",
+  "criteria": {
+    "observed_test_fsr_target": true,
+    "answer_f1_noninferiority": true,
+    "retrieved_chunks_reduction": true,
+    "total_latency_reduction": true
+  },
+  "primary_test_fsr_ci95": [
+    0.05638965371174415,
+    0.11765174222555261
+  ],
+  "raw_primary_comparison": {
+    "policy": "raw_conservative_risk_10",
+    "same_answer_f1_and_fsr_within_1e-12": true,
+    "average_retrieved_chunks_delta": -0.005000000000000782
+  },
+  "source_sha256": {
+    "gate": "2b147dba5b675b704a9d4fb0068defa1ae6d70f0e41f6ab89201c8c63158459b",
+    "calibration": "21aea47868c21c41f8a58c6b617f1f5f52809ea6d21b61ac158d8b37766a16ca",
+    "selected": "c2bd23e6d460a593dcf1ffed41b08f76f7834d8f8541c08fab7113e5d4d7f322",
+    "dev": "079731546472e37b17d56b0851b8411be328dda36e7d15361fa1a0ca615baa05",
+    "test": "dae107bc0b6c532ae86aecf5d8a8b0b97b75d50802f34a99e1d46d1ca6e3658e",
+    "bootstrap": "c16b8968ed87327ebeeb152e3286b2749572a44c2859607cc00ad52e314b6b84",
+    "test_manifest": "43a056182e5df2251b2a2988ba31e7611ffbc81ac1a0860eb0b5e7f4ed250103"
+  },
+  "outputs": {
+    "docs/phase3b_analysis.md": "e8b46906e0b086e177900efb8fd47e63017746c555ac875b40373e832f1934b3",
+    "docs/phase3b_closing_report.md": "704a6a1263ccc313b39e49865118348665511b50655d3482627dae758b25ab96"
+  }
+}

@@ -1,0 +1,5 @@
+comparison,metric,observed_baseline,observed_model,observed_delta,bootstrap_mean_delta,ci95_low,ci95_high,ci_excludes_zero,replicates,sampling_unit
+temperature_conservative_risk_10_minus_fixed_heavy,answer_f1,0.510839232130099,0.5104395222321537,-0.00039970989794524403,-0.0002051117620288221,-0.019256642605760238,0.018541145847616475,False,2000,question_id
+temperature_conservative_risk_10_minus_fixed_heavy,retrieval_cost,20.646,9.38,-11.266,-11.265749,-11.661025,-10.850975000000002,True,2000,question_id
+temperature_conservative_risk_10_minus_fixed_heavy,latency_ms,587.7891366463155,347.66887517040595,-240.1202614759095,-240.07600337342754,-250.08015591200675,-229.57471854693722,True,2000,question_id
+temperature_conservative_risk_10_minus_fixed_heavy,false_stop_rate,0.0,0.08445945945945946,0.08445945945945946,0.0843839475656778,0.05638965371174415,0.11765174222555261,True,2000,question_id
