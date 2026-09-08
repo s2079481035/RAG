@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-08T07:25:28.061266+00:00",
+  "phase": "3B",
+  "selection_manifest": "results/phase3/final_controller_selection.json",
+  "selection_manifest_sha256": "79d2b8e0c8fed8e5e7963deac2ad027992fdbd9ffdba5e41523463281af35010",
+  "run_dir": "experiments/phase3a/lambda_dev/lambda_0.1_seed42",
+  "resolved_config": "experiments/phase3a/lambda_dev/lambda_0.1_seed42/resolved_config.json",
+  "resolved_config_sha256": "063071ef2958ff6fa56b8724d4c34ceaf38059faa0ef2c03d8964a379c86b924",
+  "run_manifest": "experiments/phase3a/lambda_dev/lambda_0.1_seed42/run_manifest.json",
+  "run_manifest_sha256": "3e31286c010b43f2b9885dfc76d527d6e0c94229e57e5dd0d89bcca4602a317e",
+  "checkpoint": "experiments/phase3a/lambda_dev/lambda_0.1_seed42/best.pt",
+  "checkpoint_sha256": "c9b768cd51b21aa8013dabb7597de056b2f04580e275d46d6a5897b7d5c5225a",
+  "dev_predictions": "experiments/phase3a/lambda_dev/lambda_0.1_seed42/dev_predictions.jsonl",
+  "dev_predictions_sha256": "0088ffc8a088eb8dfc9aa10e83d2c82e2d5601ea2591ba8a6d07e2e3158d8db0",
+  "test_predictions": "experiments/phase3a/lambda_dev/lambda_0.1_seed42/evaluation/test/original_predictions.jsonl",
+  "test_predictions_sha256": null,
+  "test_predictions_note": "Existence and content are not inspected before the Phase 3B Test gate.",
+  "frozen_fields": {
+    "variant": "sentence_256",
+    "baseline": "query_evidence",
+    "representation": "score_aware_packing",
+    "evidence_mode": "cumulative",
+    "seed": 42,
+    "coverage_auxiliary": true,
+    "coverage_lambda": 0.1,
+    "sampling": "natural",
+    "backbone": "BAAI/bge-reranker-base"
+  },
+  "phase3a_selected_dev_threshold": 0.38000000000000006
+}

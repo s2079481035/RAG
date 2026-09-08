@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-08T07:26:17.231640+00:00",
+  "phase": "3B",
+  "git_commit": "18501bbe36197c8f336129f6ac2c9ab67244f253",
+  "config": "configs/phase3b/protocol.json",
+  "config_sha256": "ffc57b751b468bbd3e4e922a9ae32ff27e2475b3124b1836bef92c651dd7f3e0",
+  "split": "dev_policy",
+  "questions": 500,
+  "actionable_stage_decisions": 1000,
+  "test_consulted": false,
+  "bootstrap_replicates": 2000,
+  "bootstrap_unit": "question_id",
+  "calibrated_predictions_sha256": "276d1c8a713b94c98e202a3fb4196e425647612c2d404b3524a52ad9c9611365",
+  "outputs": {
+    "threshold_sweep": "results/phase3b/dev_threshold_selection_sweep.csv",
+    "selected_thresholds": "results/phase3b/selected_thresholds.json",
+    "trajectories": "results/phase3b/dev_policy_threshold_trajectories.jsonl",
+    "bootstrap_fsr": "results/phase3b/dev_policy_bootstrap_fsr.jsonl"
+  }
+}

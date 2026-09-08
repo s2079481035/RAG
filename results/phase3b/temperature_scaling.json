@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-08T07:26:08.684755+00:00",
+  "fit_split": "dev_calibration",
+  "fit_questions": 500,
+  "fit_stage_decisions": 1000,
+  "fit_stages": [
+    "dense@5",
+    "hybrid@10"
+  ],
+  "temperature": 1.0732333511122047,
+  "optimized_nll": 0.16610608143853342,
+  "probability_epsilon": 1e-07,
+  "source_predictions": "experiments/phase3a/lambda_dev/lambda_0.1_seed42/dev_predictions.jsonl",
+  "source_predictions_sha256": "0088ffc8a088eb8dfc9aa10e83d2c82e2d5601ea2591ba8a6d07e2e3158d8db0"
+}

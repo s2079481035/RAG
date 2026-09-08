@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-08T07:26:08.710147+00:00",
+  "phase": "3B",
+  "git_commit": "18501bbe36197c8f336129f6ac2c9ab67244f253",
+  "config": "configs/phase3b/protocol.json",
+  "config_sha256": "ffc57b751b468bbd3e4e922a9ae32ff27e2475b3124b1836bef92c651dd7f3e0",
+  "base_controller": "results/phase3b/base_controller.json",
+  "base_controller_sha256": "7e0754f9425424e0be28183fa4a4ff63ec2ea1537cb29ec540d2c7852e712434",
+  "calibrator": "results/phase3b/temperature_scaling.json",
+  "calibrator_sha256": "2664219e9b3d866efa1b29bea8183b78cb289fb56e11b06ea84bb3d9420261a5",
+  "test_consulted": false,
+  "evaluation_scope": "actionable_controller_stages",
+  "outputs": {
+    "metrics": "results/phase3b/calibration_metrics.csv",
+    "predictions": "results/phase3b/calibrated_dev_predictions.jsonl",
+    "reliability_raw": "figures/phase3b/reliability_raw.png",
+    "reliability_temperature": "figures/phase3b/reliability_temperature.png",
+    "reliability_diagram": "figures/phase3b/reliability_diagram.png"
+  }
+}

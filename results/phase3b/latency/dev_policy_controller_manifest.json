@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-08T08:03:13.316137+00:00",
+  "phase": "3B",
+  "git_commit": "3dd2537bd1a00ebfcb3ed5f753c1b0ede79da9f8",
+  "split": "dev_policy",
+  "actionable_stage_decisions": 1000,
+  "warmup_decisions": 5,
+  "batch_size": 1,
+  "cuda_synchronized": true,
+  "maximum_probability_replay_difference": 2.6226043701171875e-06,
+  "probability_replay_tolerance": 0.0001,
+  "latency": {
+    "mean_ms": 13.03606929583475,
+    "median_ms": 12.997254030779004,
+    "p95_ms": 13.194750715047121
+  },
+  "output": "results/phase3b/latency/dev_policy_controller.jsonl",
+  "output_sha256": "d784ac640e64cc0e9ec9413c4da1c1e30a3ffbbcc00fc4b2d99f1e42f60c1c33",
+  "environment": {
+    "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.39",
+    "packages": {
+      "torch": "2.5.1+cu121",
+      "transformers": "4.44.2",
+      "sentence-transformers": "5.6.0",
+      "datasets": "5.0.0",
+      "faiss-cpu": "1.14.3",
+      "faiss-gpu": "1.14.3",
+      "rank-bm25": "0.2.2",
+      "numpy": "1.26.4",
+      "scikit-learn": "1.9.0"
+    },
+    "git_commit": "3dd2537bd1a00ebfcb3ed5f753c1b0ede79da9f8",
+    "cuda_visible_devices": "1",
+    "cuda": "12.1",
+    "gpus": [
+      "NVIDIA GeForce RTX 4090"
+    ]
+  }
+}
