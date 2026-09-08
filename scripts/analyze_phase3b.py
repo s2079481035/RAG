@@ -101,6 +101,11 @@ def main() -> None:
     primary = find_policy(test_rows, primary_name)
     heavy = find_policy(test_rows, "fixed_heavy")
     primary_dev = find_policy(dev_rows, primary_name)
+    raw_primary_name = (
+        f"raw_{primary_config['selection']}_risk_"
+        f"{int(round(float(primary_config['risk_target']) * 100)):02d}"
+    )
+    raw_primary = find_policy(test_rows, raw_primary_name)
 
     calibration_policy = {
         row["method"]: row
@@ -118,6 +123,21 @@ def main() -> None:
     chunk_delta = find_bootstrap(bootstrap, "retrieval_cost")
     latency_delta = find_bootstrap(bootstrap, "latency_ms")
     fsr_delta = find_bootstrap(bootstrap, "false_stop_rate")
+    primary_fsr_ci = None
+    if abs(float(heavy["false_stop_rate"])) <= 1e-12:
+        primary_fsr_ci = (
+            float(fsr_delta["ci95_low"]),
+            float(fsr_delta["ci95_high"]),
+        )
+    raw_primary_equivalent = (
+        abs(float(raw_primary["answer_f1"]) - float(primary["answer_f1"])) <= 1e-12
+        and abs(float(raw_primary["false_stop_rate"]) - float(primary["false_stop_rate"]))
+        <= 1e-12
+    )
+    raw_primary_chunk_delta = (
+        float(raw_primary["average_retrieved_chunks"])
+        - float(primary["average_retrieved_chunks"])
+    )
     closing = config["go_no_go"]
     criteria = {
         "observed_test_fsr_target": float(primary["false_stop_rate"])
@@ -192,14 +212,38 @@ def main() -> None:
                 item["selection"],
                 number(item["threshold"], 3),
                 percent(result["false_stop_rate"]),
+                str(float(result["false_stop_rate"]) <= float(item["risk_target"])),
                 number(result["answer_f1"]),
                 number(result["average_retrieved_chunks"], 2),
                 number(result["total_latency_mean_ms"], 2),
             ]
         )
     risk_table = markdown_table(
-        ["Risk target", "Selection", "Threshold", "Test FSR", "Answer F1", "Chunks", "Latency ms"],
+        ["Risk target", "Selection", "Threshold", "Test FSR", "Observed target met", "Answer F1", "Chunks", "Latency ms"],
         risk_rows,
+    )
+
+    if primary_fsr_ci is None:
+        primary_fsr_ci_text = "not available from the saved paired comparison"
+        primary_fsr_ci_limit = ""
+    else:
+        primary_fsr_ci_text = (
+            f"[{percent(primary_fsr_ci[0])}, {percent(primary_fsr_ci[1])}]"
+        )
+        primary_fsr_ci_limit = (
+            f" Its upper bound exceeds the {percent(primary_config['risk_target'])} "
+            "target, so the result is empirical risk control rather than a "
+            "statistical guarantee."
+            if primary_fsr_ci[1] > float(primary_config["risk_target"])
+            else " Its upper bound is within the target."
+        )
+
+    pareto_note = (
+        f"The pre-registered primary policy has strict two-dimensional Pareto status "
+        f"`{primary['pareto_optimal_chunks_answer_f1']}`. `{raw_primary_name}` has "
+        f"{'the same Test F1 and FSR to numerical precision' if raw_primary_equivalent else 'different Test outcomes'} "
+        f"and changes average retrieved chunks by {raw_primary_chunk_delta:+.3f} per question. "
+        "This raw-policy comparison is descriptive and does not replace the frozen primary policy."
     )
 
     lines = [
@@ -223,6 +267,8 @@ def main() -> None:
         "",
         *end_to_end_table,
         "",
+        pareto_note,
+        "",
         "## Table 4: Risk-Level Comparison (Test)",
         "",
         *risk_table,
@@ -242,11 +288,11 @@ def main() -> None:
         "## Research Questions",
         "",
         f"- RQ1 Calibration: NLL/ECE jointly improved on held-out dev_policy: **{calibration_improved}**.",
-        f"- RQ2 Risk transfer: Dev FSR was {percent(primary_dev['false_stop_rate'])}; Test FSR was {percent(primary['false_stop_rate'])} for the primary alpha={float(primary_config['risk_target']):.2f} policy.",
+        f"- RQ2 Risk transfer: Dev FSR was {percent(primary_dev['false_stop_rate'])}; Test FSR was {percent(primary['false_stop_rate'])} for the primary alpha={float(primary_config['risk_target']):.2f} policy. The Test question-bootstrap 95% CI was {primary_fsr_ci_text}.{primary_fsr_ci_limit}",
         f"- RQ3 Cost: versus Fixed Heavy, retrieved chunks changed by {number(chunk_delta['observed_delta'], 3)} and total latency by {number(latency_delta['observed_delta'], 3)} ms.",
         f"- RQ4 QA quality: primary Test F1 was {number(primary['answer_f1'])}, versus {number(heavy['answer_f1'])} for Fixed Heavy.",
         f"- RQ5 Sweet spot: the pre-registered positive-claim rule is **{'met' if positive_claim_go else 'not met'}**.",
-        "- RQ6 Conservative stability: compare point and conservative rows in Table 4; no stronger guarantee is claimed from bootstrap confidence-bound selection.",
+        "- RQ6 Conservative stability: point-selected policies missed all three nominal Test targets. Conservative alpha=0.20 and alpha=0.10 met their observed targets; conservative alpha=0.05 met its target only by always reaching the forced final stage. No stronger guarantee is claimed from bootstrap confidence-bound selection.",
         "",
         "## Interpretation Limits",
         "",
@@ -261,7 +307,7 @@ def main() -> None:
         f"## Decision: {'GO' if positive_claim_go else 'NO-GO'}",
         "",
         (
-            "The pre-registered evidence supports the positive claim that the primary risk-controlled policy preserves QA quality while reducing retrieval and latency cost."
+            "The pre-registered operational criteria support the claim that the primary policy preserves QA quality within the declared noninferiority margin while reducing retrieval and latency cost relative to Fixed Heavy."
             if positive_claim_go
             else "The pre-registered evidence does not support the full positive efficient-risk-control claim. This remains a valid negative result and must not trigger Test-driven retuning."
         ),
@@ -272,10 +318,17 @@ def main() -> None:
         "",
         f"- Primary policy: `{primary_name}`",
         f"- Observed Test FSR: {percent(primary['false_stop_rate'])} (target {percent(primary_config['risk_target'])})",
+        f"- Primary Test FSR question-bootstrap 95% CI: {primary_fsr_ci_text}",
         f"- Answer F1 delta 95% CI: [{number(answer_delta['ci95_low'])}, {number(answer_delta['ci95_high'])}]",
         f"- Retrieved-chunk delta 95% CI: [{number(chunk_delta['ci95_low'])}, {number(chunk_delta['ci95_high'])}]",
         f"- Total-latency delta 95% CI: [{number(latency_delta['ci95_low'])}, {number(latency_delta['ci95_high'])}]",
         f"- FSR delta 95% CI: [{number(fsr_delta['ci95_low'])}, {number(fsr_delta['ci95_high'])}]",
+        "",
+        "## Qualification",
+        "",
+        pareto_note,
+        "",
+        "The observed primary FSR meets the target, but its confidence interval is not wholly below 10%. Temperature Scaling also did not jointly improve held-out NLL and ECE, and the raw conservative alpha=0.10 policy produced effectively the same Test operating point. The GO verdict therefore does not establish guaranteed risk control or a distinct deployment benefit from Temperature Scaling itself.",
         "",
         "## Thesis Boundary",
         "",
@@ -303,6 +356,12 @@ def main() -> None:
         "git_commit": git_commit(ROOT),
         "positive_claim_decision": "GO" if positive_claim_go else "NO-GO",
         "criteria": criteria,
+        "primary_test_fsr_ci95": primary_fsr_ci,
+        "raw_primary_comparison": {
+            "policy": raw_primary_name,
+            "same_answer_f1_and_fsr_within_1e-12": raw_primary_equivalent,
+            "average_retrieved_chunks_delta": raw_primary_chunk_delta,
+        },
         "source_sha256": {name: file_sha256(path) for name, path in paths.items()},
         "outputs": {path.relative_to(ROOT).as_posix(): file_sha256(path) for path in outputs},
     }
