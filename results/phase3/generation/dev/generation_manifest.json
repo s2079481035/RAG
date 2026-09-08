@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-07T10:37:19.901641+00:00",
+  "phase": "3A",
+  "split": "dev",
+  "samples": 1000,
+  "source": "data/phase2/controller/sentence_256/dev.jsonl",
+  "output": "results/phase3/generation/dev/generated.jsonl",
+  "generation_config": "configs/phase3a/generation.json",
+  "generation_config_sha256": "76df4cbd8517f6acffdda6befa3ac5fde78db6e36281c892c06b4d224e308bbf",
+  "model": "/home/sunjb/RAG/ekrag/ekrag/models/Qwen2.5-7B-Instruct",
+  "model_revision": null,
+  "decoding": {
+    "do_sample": false,
+    "temperature": null,
+    "num_beams": 1
+  },
+  "max_input_tokens": 4096,
+  "max_new_tokens": 32,
+  "answer_extraction": "first_nonempty_line_strip_answer_prefix",
+  "normalization": "official_hotpotqa_lower_punctuation_articles_whitespace",
+  "test_gate_approval": null,
+  "environment": {
+    "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.39",
+    "packages": {
+      "torch": "2.5.1+cu121",
+      "transformers": "4.44.2",
+      "sentence-transformers": "5.6.0",
+      "datasets": "5.0.0",
+      "faiss-cpu": "1.14.3",
+      "faiss-gpu": "1.14.3",
+      "rank-bm25": "0.2.2",
+      "numpy": "1.26.4",
+      "scikit-learn": "1.9.0"
+    },
+    "git_commit": "51050f1f8167a11f9ed1459c1b2233aa0d41b7b6",
+    "cuda_visible_devices": "1",
+    "cuda": "12.1",
+    "gpus": [
+      "NVIDIA GeForce RTX 4090"
+    ]
+  }
+}

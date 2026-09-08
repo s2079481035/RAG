@@ -1,0 +1,28 @@
+{
+  "generation_config_sha256": "76df4cbd8517f6acffdda6befa3ac5fde78db6e36281c892c06b4d224e308bbf",
+  "evaluation_details": "results/phase3/generation/dev/evaluation_details.jsonl",
+  "evaluation_details_sha256": "63a69c1afb966ab21bbf6f2dbdbff7d7b78d1d512311987ea44f6def4a83784f",
+  "audit_csv_sha256_at_creation": "c38827f357b93bc7a31813b52867a99bc22f5ba2724c56c9591c3427a58bfcf4",
+  "immutable_fields": [
+    "audit_id",
+    "question_id",
+    "stratum",
+    "question",
+    "gold_answer",
+    "raw_output",
+    "extracted_answer",
+    "exact_match",
+    "token_f1",
+    "output_tokens",
+    "raw_output_lines"
+  ],
+  "immutable_fields_sha256": "76cda540ff5e9014cf9de3b8f06ba38901acaef4b26cf86beaed3955da95e66e",
+  "sample_count": 50,
+  "seed": 42,
+  "strata": [
+    "exact_match",
+    "partial_f1",
+    "verbose_or_multiline",
+    "zero_f1"
+  ]
+}

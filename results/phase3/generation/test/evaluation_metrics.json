@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-07T11:37:53.066901+00:00",
+  "split": "test",
+  "samples": 1000,
+  "exact_match": 0.407,
+  "token_f1": 0.510839232130099,
+  "multiline_raw_output_count": 1,
+  "long_raw_output_count": 9,
+  "empty_extracted_answer_count": 0,
+  "context_truncated_count": 0,
+  "input": "results/phase3/generation/test/generated.jsonl"
+}

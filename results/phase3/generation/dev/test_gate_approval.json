@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-07T11:28:25.955222+00:00",
+  "status": "approved",
+  "selection_split": "dev",
+  "test_consulted": false,
+  "reviewed_samples": 50,
+  "generation_config_sha256": "76df4cbd8517f6acffdda6befa3ac5fde78db6e36281c892c06b4d224e308bbf",
+  "audit": "results/phase3/generation/dev/manual_audit_50.csv",
+  "audit_sha256_after_review": "68352dd877714f9cba4eb1e22adf2203d99ed11759f797996e96bda54e6c94c7",
+  "source_evaluation_details_sha256": "63a69c1afb966ab21bbf6f2dbdbff7d7b78d1d512311987ea44f6def4a83784f",
+  "dev_generation_manifest": "results/phase3/generation/dev/generation_manifest.json",
+  "dev_generation_manifest_sha256": "fb1a8418e9a93a590f42d8e8b0aa9d1e70bc43a9f6a9956dd0fb1641c6fb3f8f",
+  "model": "/home/sunjb/RAG/ekrag/ekrag/models/Qwen2.5-7B-Instruct",
+  "model_revision": null,
+  "extraction_failure_ids": [],
+  "scoring_failure_ids": [],
+  "reviewers": [
+    "sunjb"
+  ]
+}
