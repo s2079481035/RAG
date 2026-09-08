@@ -63,6 +63,7 @@ def main() -> None:
     existing = [path for path in [output_path, manifest_path] if path.exists()]
     if existing and not args.force:
         raise FileExistsError(f"Refusing to overwrite Controller benchmark: {existing}")
+    output_dir.mkdir(parents=True, exist_ok=True)
     base_path = ROOT / "results" / "phase3b" / "base_controller.json"
     base = json.loads(base_path.read_text(encoding="utf-8"))
     resolved_path = repo_path(base["resolved_config"])

@@ -101,6 +101,7 @@ def main() -> None:
     existing = [path for path in [output_path, manifest_path] if path.exists()]
     if existing and not args.force:
         raise FileExistsError(f"Refusing to overwrite retrieval benchmark: {existing}")
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     import faiss
     import torch
