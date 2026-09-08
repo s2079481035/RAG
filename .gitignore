@@ -18,3 +18,5 @@ results/phase2/*.log
 experiments/phase2/
 results/phase3/**/*.jsonl
 results/phase3*.log
+results/phase3b/**/*.jsonl
+results/phase3b/*.log
