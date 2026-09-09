@@ -54,8 +54,9 @@ def main() -> None:
     if args.variant not in variants:
         raise ValueError(f"Unknown chunk variant {args.variant!r}; expected one of {sorted(variants)}")
 
-    chunk_path = ROOT / "data" / "phase2" / "chunks" / f"{args.variant}.jsonl"
-    output_dir = ROOT / "data" / "phase2" / "indices" / args.variant
+    data_dir = ROOT / config.get("outputs", {}).get("data_dir", "data/phase2")
+    chunk_path = data_dir / "chunks" / f"{args.variant}.jsonl"
+    output_dir = data_dir / "indices" / args.variant
     paths = {
         "dense": output_dir / "dense.faiss",
         "doc_ids": output_dir / "doc_ids.npy",
@@ -66,7 +67,7 @@ def main() -> None:
     if existing and not args.force:
         raise FileExistsError(f"Refusing to overwrite index files: {existing}")
     if not chunk_path.exists():
-        raise FileNotFoundError(f"Build Phase 2 chunks first: {chunk_path}")
+        raise FileNotFoundError(f"Build configured chunks first: {chunk_path}")
 
     chunks = load_chunks(chunk_path)
     doc_ids = [chunk["chunk_id"] for chunk in chunks]
@@ -105,8 +106,9 @@ def main() -> None:
     manifest = {
         "schema_version": 1,
         "created_at_utc": utc_now(),
-        "phase": 2,
-        "phase1_frozen_commit": config["phase1_frozen_commit"],
+        "phase": int(config.get("phase", 2)),
+        "phase1_frozen_commit": config.get("phase1_frozen_commit"),
+        "phase3b_frozen_commit": config.get("phase3b_freeze", {}).get("commit"),
         "git_commit": git_commit(ROOT),
         "config": portable_path(args.config, ROOT),
         "variant": args.variant,

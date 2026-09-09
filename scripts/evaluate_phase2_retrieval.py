@@ -23,7 +23,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
     parser.add_argument("--variants", help="Comma-separated variants; defaults to config selection set")
-    parser.add_argument("--split", default="dev", choices=["train", "dev", "test"])
+    parser.add_argument("--split", default="dev")
     parser.add_argument("--force", action="store_true")
     return parser.parse_args()
 
@@ -67,9 +67,9 @@ def method_latency_ms(record: dict, method: str) -> float:
     raise ValueError(f"Unknown retrieval method: {method}")
 
 
-def render_markdown(summaries: list[dict], split: str) -> str:
+def render_markdown(summaries: list[dict], split: str, phase: int) -> str:
     lines = [
-        "# Phase 2 Chunk Retrieval Comparison",
+        f"# Phase {phase} Chunk Retrieval Comparison",
         "",
         f"Evaluation split: `{split}`. Evidence matches require exact `(document_title, sentence_id)` equality.",
         "",
@@ -96,6 +96,9 @@ def render_markdown(summaries: list[dict], split: str) -> str:
 def main() -> None:
     args = parse_args()
     config = json.loads(args.config.read_text(encoding="utf-8"))
+    valid_splits = set(config.get("dataset", {}).get("valid_splits", ["train", "dev", "test"]))
+    if args.split not in valid_splits:
+        raise ValueError(f"Unknown split {args.split!r}; expected one of {sorted(valid_splits)}")
     evaluation = config["retrieval_evaluation"]
     variants = (
         [value.strip() for value in args.variants.split(",") if value.strip()]
@@ -105,13 +108,16 @@ def main() -> None:
     known = {item["name"] for item in config["chunking"]["variants"]}
     if not variants or set(variants) - known:
         raise ValueError(f"Unknown or empty variant list: {variants}")
-    if args.split == "test":
+    evaluation_split = config.get("dataset", {}).get("evaluation_split", "test")
+    if args.split == evaluation_split:
         selected = evaluation["selected_variant_after_dev"]
         if selected is None or variants != [selected]:
-            raise ValueError("Test evaluation requires exactly the dev-selected chunk variant")
+            raise ValueError("Held-out evaluation requires exactly the frozen chunk variant")
 
+    data_dir = ROOT / config.get("outputs", {}).get("data_dir", "data/phase2")
+    result_dir = ROOT / config.get("outputs", {}).get("result_dir", "results/phase2")
     questions = json.loads(
-        (ROOT / "data" / "phase2" / "questions.json").read_text(encoding="utf-8")
+        (data_dir / "questions.json").read_text(encoding="utf-8")
     )
     question_by_id = {
         qid: question
@@ -120,7 +126,7 @@ def main() -> None:
     }
     methods = evaluation["methods"]
     ks = [int(k) for k in evaluation["ks"]]
-    output_dir = ROOT / "results" / "phase2" / "retrieval_eval" / args.split
+    output_dir = result_dir / "retrieval_eval" / args.split
     summary_csv = output_dir / "retrieval_summary.csv"
     summary_md = output_dir / "retrieval_summary.md"
     manifest_path = output_dir / "evaluation_manifest.json"
@@ -141,8 +147,8 @@ def main() -> None:
     summaries = []
     ranking_sources = {}
     for variant in variants:
-        chunk_path = ROOT / "data" / "phase2" / "chunks" / f"{variant}.jsonl"
-        ranking_path = ROOT / "results" / "phase2" / "retrieval" / variant / f"{args.split}.jsonl"
+        chunk_path = data_dir / "chunks" / f"{variant}.jsonl"
+        ranking_path = result_dir / "retrieval" / variant / f"{args.split}.jsonl"
         if not chunk_path.exists() or not ranking_path.exists():
             raise FileNotFoundError(f"Missing chunks or rankings for {variant} {args.split}")
         chunks = read_jsonl(chunk_path)
@@ -155,7 +161,7 @@ def main() -> None:
         ranking_sources[variant] = portable_path(ranking_path, ROOT)
 
         index_manifest_path = (
-            ROOT / "data" / "phase2" / "indices" / variant / "index_manifest.json"
+            data_dir / "indices" / variant / "index_manifest.json"
         )
         index_manifest = json.loads(index_manifest_path.read_text(encoding="utf-8"))
         index_bytes = sum(item["bytes"] for item in index_manifest["files"].values())
@@ -244,6 +250,7 @@ def main() -> None:
                         / count,
                         "average_retrieved_chunks": totals["retrieved_chunks"] / count,
                         "average_unique_documents": totals["unique_documents"] / count,
+                        "average_unique_titles": totals["unique_documents"] / count,
                         "average_latency_ms": totals["latency_ms"] / count,
                         "index_storage_bytes": index_bytes,
                     }
@@ -256,12 +263,16 @@ def main() -> None:
         writer.writeheader()
         writer.writerows(summaries)
     temporary_csv.replace(summary_csv)
-    summary_md.write_text(render_markdown(summaries, args.split), encoding="utf-8")
+    summary_md.write_text(
+        render_markdown(summaries, args.split, int(config.get("phase", 2))),
+        encoding="utf-8",
+    )
     manifest = {
         "schema_version": 1,
         "created_at_utc": utc_now(),
-        "phase": 2,
-        "phase1_frozen_commit": config["phase1_frozen_commit"],
+        "phase": int(config.get("phase", 2)),
+        "phase1_frozen_commit": config.get("phase1_frozen_commit"),
+        "phase3b_frozen_commit": config.get("phase3b_freeze", {}).get("commit"),
         "git_commit": git_commit(ROOT),
         "config": portable_path(args.config, ROOT),
         "split": args.split,

@@ -162,7 +162,8 @@ def main() -> None:
     config = json.loads(args.config.read_text(encoding="utf-8"))
     validate_experiment(args, config)
     validate_tuning_splits(
-        [config["training"]["selection_split"], config["training"]["threshold_selection_split"]]
+        [config["training"]["selection_split"], config["training"]["threshold_selection_split"]],
+        test_split=config.get("data", {}).get("evaluation_split", "test"),
     )
     cublas = configure_cublas_workspace(config["training"]["cublas_workspace_config"])
 
@@ -180,10 +181,22 @@ def main() -> None:
     model, classifier_initialization = load_phase3a_model(backbone, load_kwargs, auxiliary)
 
     variant = config["variant"]
-    chunk_path = ROOT / "data" / "phase2" / "chunks" / f"{variant}.jsonl"
+    data_config = config.get("data", {})
+    chunk_path = ROOT / data_config.get(
+        "chunk_file", f"data/phase2/chunks/{variant}.jsonl"
+    )
     chunk_by_id = {row["chunk_id"]: row for row in read_jsonl(chunk_path)}
-    data_dir = ROOT / "data" / "phase2" / "controller" / variant
-    source = {split: read_jsonl(data_dir / f"{split}.jsonl") for split in ["train", "dev"]}
+    data_dir = ROOT / data_config.get(
+        "controller_dir", f"data/phase2/controller/{variant}"
+    )
+    source_splits = {
+        "train": data_config.get("train_split", "train"),
+        "dev": data_config.get("dev_split", "dev"),
+    }
+    source = {
+        role: read_jsonl(data_dir / f"{split}.jsonl")
+        for role, split in source_splits.items()
+    }
     assert_disjoint_question_ids(
         {split: {item["question_id"] for item in records} for split, records in source.items()}
     )
@@ -206,7 +219,10 @@ def main() -> None:
         f"{args.baseline}__{resolved_representation}__seed{args.seed}__"
         f"aux{args.coverage_lambda:g}__{args.sampling}__{timestamp}"
     )
-    run_dir = (args.run_dir or ROOT / "experiments" / "phase3a" / run_name).resolve()
+    default_experiment_dir = "phase4" if str(config.get("phase")) == "4" else "phase3a"
+    run_dir = (
+        args.run_dir or ROOT / "experiments" / default_experiment_dir / run_name
+    ).resolve()
     if run_dir.exists() and any(run_dir.iterdir()):
         raise FileExistsError(f"Refusing to overwrite non-empty run directory: {run_dir}")
     run_dir.mkdir(parents=True, exist_ok=True)
@@ -243,8 +259,10 @@ def main() -> None:
         "status": "running",
         "start_time_utc": utc_now(),
         "end_time_utc": None,
-        "phase": "3A",
-        "phase2_frozen_branch": config["phase2_frozen_branch"],
+        "phase": str(config.get("phase", "3A")),
+        "phase2_frozen_branch": config.get("phase2_frozen_branch"),
+        "phase3b_frozen_commit": config.get("phase3b_frozen_commit"),
+        "source_splits": source_splits,
         "variant": variant,
         "baseline": args.baseline,
         "representation": resolved_representation,
@@ -366,7 +384,7 @@ def main() -> None:
             {
                 "question_id": item["question_id"],
                 "stage": item["stage"],
-                "split": "dev",
+                "split": source_splits["dev"],
                 "actual_stop_label": item["label"],
                 "actual_three_class_label": item["diagnostic_label"],
                 "true_coverage": item["coverage_target"],

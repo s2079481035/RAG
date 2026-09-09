@@ -62,19 +62,21 @@ def validate_protocol(config: dict, variant: str, splits: list[str]) -> None:
     known_variants = {item["name"] for item in config["chunking"]["variants"]}
     if variant not in known_variants:
         raise ValueError(f"Unknown chunk variant {variant!r}; expected one of {sorted(known_variants)}")
-    unknown_splits = set(splits) - set(VALID_SPLITS)
+    valid_splits = set(config.get("dataset", {}).get("valid_splits", VALID_SPLITS))
+    unknown_splits = set(splits) - valid_splits
     if unknown_splits:
         raise ValueError(f"Unknown splits: {sorted(unknown_splits)}")
     if len(splits) != len(set(splits)):
         raise ValueError("Duplicate split names are not allowed")
-    if "test" in splits:
+    evaluation_split = config.get("dataset", {}).get("evaluation_split", "test")
+    if evaluation_split in splits:
         selected = config["retrieval_evaluation"]["selected_variant_after_dev"]
         if selected is None:
             raise ValueError(
-                "Test retrieval is locked until selected_variant_after_dev is recorded in the config"
+                "Held-out retrieval is locked until the transferred/selected variant is recorded"
             )
         if selected != variant:
-            raise ValueError(f"Test is locked to the dev-selected variant {selected!r}")
+            raise ValueError(f"Held-out evaluation is locked to variant {selected!r}")
 
 
 def main() -> None:
@@ -83,10 +85,12 @@ def main() -> None:
     splits = [value.strip() for value in args.splits.split(",") if value.strip()]
     validate_protocol(config, args.variant, splits)
 
-    chunk_path = ROOT / "data" / "phase2" / "chunks" / f"{args.variant}.jsonl"
-    question_path = ROOT / "data" / "phase2" / "questions.json"
-    index_dir = ROOT / "data" / "phase2" / "indices" / args.variant
-    output_dir = ROOT / "results" / "phase2" / "retrieval" / args.variant
+    data_dir = ROOT / config.get("outputs", {}).get("data_dir", "data/phase2")
+    result_dir = ROOT / config.get("outputs", {}).get("result_dir", "results/phase2")
+    chunk_path = data_dir / "chunks" / f"{args.variant}.jsonl"
+    question_path = data_dir / "questions.json"
+    index_dir = data_dir / "indices" / args.variant
+    output_dir = result_dir / "retrieval" / args.variant
     output_paths = {split: output_dir / f"{split}.jsonl" for split in splits}
     manifest_path = output_dir / f"run_manifest_{'_'.join(splits)}.json"
     existing = [path for path in [*output_paths.values(), manifest_path] if path.exists()]
@@ -103,7 +107,7 @@ def main() -> None:
     ]
     missing = [path for path in required if not path.exists()]
     if missing:
-        raise FileNotFoundError(f"Missing Phase 2 data/index files: {missing}")
+        raise FileNotFoundError(f"Missing configured data/index files: {missing}")
 
     chunks = read_jsonl(chunk_path)
     chunk_by_id = {chunk["chunk_id"]: chunk for chunk in chunks}
@@ -271,8 +275,9 @@ def main() -> None:
     manifest = {
         "schema_version": 1,
         "created_at_utc": utc_now(),
-        "phase": 2,
-        "phase1_frozen_commit": config["phase1_frozen_commit"],
+        "phase": int(config.get("phase", 2)),
+        "phase1_frozen_commit": config.get("phase1_frozen_commit"),
+        "phase3b_frozen_commit": config.get("phase3b_freeze", {}).get("commit"),
         "git_commit": git_commit(ROOT),
         "config": portable_path(args.config, ROOT),
         "variant": args.variant,

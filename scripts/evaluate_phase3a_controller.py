@@ -25,7 +25,10 @@ ROOT = Path(__file__).resolve().parent.parent
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--run-dir", type=Path, required=True)
-    parser.add_argument("--split", choices=["dev", "test"], default="test")
+    parser.add_argument("--split", default="test")
+    parser.add_argument("--source", type=Path)
+    parser.add_argument("--chunks", type=Path)
+    parser.add_argument("--output-dir", type=Path)
     parser.add_argument("--allow-download", action="store_true")
     parser.add_argument("--force", action="store_true")
     return parser.parse_args()
@@ -39,7 +42,8 @@ def main() -> None:
     if manifest["status"] != "complete":
         raise ValueError("Phase 3A training run is not complete")
     resolved = config["resolved"]
-    if args.split == "test" and not config["training"]["test_is_evaluation_only"]:
+    evaluation_split = config.get("data", {}).get("evaluation_split", "test")
+    if args.split == evaluation_split and not config["training"]["test_is_evaluation_only"]:
         raise ValueError("Configuration does not lock test to evaluation-only")
     configure_cublas_workspace(config["training"]["cublas_workspace_config"])
 
@@ -57,9 +61,19 @@ def main() -> None:
     model.to(device)
 
     variant = resolved["variant"]
-    chunks = read_jsonl(ROOT / "data" / "phase2" / "chunks" / f"{variant}.jsonl")
+    data_config = config.get("data", {})
+    chunk_path = (
+        args.chunks
+        or ROOT / data_config.get("chunk_file", f"data/phase2/chunks/{variant}.jsonl")
+    ).resolve()
+    chunks = read_jsonl(chunk_path)
     chunk_by_id = {row["chunk_id"]: row for row in chunks}
-    source_path = ROOT / "data" / "phase2" / "controller" / variant / f"{args.split}.jsonl"
+    source_path = (
+        args.source
+        or ROOT
+        / data_config.get("controller_dir", f"data/phase2/controller/{variant}")
+        / f"{args.split}.jsonl"
+    ).resolve()
     source = read_jsonl(source_path)
     namespace = argparse.Namespace(
         baseline=resolved["baseline"],
@@ -93,7 +107,7 @@ def main() -> None:
         metrics["coverage_regression"] = coverage_regression_metrics(truth, predicted)
     metrics["split"] = args.split
 
-    output_dir = run_dir / "evaluation" / args.split
+    output_dir = (args.output_dir or run_dir / "evaluation" / args.split).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
     predictions_path = output_dir / "original_predictions.jsonl"
     metrics_path = output_dir / "original_metrics.json"

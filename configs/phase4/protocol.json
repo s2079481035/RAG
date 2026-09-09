@@ -1,0 +1,163 @@
+{
+  "experiment_name": "phase4_2wiki_credibility_extension_v1",
+  "phase": 4,
+  "phase3b_freeze": {
+    "tag": "phase3b_final",
+    "commit": "1ed762c",
+    "final_controller_selection": "results/phase3/final_controller_selection.json",
+    "risk_policy": "results/phase3b/test_gate.json",
+    "generation_config": "configs/phase3a/generation.json"
+  },
+  "dataset": {
+    "name": "2WikiMultiHopQA",
+    "official_repository": "https://github.com/Alab-NII/2wikimultihop",
+    "official_train": "data/2wiki/source/train.json",
+    "official_dev": "data/2wiki/source/dev.json",
+    "official_test_is_unlabeled_and_unused": true,
+    "official_dev_role": "heldout",
+    "valid_splits": [
+      "train_core",
+      "dev_calibration",
+      "dev_policy",
+      "heldout"
+    ],
+    "evaluation_split": "heldout",
+    "internal_split": {
+      "source": "official_train",
+      "unit": "question_id",
+      "seed": 42,
+      "dev_calibration_questions": 2000,
+      "dev_policy_questions": 2000,
+      "remainder": "train_core"
+    }
+  },
+  "corpus_scope": {
+    "name": "shared benchmark-context corpus",
+    "sources": [
+      "official_train.context",
+      "official_dev.context"
+    ],
+    "deduplication": "exact_document_title_plus_exact_joined_text",
+    "not_full_wikipedia": true
+  },
+  "chunking": {
+    "tokenizer": "BAAI/bge-large-en-v1.5",
+    "include_special_tokens_in_budget": false,
+    "sentence_separator": " ",
+    "overlap_sentences": 0,
+    "variants": [
+      {
+        "name": "sentence_256",
+        "target_tokens": 256
+      }
+    ],
+    "default_candidate": "sentence_256"
+  },
+  "retrieval": {
+    "dense_model": "BAAI/bge-large-en-v1.5",
+    "document_text": "title_and_chunk_text",
+    "document_text_template": "[TITLE] {document_title} [TEXT] {chunk_text}",
+    "query_instruction": null,
+    "dense_normalize_embeddings": true,
+    "faiss_index": "IndexFlatIP",
+    "bm25_implementation": "rank_bm25.BM25Okapi",
+    "bm25_parameters": "library_defaults",
+    "rrf_k": 60,
+    "dense_candidate_k": 200,
+    "bm25_candidate_k": 200,
+    "hybrid_candidate_k": 20,
+    "reranker_model": "BAAI/bge-reranker-v2-m3",
+    "reranker_max_length": 512,
+    "saved_ranking_depth": 20
+  },
+  "retrieval_evaluation": {
+    "methods": [
+      "dense",
+      "bm25",
+      "hybrid",
+      "rerank"
+    ],
+    "ks": [
+      5,
+      10,
+      20
+    ],
+    "selection_variants": [
+      "sentence_256"
+    ],
+    "selected_variant_after_dev": "sentence_256",
+    "selection_status": "transferred_without_2wiki_sweep"
+  },
+  "controller_ladder": [
+    "dense@5",
+    "hybrid@10",
+    "rerank@20"
+  ],
+  "controller": {
+    "backbone": "BAAI/bge-reranker-base",
+    "max_length": 512,
+    "representation": "score_aware_packing",
+    "evidence_mode": "cumulative",
+    "minimum_chunk_tokens": 12,
+    "coverage_auxiliary": true,
+    "coverage_lambda": 0.1,
+    "sampling": "natural",
+    "seeds": [
+      42,
+      123,
+      2026
+    ],
+    "hotpotqa_checkpoint": "experiments/phase3a/lambda_dev/lambda_0.1_seed42/best.pt",
+    "hotpotqa_temperature": 1.0732333511122047,
+    "hotpotqa_primary_threshold": 0.93,
+    "risk_targets": [
+      0.2,
+      0.1,
+      0.05
+    ],
+    "bootstrap_replicates": 2000
+  },
+  "score_threshold": {
+    "feature": "top1_normalized_retrieval_score",
+    "normalization": "within_stage_min_max_from_dev_policy",
+    "threshold_selection_split": "dev_policy",
+    "threshold_grid": {
+      "start": 0.0,
+      "stop": 1.0,
+      "step": 0.01
+    },
+    "test_tuning_forbidden": true
+  },
+  "llm_judge": {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_template": "Question:\n{question}\n\nRetrieved Evidence:\n{evidence}\n\nDetermine whether the retrieved evidence is sufficient to answer the question correctly.\n\nOutput exactly one label:\n\nSUFFICIENT\n\nor\n\nINSUFFICIENT",
+    "temperature": 0,
+    "max_new_tokens": 8,
+    "allowed_labels": [
+      "SUFFICIENT",
+      "INSUFFICIENT"
+    ],
+    "prompt_check_split": "dev_policy",
+    "heldout_prompt_tuning_forbidden": true
+  },
+  "external_baselines": {
+    "adaptive_rag": {
+      "official_repository": "https://github.com/starsuzi/Adaptive-RAG",
+      "paper": "https://aclanthology.org/2024.naacl-long.389/",
+      "status": "not_yet_audited"
+    },
+    "s2g_rag": {
+      "official_repository": "https://github.com/nianaaa/S2G-RAG",
+      "paper": "https://aclanthology.org/2026.acl-long.1185/",
+      "working_day_limit": 2,
+      "status": "not_started"
+    }
+  },
+  "outputs": {
+    "data_dir": "data/2wiki",
+    "result_dir": "results/phase4/2wiki",
+    "dataset_audit": "docs/phase4/2wiki_dataset_audit.md",
+    "corpus_audit": "docs/phase4/2wiki_corpus_audit.md",
+    "trajectory_audit": "docs/phase4/2wiki_trajectory_audit.md"
+  }
+}

@@ -20,3 +20,12 @@ results/phase3/**/*.jsonl
 results/phase3*.log
 results/phase3b/**/*.jsonl
 results/phase3b/*.log
+data/2wiki/source/
+data/2wiki/questions.json
+data/2wiki/chunks/
+data/2wiki/indices/
+data/2wiki/controller/**/*.jsonl
+results/phase4/**/*.jsonl
+results/phase4/*.log
+experiments/phase4/
+external/

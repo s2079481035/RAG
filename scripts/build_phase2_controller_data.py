@@ -101,9 +101,9 @@ def evidence_view(chunk_ids: list[str], chunk_by_id: dict, gold: list[dict]) -> 
     }
 
 
-def render_trajectory_report(distribution: dict) -> str:
+def render_trajectory_report(distribution: dict, phase: int = 2) -> str:
     lines = [
-        "# Phase 2 Evidence Trajectory Audit",
+        f"# Phase {phase} Evidence Trajectory Audit",
         "",
         "The Controller ladder is evaluated under both raw-stage evidence and cumulative evidence memory. Cumulative coverage is asserted to be non-decreasing during data construction.",
     ]
@@ -145,29 +145,37 @@ def main() -> None:
     retrieval_config = json.loads(args.retrieval_config.read_text(encoding="utf-8"))
     controller_config = json.loads(args.controller_config.read_text(encoding="utf-8"))
     splits = [value.strip() for value in args.splits.split(",") if value.strip()]
-    if set(splits) - {"train", "dev", "test"} or not splits:
+    valid_splits = set(
+        retrieval_config.get("dataset", {}).get("valid_splits", ["train", "dev", "test"])
+    )
+    if set(splits) - valid_splits or not splits:
         raise ValueError(f"Invalid split list: {splits}")
     known_variants = {item["name"] for item in retrieval_config["chunking"]["variants"]}
     if args.variant not in known_variants:
         raise ValueError(f"Unknown variant: {args.variant}")
-    if "test" in splits:
+    evaluation_split = retrieval_config.get("dataset", {}).get("evaluation_split", "test")
+    if evaluation_split in splits:
         selected = retrieval_config["retrieval_evaluation"]["selected_variant_after_dev"]
         if selected != args.variant:
-            raise ValueError("Test Controller data is locked to the dev-selected chunk variant")
+            raise ValueError("Held-out Controller data is locked to the frozen chunk variant")
 
+    data_root = ROOT / retrieval_config.get("outputs", {}).get("data_dir", "data/phase2")
+    result_root = ROOT / retrieval_config.get("outputs", {}).get("result_dir", "results/phase2")
     chunks = read_jsonl(
-        ROOT / "data" / "phase2" / "chunks" / f"{args.variant}.jsonl"
+        data_root / "chunks" / f"{args.variant}.jsonl"
     )
     chunk_by_id = {chunk["chunk_id"]: chunk for chunk in chunks}
     questions = json.loads(
-        (ROOT / "data" / "phase2" / "questions.json").read_text(encoding="utf-8")
+        (data_root / "questions.json").read_text(encoding="utf-8")
     )
     ladder = controller_config["controller_ladder"]
     parsed_ladder = [parse_stage(stage) for stage in ladder]
-    output_dir = ROOT / "data" / "phase2" / "controller" / args.variant
+    output_dir = data_root / "controller" / args.variant
     output_paths = {split: output_dir / f"{split}.jsonl" for split in splits}
     distribution_path = output_dir / f"label_distribution_{'_'.join(splits)}.json"
-    report_path = ROOT / "docs" / "phase2_trajectory_audit.md"
+    report_path = ROOT / retrieval_config.get("outputs", {}).get(
+        "trajectory_audit", "docs/phase2_trajectory_audit.md"
+    )
     manifest_path = output_dir / f"dataset_manifest_{'_'.join(splits)}.json"
     targets = [*output_paths.values(), distribution_path, report_path, manifest_path]
     existing = [path for path in targets if path.exists()]
@@ -186,10 +194,10 @@ def main() -> None:
 
     for split in splits:
         ranking_path = (
-            ROOT / "results" / "phase2" / "retrieval" / args.variant / f"{split}.jsonl"
+            result_root / "retrieval" / args.variant / f"{split}.jsonl"
         )
         if not ranking_path.exists():
-            raise FileNotFoundError(f"Run Phase 2 retrieval first: {ranking_path}")
+            raise FileNotFoundError(f"Run configured retrieval first: {ranking_path}")
         ranking_sources[split] = portable_path(ranking_path, ROOT)
         ranking_records = read_jsonl(ranking_path)
         output_records = []
@@ -197,7 +205,7 @@ def main() -> None:
             qid = retrieval_record["question_id"]
             question = questions[qid]
             if not question.get("gold_annotation_valid", True):
-                if split != "train":
+                if split != "train" and split != "train_core":
                     raise ValueError(f"Invalid gold annotation outside train: {qid}")
                 excluded_invalid[split] += 1
                 continue
@@ -238,7 +246,7 @@ def main() -> None:
                         "split": split,
                         "question": question["question"],
                         "answer": question["answer"],
-                        "question_type": question["type"],
+                        "question_type": question.get("type", question.get("question_type")),
                         "gold_supporting_facts": question["gold_supporting_facts"],
                         "gold_supporting_fact_count": len(
                             {
@@ -305,12 +313,16 @@ def main() -> None:
         "by_split": by_split,
     }
     write_json_atomic(distribution_path, distribution)
-    report_path.write_text(render_trajectory_report(distribution), encoding="utf-8")
+    report_path.write_text(
+        render_trajectory_report(distribution, int(retrieval_config.get("phase", 2))),
+        encoding="utf-8",
+    )
     manifest = {
         "schema_version": 1,
         "created_at_utc": utc_now(),
-        "phase": 2,
-        "phase1_frozen_commit": retrieval_config["phase1_frozen_commit"],
+        "phase": int(retrieval_config.get("phase", 2)),
+        "phase1_frozen_commit": retrieval_config.get("phase1_frozen_commit"),
+        "phase3b_frozen_commit": retrieval_config.get("phase3b_freeze", {}).get("commit"),
         "git_commit": git_commit(ROOT),
         "retrieval_config": portable_path(args.retrieval_config, ROOT),
         "controller_config": portable_path(args.controller_config, ROOT),
