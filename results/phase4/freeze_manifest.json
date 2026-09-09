@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-09T09:08:32.938824+00:00",
+  "phase": 4,
+  "git_commit": "f2ced718aca57eb76990d1fd078001067bb2aee1",
+  "phase3b_tag": "phase3b_final",
+  "phase3b_tag_commit": "1ed762c7fa527a606c5d4273b7f1563cc0b0c5d0",
+  "checkpoint": {
+    "path": "experiments/phase3a/lambda_dev/lambda_0.1_seed42/best.pt",
+    "bytes": 1112262511,
+    "sha256": "c9b768cd51b21aa8013dabb7597de056b2f04580e275d46d6a5897b7d5c5225a"
+  },
+  "controller": {
+    "selected_group": "score_aware_coverage_auxiliary",
+    "packing": "score_aware_packing",
+    "evidence_mode": "cumulative",
+    "coverage_auxiliary": true,
+    "coverage_lambda": 0.1,
+    "sampling": "natural",
+    "temperature": 1.0732333511122047,
+    "primary_policy": {
+      "calibration_method": "temperature",
+      "selection": "conservative",
+      "risk_target": 0.1,
+      "status": "selected",
+      "threshold": 0.93,
+      "observed_false_stop_rate": 0.046875,
+      "fsr_ci95_low": 0.015034788463696554,
+      "fsr_ci95_high": 0.08548177083333328,
+      "average_retrieved_chunks": 9.022,
+      "estimated_average_retrieval_latency_ms": 41.29056108862278,
+      "average_reranker_calls": 0.178,
+      "average_final_stage": 1.532
+    }
+  },
+  "retrieval": {
+    "dense_model": "BAAI/bge-large-en-v1.5",
+    "document_text": "title_and_chunk_text",
+    "document_text_template": "[TITLE] {document_title} [TEXT] {chunk_text}",
+    "query_instruction": null,
+    "dense_normalize_embeddings": true,
+    "faiss_index": "IndexFlatIP",
+    "bm25_implementation": "rank_bm25.BM25Okapi",
+    "bm25_parameters": "library_defaults",
+    "rrf_k": 60,
+    "dense_candidate_k": 200,
+    "bm25_candidate_k": 200,
+    "hybrid_candidate_k": 20,
+    "reranker_model": "BAAI/bge-reranker-v2-m3",
+    "reranker_max_length": 512,
+    "saved_ranking_depth": 20
+  },
+  "chunking": {
+    "tokenizer": "BAAI/bge-large-en-v1.5",
+    "include_special_tokens_in_budget": false,
+    "sentence_separator": " ",
+    "overlap_sentences": 0,
+    "variants": [
+      {
+        "name": "sentence_256",
+        "target_tokens": 256
+      }
+    ],
+    "default_candidate": "sentence_256"
+  },
+  "generation": {
+    "experiment_name": "phase3a_hotpotqa_generation_v1",
+    "selection_split": "dev",
+    "test_is_evaluation_only": true,
+    "variant": "sentence_256",
+    "evidence_mode": "cumulative",
+    "stage": "rerank@20",
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_template": "Answer the question using only the context. Return only the short final answer in English. Do not explain your answer and do not repeat the question. If the context is insufficient, return exactly: cannot determine.\n\nContext:\n{context}\n\nQuestion: {question}\n\nFinal answer:",
+    "max_input_tokens": 4096,
+    "max_new_tokens": 32,
+    "decoding": {
+      "do_sample": false,
+      "temperature": null,
+      "num_beams": 1
+    },
+    "answer_extraction": "first_nonempty_line_strip_answer_prefix",
+    "normalization": "official_hotpotqa_lower_punctuation_articles_whitespace",
+    "manual_dev_audit_count": 50,
+    "seed": 42
+  },
+  "models": {
+    "dense": {
+      "configured_name": "BAAI/bge-large-en-v1.5",
+      "local_path": "/home/sunjb/RAG/ekrag/ekrag/models/bge-large-en-v1.5",
+      "config_sha256": "446712fac367857b4b1302762fe1cd7bfa8b3c4b77b4dc5d77c4025407660896"
+    },
+    "reranker": {
+      "configured_name": "BAAI/bge-reranker-v2-m3",
+      "local_path": "/home/sunjb/RAG/ekrag/ekrag/models/bge-reranker-v2-m3",
+      "config_sha256": "13dcd6c31d9fec9d1d8e158702072f62d7fa7d312a64b9fe057bec9a08cfe41a"
+    },
+    "generator": {
+      "configured_name": "Qwen/Qwen2.5-7B-Instruct",
+      "local_path": "/home/sunjb/RAG/ekrag/ekrag/models/Qwen2.5-7B-Instruct",
+      "config_sha256": "7463bb0ea78315365e6c6b74de4e73bbcc8359dfb0c5a737584e077d42c0b03c"
+    }
+  },
+  "files": {
+    "phase4_protocol": {
+      "path": "configs/phase4/protocol.json",
+      "sha256": "672307eca02a93af495268856530a5ad80e9adb7691dd840aaded160e2529ad4"
+    },
+    "final_controller_selection": {
+      "path": "results/phase3/final_controller_selection.json",
+      "sha256": "79d2b8e0c8fed8e5e7963deac2ad027992fdbd9ffdba5e41523463281af35010"
+    },
+    "risk_gate": {
+      "path": "results/phase3b/test_gate.json",
+      "sha256": "2b147dba5b675b704a9d4fb0068defa1ae6d70f0e41f6ab89201c8c63158459b"
+    },
+    "temperature_scaling": {
+      "path": "results/phase3b/temperature_scaling.json",
+      "sha256": "2664219e9b3d866efa1b29bea8183b78cb289fb56e11b06ea84bb3d9420261a5"
+    },
+    "generation_config": {
+      "path": "configs/phase3a/generation.json",
+      "sha256": "76df4cbd8517f6acffdda6befa3ac5fde78db6e36281c892c06b4d224e308bbf"
+    },
+    "answer_evaluator": {
+      "path": "scripts/phase3a_generation_utils.py",
+      "sha256": "83ecea145aad0547e3b13af34338b3a15df4ee1c9f59d083ca7d674703b0de4e"
+    },
+    "latency_retrieval": {
+      "path": "scripts/benchmark_phase3b_retrieval.py",
+      "sha256": "4b6ecae81c8b834c321ef1b0a12d3b4b140034765e6976baad3b33a502eff7ac"
+    },
+    "latency_controller": {
+      "path": "scripts/benchmark_phase3b_controller.py",
+      "sha256": "45821068fa0da4a8b69f1c658d49d026bbf3d507b819ab8bc3a1fa57db74178d"
+    }
+  },
+  "environment": {
+    "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.39",
+    "packages": {
+      "torch": "2.5.1+cu121",
+      "transformers": "4.44.2",
+      "sentence-transformers": "5.6.0",
+      "datasets": "5.0.0",
+      "faiss-cpu": "1.14.3",
+      "faiss-gpu": "1.14.3",
+      "rank-bm25": "0.2.2",
+      "numpy": "1.26.4",
+      "scikit-learn": "1.9.0"
+    },
+    "git_commit": "f2ced718aca57eb76990d1fd078001067bb2aee1",
+    "cuda_visible_devices": null,
+    "cuda": "12.1",
+    "gpus": [
+      "NVIDIA GeForce RTX 4090",
+      "NVIDIA GeForce RTX 4090"
+    ]
+  }
+}
