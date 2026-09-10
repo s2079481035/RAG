@@ -99,6 +99,13 @@ $PYTHON_BIN scripts/compare_phase4_retrieval_runs.py \
   --output results/phase4/2wiki/retrieval_smoke/dev_policy_100_parallel8/parity.json
 ```
 
+After testing both parallel BM25 and batched FAISS, freeze the execution-only choice:
+
+```bash
+$PYTHON_BIN scripts/select_phase4_retrieval_execution.py
+cat docs/phase4/retrieval_execution_audit.md
+```
+
 First run Train-derived splits:
 
 ```bash
