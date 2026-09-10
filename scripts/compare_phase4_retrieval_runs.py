@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -29,6 +30,14 @@ def read_by_question(path: Path) -> dict[str, dict]:
                 raise ValueError(f"Duplicate question_id {qid!r} in {path}")
             rows[qid] = row
     return rows
+
+
+def sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
 
 
 def compare_value(left, right, path: str, atol: float, differences: list[str]) -> None:
@@ -84,7 +93,9 @@ def main() -> None:
     result = {
         "schema_version": 1,
         "left": str(args.left),
+        "left_sha256": sha256(args.left),
         "right": str(args.right),
+        "right_sha256": sha256(args.right),
         "questions": len(left_rows),
         "absolute_float_tolerance": args.atol,
         "latency_ignored": True,
