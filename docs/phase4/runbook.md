@@ -70,6 +70,20 @@ $PYTHON_BIN scripts/build_phase2_index.py \
 
 ## 4. Retrieval
 
+Before any full split, run an isolated throughput check. Its deterministic subset is
+for runtime and memory estimation only and must not be reported as an experiment result:
+
+```bash
+$PYTHON_BIN scripts/run_phase2_retrieval.py \
+  --config configs/phase4/protocol.json \
+  --variant sentence_256 \
+  --splits dev_policy \
+  --limit-per-split 100 \
+  --output-label dev_policy_100 \
+  --dense-model /path/to/bge-large-en-v1.5 \
+  --reranker-model /path/to/bge-reranker-v2-m3
+```
+
 First run Train-derived splits:
 
 ```bash

@@ -18,6 +18,7 @@ from phase4_score_threshold import (  # noqa: E402
     fit_stage_minmax,
     minmax_score,
 )
+from run_phase2_retrieval import select_questions_for_run  # noqa: E402
 
 
 def record(qid="q1"):
@@ -100,6 +101,19 @@ class Phase42WikiTests(unittest.TestCase):
         heldout = [stage_row("q3", "dense@5", "dense", 0.8)]
         scored = attach_normalized_scores(heldout, parameters)
         self.assertEqual(scored[0]["normalized_score"], 1.0)
+
+    def test_retrieval_smoke_limit_is_deterministic_per_split(self):
+        questions = {
+            "z": {"question_id": "z", "split": "train_core"},
+            "b": {"question_id": "b", "split": "dev_policy"},
+            "a": {"question_id": "a", "split": "train_core"},
+            "c": {"question_id": "c", "split": "dev_policy"},
+        }
+        selected, eligible = select_questions_for_run(
+            questions, ["train_core", "dev_policy"], 1
+        )
+        self.assertEqual([row["question_id"] for row in selected], ["a", "b"])
+        self.assertEqual(eligible, {"train_core": 2, "dev_policy": 2})
 
 
 if __name__ == "__main__":

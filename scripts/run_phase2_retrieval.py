@@ -39,6 +39,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--query-batch-size", type=int, default=64)
     parser.add_argument("--reranker-batch-size", type=int, default=64)
     parser.add_argument("--reranker-query-batch", type=int, default=32)
+    parser.add_argument(
+        "--limit-per-split",
+        type=int,
+        help="Deterministic per-split question limit for non-formal throughput checks",
+    )
+    parser.add_argument(
+        "--output-label",
+        help="Required isolated output label when --limit-per-split is used",
+    )
     parser.add_argument("--allow-download", action="store_true")
     parser.add_argument("--force", action="store_true")
     return parser.parse_args()
@@ -79,18 +88,55 @@ def validate_protocol(config: dict, variant: str, splits: list[str]) -> None:
             raise ValueError(f"Held-out evaluation is locked to variant {selected!r}")
 
 
+def select_questions_for_run(
+    questions: dict[str, dict], splits: list[str], limit_per_split: int | None
+) -> tuple[list[dict], dict[str, int]]:
+    eligible = {
+        split: [question for question in questions.values() if question["split"] == split]
+        for split in splits
+    }
+    eligible_counts = {split: len(rows) for split, rows in eligible.items()}
+    if limit_per_split is None:
+        selected = [
+            question for question in questions.values() if question["split"] in set(splits)
+        ]
+    else:
+        selected = []
+        for split in splits:
+            selected.extend(
+                sorted(eligible[split], key=lambda row: row["question_id"])[
+                    :limit_per_split
+                ]
+            )
+    return selected, eligible_counts
+
+
 def main() -> None:
     args = parse_args()
     config = json.loads(args.config.read_text(encoding="utf-8"))
     splits = [value.strip() for value in args.splits.split(",") if value.strip()]
     validate_protocol(config, args.variant, splits)
+    if args.limit_per_split is not None:
+        if args.limit_per_split < 1:
+            raise ValueError("--limit-per-split must be positive")
+        if not args.output_label:
+            raise ValueError("--output-label is required with --limit-per-split")
+    elif args.output_label:
+        raise ValueError("--output-label is only valid with --limit-per-split")
+    if args.output_label and (
+        not args.output_label.replace("-", "").replace("_", "").isalnum()
+    ):
+        raise ValueError("--output-label may contain only letters, numbers, '-' and '_'")
 
     data_dir = ROOT / config.get("outputs", {}).get("data_dir", "data/phase2")
     result_dir = ROOT / config.get("outputs", {}).get("result_dir", "results/phase2")
     chunk_path = data_dir / "chunks" / f"{args.variant}.jsonl"
     question_path = data_dir / "questions.json"
     index_dir = data_dir / "indices" / args.variant
-    output_dir = result_dir / "retrieval" / args.variant
+    if args.limit_per_split is None:
+        output_dir = result_dir / "retrieval" / args.variant
+    else:
+        output_dir = result_dir / "retrieval_smoke" / args.output_label / args.variant
     output_paths = {split: output_dir / f"{split}.jsonl" for split in splits}
     manifest_path = output_dir / f"run_manifest_{'_'.join(splits)}.json"
     existing = [path for path in [*output_paths.values(), manifest_path] if path.exists()]
@@ -112,9 +158,9 @@ def main() -> None:
     chunks = read_jsonl(chunk_path)
     chunk_by_id = {chunk["chunk_id"]: chunk for chunk in chunks}
     questions = json.loads(question_path.read_text(encoding="utf-8"))
-    selected_questions = [
-        question for question in questions.values() if question["split"] in set(splits)
-    ]
+    selected_questions, eligible_counts = select_questions_for_run(
+        questions, splits, args.limit_per_split
+    )
     if not selected_questions:
         raise ValueError("No questions selected")
 
@@ -281,7 +327,14 @@ def main() -> None:
         "git_commit": git_commit(ROOT),
         "config": portable_path(args.config, ROOT),
         "variant": args.variant,
+        "run_scope": "formal" if args.limit_per_split is None else "smoke_throughput_only",
+        "limit_per_split": args.limit_per_split,
+        "output_label": args.output_label,
+        "selection_order": (
+            "source_order" if args.limit_per_split is None else "question_id_ascending"
+        ),
         "splits": splits,
+        "eligible_question_counts": eligible_counts,
         "question_counts": {
             split: sum(record["split"] == split for record in records) for split in splits
         },
