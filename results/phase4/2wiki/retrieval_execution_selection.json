@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-10T09:10:11.721367+00:00",
+  "phase": 4,
+  "git_commit": "1128e8308e8968d11ea3340ffd082c0ff5e97853",
+  "selection_scope": "non_formal_throughput_and_parity_gate",
+  "effect_metrics_consulted": false,
+  "selected": {
+    "bm25_workers": 8,
+    "dense_search_batch_size": 1
+  },
+  "accepted_optimization": "parallel_bm25_exact_parity",
+  "rejected_optimization": "batched_faiss_ranking_parity_failure",
+  "questions": 100,
+  "serial_timed_seconds": 137.26052955398336,
+  "selected_timed_seconds": 34.14476352930069,
+  "timed_pipeline_speedup": 4.019958417231263,
+  "serial_first_stage_seconds": 130.69295043079183,
+  "selected_first_stage_seconds": 27.627408135682344,
+  "first_stage_speedup": 4.730554157991917,
+  "estimated_hours_excluding_startup": {
+    "dev_calibration": 0.18969313071833716,
+    "dev_policy": 0.18969313071833716,
+    "heldout": 1.1927904059569043,
+    "train_core": 15.503050494217542
+  },
+  "evidence": {
+    "serial_manifest": {
+      "path": "results/phase4/2wiki/retrieval_smoke/dev_policy_100/sentence_256/run_manifest_dev_policy.json",
+      "sha256": "a7fa8dc72888b60fb77f26c9c5bf05173517249304489ea404d0ef25b7cc3546"
+    },
+    "parallel_manifest": {
+      "path": "results/phase4/2wiki/retrieval_smoke/dev_policy_100_parallel8/sentence_256/run_manifest_dev_policy.json",
+      "sha256": "3a813211a59b3e37bab0e325f4bfc25035f562f1f2b881e9a4265b5d5a25a056"
+    },
+    "parallel_parity": {
+      "path": "results/phase4/2wiki/retrieval_smoke/dev_policy_100_parallel8/parity.json",
+      "sha256": "f231cef469a460b01806fb809c89c2dc9998d0489bcaf9694d57dc2662c8a78a"
+    },
+    "batched_manifest": {
+      "path": "results/phase4/2wiki/retrieval_smoke/dev_policy_100_parallel8_batch512/sentence_256/run_manifest_dev_policy.json",
+      "sha256": "c6f745a60cddf221157a62c5e4631b066e341a0c247c2e4431f596b60e0fef97"
+    },
+    "batched_parity": {
+      "path": "results/phase4/2wiki/retrieval_smoke/dev_policy_100_parallel8_batch512/parity.json",
+      "sha256": "224c52aca3a1d55c0fc6cbbf394abde821494ca8c8190608425538afb126f05a"
+    },
+    "preparation_manifest": {
+      "path": "data/2wiki/preparation_manifest.json",
+      "sha256": "3f8c07a8a1c8776aa9a244a7e5d11a406b8273611e6b6a4bce8f47e2c24efd9e"
+    }
+  }
+}

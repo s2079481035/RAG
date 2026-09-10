@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "left": "results/phase4/2wiki/retrieval_smoke/dev_policy_100/sentence_256/dev_policy.jsonl",
+  "left_sha256": "25db959e5a6d6ed7ff56047d88df6471779b500222a5399bfda4943f37854a96",
+  "right": "results/phase4/2wiki/retrieval_smoke/dev_policy_100_parallel8/sentence_256/dev_policy.jsonl",
+  "right_sha256": "9d8db0a9e791fb16c30d7f0a9ca74f8329f59e45cd4b5c0c1f48dbf8db8464ee",
+  "questions": 100,
+  "absolute_float_tolerance": 1e-06,
+  "latency_ignored": true,
+  "matches": true,
+  "first_differences": []
+}

@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "left": "results/phase4/2wiki/retrieval_smoke/dev_policy_100/sentence_256/dev_policy.jsonl",
+  "left_sha256": "25db959e5a6d6ed7ff56047d88df6471779b500222a5399bfda4943f37854a96",
+  "right": "results/phase4/2wiki/retrieval_smoke/dev_policy_100_parallel8_batch512/sentence_256/dev_policy.jsonl",
+  "right_sha256": "ccc21cd5a7cd96d205486681a2fe333a0327cca231665789b6cfdc0b468ace7c",
+  "questions": 100,
+  "absolute_float_tolerance": 1e-06,
+  "latency_ignored": true,
+  "matches": false,
+  "first_differences": [
+    "020f25320bdb11eba7f7acde48001122.rankings.hybrid[18].dense_rank: 166 != 167",
+    "020f25320bdb11eba7f7acde48001122.rankings.hybrid[18].rrf_score: 0.015177466933104958 != 0.015157974515655346",
+    "020f25320bdb11eba7f7acde48001122.rankings.rerank[13].dense_rank: 166 != 167",
+    "020f25320bdb11eba7f7acde48001122.rankings.rerank[13].rrf_score: 0.015177466933104958 != 0.015157974515655346",
+    "022340620bdb11eba7f7acde48001122.rankings.dense[0].chunk_id: 'article_7d50c2706d008c92c207_b256_s0000-0000' != 'article_af71b0f5f5c67d9c5353_b256_s0000-0000'",
+    "022340620bdb11eba7f7acde48001122.rankings.dense[1].chunk_id: 'article_af71b0f5f5c67d9c5353_b256_s0000-0000' != 'article_7d50c2706d008c92c207_b256_s0000-0000'",
+    "022340620bdb11eba7f7acde48001122.rankings.hybrid[0].dense_rank: 2 != 1",
+    "022340620bdb11eba7f7acde48001122.rankings.hybrid[0].rrf_score: 0.03252247488101534 != 0.03278688524590164",
+    "022340620bdb11eba7f7acde48001122.rankings.hybrid[1].dense_rank: 1 != 2",
+    "022340620bdb11eba7f7acde48001122.rankings.hybrid[1].rrf_score: 0.03252247488101534 != 0.03225806451612903",
+    "022340620bdb11eba7f7acde48001122.rankings.rerank[0].dense_rank: 2 != 1",
+    "022340620bdb11eba7f7acde48001122.rankings.rerank[0].rrf_score: 0.03252247488101534 != 0.03278688524590164",
+    "022340620bdb11eba7f7acde48001122.rankings.rerank[1].dense_rank: 1 != 2",
+    "022340620bdb11eba7f7acde48001122.rankings.rerank[1].rrf_score: 0.03252247488101534 != 0.03225806451612903",
+    "05f9cb080bda11eba7f7acde48001122.rankings.dense[14].chunk_id: 'article_636d8832a5e658b42187_b256_s0000-0000' != 'article_17ecfb16b8a186ab7998_b256_s0000-0000'",
+    "05f9cb080bda11eba7f7acde48001122.rankings.dense[15].chunk_id: 'article_17ecfb16b8a186ab7998_b256_s0000-0000' != 'article_636d8832a5e658b42187_b256_s0000-0000'",
+    "078a54b608d211ebbd95ac1f6bf848b6.rankings.hybrid[10].bm25_rank: 91 != 92",
+    "078a54b608d211ebbd95ac1f6bf848b6.rankings.hybrid[10].chunk_id: 'article_75f9177eb450d1266973_b256_s0000-0000' != 'article_90e1b0cb049710340044_b256_s0000-0000'",
+    "078a54b608d211ebbd95ac1f6bf848b6.rankings.hybrid[10].rrf_score: 0.018968195568637068 != 0.01892462638076673",
+    "078a54b608d211ebbd95ac1f6bf848b6.rankings.hybrid[11].bm25_rank: 92 != 91"
+  ]
+}

@@ -1,0 +1,5851 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-09T10:24:48.598470+00:00",
+  "phase": 4,
+  "phase3b_frozen_commit": "1ed762c",
+  "git_commit": "c66690f3754e81c4a89da786bb7d7ee489770076",
+  "config": "configs/phase4/protocol.json",
+  "sources": {
+    "train": {
+      "path": "data/2wiki/source/train.json",
+      "sha256": "b3fddb4d5bb42cd797919cad67616545be51b24740e0a7dabdae7bf76b8f7bfa"
+    },
+    "dev": {
+      "path": "data/2wiki/source/dev.json",
+      "sha256": "48b9bdc69654dc580fda5f935a48b88cb89f11887587310af60d406c8d0111a6"
+    }
+  },
+  "question_counts": {
+    "dev_calibration": 2000,
+    "dev_policy": 2000,
+    "heldout": 12576,
+    "train_core": 163454
+  },
+  "split_unit": "question_id",
+  "split_seed": 42,
+  "split_sha256": "c7828fe62192601a57804a3067c277d7b77d8d852e4c8994123419ff85749e8e",
+  "corpus_scope": {
+    "name": "shared benchmark-context corpus",
+    "sources": [
+      "official_train.context",
+      "official_dev.context"
+    ],
+    "deduplication": "exact_document_title_plus_exact_joined_text",
+    "not_full_wikipedia": true
+  },
+  "corpus_statistics": {
+    "raw_document_count": 1800300,
+    "unique_title_count": 384857,
+    "unique_text_count": 414664,
+    "deduplicated_document_count": 415892
+  },
+  "dedup": {
+    "document_instances": 1800300,
+    "canonical_articles": 415892,
+    "duplicate_title_identical_text_groups": 166924,
+    "duplicate_title_identical_text_instances": 1552481,
+    "duplicate_title_identical_text_extra_instances": 1385557,
+    "max_duplicate_group_size": 51109,
+    "same_title_different_text_titles": 29734,
+    "same_title_different_text_variants": 59620,
+    "different_title_identical_text_groups": 49,
+    "different_title_identical_text_titles": 128,
+    "sentence_segmentation_conflicts": [
+      {
+        "document_title": "...And God Created Them",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "...e vennero in quattro per uccidere Sartana!",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "1987: When the Day Comes",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "3 Needles",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "30 Below Zero",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "7 Assassins",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "97 Aces Go Places",
+        "instances": 11,
+        "segmentations": 2
+      },
+      {
+        "document_title": "A Girl Like Her",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "A Jolly Bad Fellow",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "A Kiss in a Taxi",
+        "instances": 11,
+        "segmentations": 2
+      },
+      {
+        "document_title": "A Man - That's All",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "A Mero Hajur 3",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "A Nice Girl Like Me",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "A Night Like This (film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "A Rare Bird",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "A Relic of Old Japan",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "A Spiral of Mist",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "A Thousand and One Wives",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "A Woman Alone (1936 film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "A Woman Scorned: The Betty Broderick Story",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "A Woman Without Love",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "A World Apart (film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "A. Edward Sutherland",
+        "instances": 52,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Aana Valarthiya Vanampadi",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Aastha: In the Prison of Spring",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Abbiamo vinto!",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "About Last Night (2014 film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Absolute Evil",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Acolytes (film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Across the Line (2015 film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Adrian Brunel",
+        "instances": 14,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Agent 505: Death Trap in Beirut",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ah! La Barbe",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Aida Begić",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Alain Robbe-Grillet",
+        "instances": 17,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Alan J. Pakula",
+        "instances": 9,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Alangkar",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Alarm at Midnight",
+        "instances": 19,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Albert Lewin",
+        "instances": 21,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Albert S. Rogell",
+        "instances": 170,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Aleksander Ford",
+        "instances": 24,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Alexander Korda",
+        "instances": 53,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Alexis Granowsky",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Alias Mr. Twilight",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Alias the Night Wind",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "All In (film)",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "All Roads Lead to Rome (2015 film)",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "All Souls Day (film)",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "All Things Fair",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Allah Verdi Mirza Farman Farmaian",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Allauddin Khan",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Always Be My Maybe (2019 film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Amanece, que no es poco",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Amarillo by Morning (film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "American Drug War: The Last White Hope",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "American Pluck",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "And No One Could Save Her",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "And So They Were Married",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "And That on Monday Morning",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "And Then What?",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Andreas Bethmann",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "André Cayatte",
+        "instances": 33,
+        "segmentations": 2
+      },
+      {
+        "document_title": "André Charpak",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Andy Hardy Comes Home",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Angel, Angel, Down We Go",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Angelo My Love",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Anil Das",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Answering the Call: Ground Zero's Volunteers",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Anthony Kaun Hai?",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Antonio Isasi-Isasmendi",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Antonio Muñoz Degrain",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Antonio Nuić",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Anybody Here Seen Kelly?",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Arcady Boytler",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Archduchess Margarete Sophie of Austria",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Archduchess Margaretha of Austria",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Arctic Flight",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Are These Our Children",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Are We Men or Corporals?",
+        "instances": 17,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Are You Listening? (film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Are You a Mason? (1934 film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Army Surgeon",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Army of Shadows",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Arne Skouen",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Arne Sucksdorff",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Arriba el Telón o el Patio de la Morocha",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Arriba las mujeres",
+        "instances": 13,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Art. 519 codice penale",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Arthur Maria Rabenalt",
+        "instances": 40,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Arthur Penn",
+        "instances": 14,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Artist (film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Asim Raza",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "At Last... Bullamakanka: The Motion Picture",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Atlantic.",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Attack of the 50 Ft. Woman (1993 film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "August Blom",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Augusta, Lady Gregory",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Auld Lang Syne (1937 film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Australia After Dark",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Autumn Moon",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Avakasi",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Axolotl Overkill",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Bab'Aziz",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Baby Bumps",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Baby Doll",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Bachelor Party (2012 film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Balan (film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Balls Out (2014 film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Batman v Superman: Dawn of Justice",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Battle of Roses",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Beah: A Black Woman Speaks",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Beauties of the Night",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Been Down So Long It Looks Like Up to Me (film)",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Bella (2017 film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Berlin: Symphony of a Metropolis",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Bernard, son of Charles Martel",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Bertha Bay-Sa Pan",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Better Late Than Never (1979 film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Bettie Page Reveals All",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Beware! (1919 film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Bill Forsyth",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Bin Bunluerit",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Birt Acres",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Black Fox: The Rise and Fall of Adolf Hitler",
+        "instances": 24,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Bloodfist VI: Ground Zero",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Blue Gate Crossing",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Blue Streak (film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Boaz Yakin",
+        "instances": 9,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Bogdan Žižić",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Bomgay",
+        "instances": 11,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Bommalattam (1968 film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Bopha!",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Boston Blackie's Chinese Venture",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Boulevard (1960 film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Bound and Gagged (serial)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Brian Trenchard-Smith",
+        "instances": 17,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Brink of Disaster!",
+        "instances": 13,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Bruce Springsteen",
+        "instances": 36,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Budd Boetticher",
+        "instances": 30,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Buddy Goes West",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Burroughs: The Movie",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Bury Me Dead",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Buselli–Wallarab Jazz Orchestra",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Butch Minds the Baby",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Buy the Ticket, Take the Ride: Hunter S. Thompson on Film",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "C. I. Mahadevan 5 Adi 4 Inchu",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "C.C. and Company",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Cake: A Wedding Story",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Captain Benoit",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Captain Poison (1951 film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Captain Tugboat Annie",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Carl Froelich",
+        "instances": 68,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Carl-Heinz Schroth",
+        "instances": 17,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Carlo Giuliani, Boy",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Carlos F. Borcosque",
+        "instances": 56,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Carol I (film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Catfight (film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Catrin ferch Owain Glyndŵr",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Charge It to Me",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Charles G. Clarke",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Charles Martin (director)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Charles Willoughby, 10th Baron Willoughby of Parham",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Charles-Félix Tavano",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Chasing Danger",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Chavez Cage of Glory",
+        "instances": 22,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Chesty: A Tribute to a Legend",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Cheyenne Takes Over",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Chile: When Will It End?",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Choices: The Movie",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Christiane F. (film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Christopher Guest",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Chuck Jones",
+        "instances": 31,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Church of God (Huntsville, Alabama)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Citizen USA: A 50 State Road Trip",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "City Under the Sea",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "City of Life and Death",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Claude Autant-Lara",
+        "instances": 33,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Claws for Alarm",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Coffee, Tea or Me? (film)",
+        "instances": 20,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Come On Marines!",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Comedy!",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Confusion Na Wa",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Conquest of Cheyenne",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Cornered! (film)",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Counsel for Romance",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Count the Hours",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Crack o' Dawn",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Crash!",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Crimson Curtain (1952 film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Cuando calienta el sol (film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Cyd Hayman",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Daddy Gets Married",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Dahmer (film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Dale Earnhardt",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Daman (film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Dames Ahoy!",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Dan Gilroy",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Dan O'Bannon",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Danger – Love at Work",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Danger: Diabolik",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Daniel Espinosa",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Daniel – Der Zauberer",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Dark Summer (film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Daud (film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Dav Pech",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "David Carnegie, 10th Earl of Northesk",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "David Cronenberg",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "David and Bathsheba (film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Dawson City: Frozen Time",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Dead On: The Life and Cinema of George A. Romero",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Deadline – U.S.A.",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Deadwater (film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Death Rides the Range",
+        "instances": 16,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Deep Blue Sea (1999 film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Deep Gold",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Delbert Mann",
+        "instances": 23,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Deliver Me (film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Dennis Hopper",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Denzel Washington",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Der Mann, der sich in Luft auflöste",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Desnuda en la arena",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Det brenner i natt!",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Devashish Makhija",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Dharm Adhikari",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Diamond Safari (1966 film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Die Fälschung",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Dil Aashna Hai",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Dil Toh Baccha Hai Ji",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Dilwale Kabhi Na Hare",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Disgraced!",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Divine Secrets of the Ya-Ya Sisterhood (film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Do Men Love Women?",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Doctor Morelle",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Doctor, You've Got to Be Kidding!",
+        "instances": 11,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Does It Pay?",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Doin' Time (film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Doin' Time on Planet Earth",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Dokuz Dağın Efesi",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Don Juan Quilligan",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Don't Take Me Home",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Donald Crisp",
+        "instances": 49,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Dongala Mutha",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Doni Sagali",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Dot.Kill",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Douglas Sirk",
+        "instances": 26,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Dracula: Prince of Darkness",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Drei Liebesbriefe aus Tirol",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Drive-In (film)",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Dunston Checks In",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "E a Vida Continua...",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "E. V. V. Satyanarayana",
+        "instances": 78,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Eagle Harbor High School",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "East, West, East: The Final Sprint",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Easy Come, Easy Go (1928 film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Easy Come, Easy Go (1947 film)",
+        "instances": 116,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ebba von Eckermann",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Eduardo Morera",
+        "instances": 10,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Edurmaneli Ganda Pakkadmaneli Hendthi",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Edward Buzzell",
+        "instances": 91,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Edward Manners, 3rd Earl of Rutland",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Edward Skinner",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Edward the Confessor",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ee Kanni Koodi",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ee Mazha Then Mazha",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ee Preethi Yeke Bhoomi Melide",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Eenam",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ekachai Uekrongtham",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ekk Deewana Tha",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "El Barco sale a las diez",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "El diablo no es tan diablo",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Elisedd ap Cyngen",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Eliza Comes to Stay",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Elizabeth de Burghersh, 3rd Baroness Burghersh",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Elizabeth: The Golden Age",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Emil-Edwin Reinert",
+        "instances": 11,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Emilio Ghione",
+        "instances": 14,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Emperor of the North Pole",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Empress Dowager Dong",
+        "instances": 25,
+        "segmentations": 2
+      },
+      {
+        "document_title": "En Pondatti Nallava",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "En Thangai Kalyani",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "En el viejo Buenos Aires",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "En ven i bolignøden",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ernest Lehman",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ernesto García Cabral",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Erwin C. Dietrich",
+        "instances": 10,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Especialista en chamacas",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Espionage Agent",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Esta noche mejor no",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Eve and the Serpent",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Everybody's Famous!",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Everything Happens to Me (1938 film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Face Down (film)",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Familien Pille som Spejdere",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Fanchon the Cricket",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Fanny's Journey",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Farewell Again",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Fast, Cheap & Out of Control",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Finnish Blood Swedish Heart",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Fire! (1991 film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Fireman Save My Child (1954 film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "First Victory Loan: Return Journey",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Five Deadly Venoms",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Five Finger Exercise",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Five Shaolin Masters",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Floyd Martin Thornton",
+        "instances": 20,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Footy Legends",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "For Valour (1928 film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Force of Nature: The David Suzuki Movie",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Forced Landing (1935 film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Forced Landing (1941 film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Forever Strong",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Fort Apache, The Bronx",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Fortuna (film)",
+        "instances": 15,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Frank Lloyd",
+        "instances": 30,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Frank Whaley",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Franklin Martin",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Fred Keays",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Frederick I, Duke of Württemberg",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Frederick Stanley Gordon",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Freetime Machos",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Frisk (film)",
+        "instances": 10,
+        "segmentations": 2
+      },
+      {
+        "document_title": "From Danger to Dignity: The Fight for Safe Abortion",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "From the Manger to the Cross",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Frontier Law",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Fujiwara no Junshi",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Full Speed (1925 film)",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Gabriel Over the White House",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Gabriele Lavia",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Gajendra Ahire",
+        "instances": 18,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ganga Maiyya Tohe Piyari Chadhaibo",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Garbage (film)",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Garçon stupide",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Gas House Kids Go West",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Gautham Menon",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Gendernauts",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "George A. Romero",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "George Albert Smith (film pioneer)",
+        "instances": 12,
+        "segmentations": 2
+      },
+      {
+        "document_title": "George Cukor",
+        "instances": 20,
+        "segmentations": 2
+      },
+      {
+        "document_title": "George Marshall (director)",
+        "instances": 140,
+        "segmentations": 2
+      },
+      {
+        "document_title": "George Mendeluk",
+        "instances": 10,
+        "segmentations": 2
+      },
+      {
+        "document_title": "George Roy Hill",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ghosts of Chosun",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Gilly poprvé v Praze",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Giovanni Fago",
+        "instances": 11,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Girl 6",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Girls Gone Wild (film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Glitch!",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Glory! Glory!",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "God Is My Co-Pilot (film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Golden Kingdom",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Good Men and True",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Gordon Luce",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Grand Ole Opry (film)",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Grass (1999 film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Guilty?",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Gun Smugglers",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Gun the Man Down",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Gundamma Katha",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Hadh: Life on the Edge of Death",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Hail, Hero!",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Hal Ashby",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Happy Go Lucky (1936 film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Happy Here and Now",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Happy Though Married",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Har Dil Jo Pyar Karega",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Harlan County Lake Seaplane Base",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Harold Ramis",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Hart Pease Danks",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Harvey Hart",
+        "instances": 9,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Has the World Gone Mad!",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "He Married His Wife",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "He Who Rides a Tiger",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Hear No Evil (2014 film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Heaven with a Gun",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Henry Kolker",
+        "instances": 20,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Henry Lehrman",
+        "instances": 14,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Henry Vane, 2nd Duke of Cleveland",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Her Fatal Millions",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Her Mad Night",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Her Private Hell",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Herberg for Hjemløse",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Herbert Rappaport",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Here Comes Happiness",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Here Comes Kelly",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Here Comes Trouble (1936 film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Hernán Cortés",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Heroes of Fort Worth",
+        "instances": 9,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Hi Gang! (film)",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Hindi Kita Malilimutan",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "His Back Against the Wall",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "His Life's Match",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Hold Me Tight (1933 film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Hollywood: The Fabulous Era",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Horrie Dick",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Hotel Berlin",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "How to Meet the Lucky Stars",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "How to Save a Marriage and Ruin Your Life",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Hung Yan-yan",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Hunt the Man Down",
+        "instances": 16,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Hurlstone Agricultural High School",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Hurrah! I Live!",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Hurrah! I'm a Father",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Hvis lille pige er du?",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "I Accuse!",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "I Am Bruce Lee",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "I Am the Man (film)",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "I Can Get It for You Wholesale (film)",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "I Do Not Want to Know Who You Are",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "I Like It That Way",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "I Love Me",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "I Love That Man",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "I Never Been in Vienna",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "I Never Promised You a Rose Garden (film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "I Shot a Man in Vegas",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "I Stand Accused",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "I Want Someone to Eat Cheese With",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "I Want You (1951 film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "I'd Receive the Worst News from Your Beautiful Lips",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "I'll Be Right Over",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "I'll Carry You in My Arms",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "I'll Name the Murderer",
+        "instances": 10,
+        "segmentations": 2
+      },
+      {
+        "document_title": "I'll Never Forget That Night",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "I'm Still Here (2010 film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "I'ma Be Me (2009)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Idu Saadhya",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "If I Had My Way",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "If It's Tuesday, This Must Be Belgium",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Il giorno della Shoah",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Il segreto del castello di Monroe",
+        "instances": 9,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Il sogno di un giorno",
+        "instances": 15,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Il trono e la seggiola",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Illicit (film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ilya Averbakh",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Immediate Call",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "In the Palace of the King",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ingen rövare finns i skogen",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Introduction to the End of an Argument",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Io ti amo",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Iput",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Iraq for Sale: The War Profiteers",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Iraqi Odyssey",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Iron Warrior",
+        "instances": 99,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Irulum Oliyum",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Is There Anybody There? (film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Is There Justice?",
+        "instances": 9,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Isabella of Hainault",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Isle of Destiny",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ismael Rodríguez",
+        "instances": 34,
+        "segmentations": 2
+      },
+      {
+        "document_title": "It Is Not the Pornographer That Is Perverse...",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "It Takes Two (1982 film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "It's You I Want",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ival Eevazhi Ithu Vare",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "J. B. Tanko",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "J. F. Lawton",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "J. Neil Schulman",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "J. Sasikumar",
+        "instances": 70,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jab Harry Met Sejal",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jack Arnold (director)",
+        "instances": 19,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jack Garfein",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jaime (1999 film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jaisi Karni Waisi Bharnii",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jan Rybkowski",
+        "instances": 14,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Janakiraman",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Japan Japan",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Javier Fuentes-León",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jean Gagé",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jean-Jacques Andrien",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jean-Jacques Annaud",
+        "instances": 12,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jean-Michel Ribes",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jean-Pierre Melville",
+        "instances": 34,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jeethu Joseph",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jeg har elsket og levet",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jerusalem Countdown (film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jesse V. Johnson",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jessica Hausner",
+        "instances": 12,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jhoom Barabar Jhoom",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jim Goddard",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "John Candy",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "John Carnegie, 12th Earl of Northesk",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "John Carpenter",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "John Frankenheimer",
+        "instances": 47,
+        "segmentations": 2
+      },
+      {
+        "document_title": "John Paddy Carstairs",
+        "instances": 38,
+        "segmentations": 2
+      },
+      {
+        "document_title": "John Petticoats",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "John Schlesinger",
+        "instances": 12,
+        "segmentations": 2
+      },
+      {
+        "document_title": "John Wells (filmmaker)",
+        "instances": 12,
+        "segmentations": 2
+      },
+      {
+        "document_title": "John Woo",
+        "instances": 10,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jolly Roger: Massacre at Cutter's Cove",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jonathan Livingston Seagull (film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jordan River Anderson, the Messenger",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Joseph Fleuriau d'Armenonville",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Joseph Gordon-Levitt",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Joseph Henabery",
+        "instances": 116,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Joseph Malègue",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Joseph Smith Sr.",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "José Antonio Nieves Conde",
+        "instances": 22,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Juan Carlos Thorry",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Juan Orol",
+        "instances": 14,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Juan de Orduña",
+        "instances": 35,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Judoka-Secret Agent",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Julie 2",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Julien Duvivier",
+        "instances": 73,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jungle Captive",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jurassic World: Fallen Kingdom",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Jára Cimrman Lying, Sleeping",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "K. Raghavendra Rao",
+        "instances": 14,
+        "segmentations": 2
+      },
+      {
+        "document_title": "K. V. Reddy",
+        "instances": 32,
+        "segmentations": 2
+      },
+      {
+        "document_title": "KGB: The Secret War",
+        "instances": 82,
+        "segmentations": 2
+      },
+      {
+        "document_title": "KL Gangster 2",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "KL Special Force",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Kaattumaina",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Kalam Marunnu",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Kanyadanam (1998 film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Karavan Lyubvi",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Karl Hartl",
+        "instances": 18,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Kasthuri Raja",
+        "instances": 30,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Keep It Up Downstairs",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Keïta! l'Héritage du griot",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Kickboxer: Retaliation",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Killer (1992 film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Kilroy Was Here (1947 film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Kim Ki-young",
+        "instances": 75,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Kinara (film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Kingfish: A Story of Huey P. Long",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Kitty and the World Conference",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Klisura, North Macedonia",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Knights of the Teutonic Order (film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Kodi Ramakrishna",
+        "instances": 60,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Kon Khon",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Kranthi Kumar",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Kubala (film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Kudumbam Oru Swargam Bharya Oru Devatha",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "L'Chayim, Comrade Stalin!",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "L'anello di Siva",
+        "instances": 9,
+        "segmentations": 2
+      },
+      {
+        "document_title": "L.E.T.H.A.L. Ladies: Return to Savage Beach",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "LOL (Laughing Out Loud)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "La Otra (film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "La Vida color de rosa",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "La donna del giorno",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "La pattuglia dell'Amba Alagi",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "La senda oscura",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Lambert Hillyer",
+        "instances": 37,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Lara Croft: Tomb Raider",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Leave It to the Irish",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Legend of a Gunfighter",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Lelíček ve službách Sherlocka Holmese",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Lend Me Your Wife",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Lenny Bruce: Swear to Tell the Truth",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Leon De La Mothe",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Lester James Peries",
+        "instances": 10,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Let Him Have It",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Levity (film)",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Liberty Stands Still",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Licántropo",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Lies My Father Told Me (1960 film)",
+        "instances": 10,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Life Begins at Seventeen",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Life with Henry",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Life!",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Lilli Marlene (film)",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Lily of the Alley",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Linda, Be Good",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Lingaa",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Little Children (film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Little Jacques (1934 film)",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Little Man, What Now? (1934 film)",
+        "instances": 14,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Little Sunset",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ljubav i drugi zločini",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Lloyd Bacon",
+        "instances": 128,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Lo que le pasó a Reynoso",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Lockdown (2000 film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Lone Wolf McQuade",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Long Live Ghosts!",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Look Who's Talking",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Los Peyotes",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Loser Takes All (film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Lost Boys: The Tribe",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Love Has Many Faces",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Love Lies Bleeding (2008 film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Love Takes Flight",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Love! Valour! Compassion! (film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Lovelines (film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Lovely But Deadly",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Lucy Liu",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ludvig Daae (priest)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ludwig II: Glanz und Ende eines Königs",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Luis Buñuel",
+        "instances": 15,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Luis María Uriarte Alzaa",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Lunar Eclipse (film)",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Lupo!",
+        "instances": 10,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Léa Pool",
+        "instances": 15,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Léon Mathot",
+        "instances": 16,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Léon Poirier",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Madame la Presidente",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Madness for Love",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Maelgwn ab Owain Gwynedd",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Main Solah Baras Ki",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Manchi Rojulu Vachchaayi",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Manfred R. Köhler",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Mani Kaul",
+        "instances": 9,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Manish Gupta (director)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Manoj Kumar",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Many Tanks Mr. Atkins",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Marcello, I'm So Bored",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Marcos Siega",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Maria Amalia of Saxony",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Marie de La Tour d'Auvergne",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Mario Bonnard",
+        "instances": 57,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Mario Caserini",
+        "instances": 18,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Mario Zampi",
+        "instances": 14,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Marlon Brando",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Martin Scorsese",
+        "instances": 22,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Master and Commander: The Far Side of the World",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Maximilian Schell",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Maya Deren",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Mean Dog Blues",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Meiert Avis",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Melvin Van Peebles",
+        "instances": 17,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Men in White (1955 film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Mera Faisla",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Meridian: Kiss of the Beast",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Meu Passado Me Condena",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Mi marido hoy duerme en casa",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Michael Bay",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Michael Curtiz",
+        "instances": 150,
+        "segmentations": 3
+      },
+      {
+        "document_title": "Michael Moore",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Michał Waszyński",
+        "instances": 54,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Midnight Movies: From the Margin to the Mainstream",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Mille bolle blu",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Miloš Forman",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Min Joon-ki",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Miss Malini",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Miss Pacific Fleet",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Molly Entangled",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Mondo Cannibale",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Money for Speed",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Monsterville: Cabinet of Souls",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Moondravadhu Kann",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Morgan and Destiny's Eleventeenth Date: The Zeppelin Zoo",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Mother Riley Meets the Vampire",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Mountain Rhythm (1943 film)",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Move and I'll Shoot",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Mr. Boggs Steps Out",
+        "instances": 30,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Mr. Muggs Steps Out",
+        "instances": 34,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ms. 45",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Munna Bhai M.B.B.S.",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Murad IV",
+        "instances": 9,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Murder She Purred: A Mrs. Murphy Mystery",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Must We Get Divorced? (1933 film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "My Brother's Name Is Robert and He Is an Idiot",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "My Geisha",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "My Heroes Have Always Been Cowboys (film)",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "My Life Is Hell",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "My Nights Are More Beautiful Than Your Days",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "My Son, My Son!",
+        "instances": 29,
+        "segmentations": 2
+      },
+      {
+        "document_title": "My Wife Is Formidable",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "N. a pris les dés...",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "NCR: Not Criminally Responsible",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Naan Thaan Siva",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Nadhi Karaiyinile",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Nambugun",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Nandri",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Nanette Makes Everything",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Nanni Loy",
+        "instances": 16,
+        "segmentations": 2
+      },
+      {
+        "document_title": "National Class Category Up to 785 ccm",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Nearly a Lady",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Negro es mi color",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Neil Young",
+        "instances": 55,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Netaji Subhas Chandra Bose: The Forgotten Hero",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Never Back Down: No Surrender",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Never Give Up: The 20th Century Odyssey of Herbert Zipper",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Never My Soul!",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Never So Few",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Next Stop Paradise (1998 film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Nick Nolte: No Exit",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Night Comes On",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "No Day Without You",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "No Time for Love (1943 film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Normal!",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Northwest Stampede",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "O Kadhal Kanmani",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "OSS 117: Cairo, Nest of Spies",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Obeah!",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Odongo",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Oh Doctor! (1925 film)",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Oh Mary Be Careful",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Oh! Susanna (film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Oh, Baby! (film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Oh, Daddy!",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Okay Bill",
+        "instances": 57,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Old Bill Through the Ages",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Old Soldiers Never Die",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Omen IV: The Awakening",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "On the Tiger's Back",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "One Hundred Men and a Girl",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "One Night in Istanbul",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "One Thrilling Night",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Onkel Filser – Allerneueste Lausbubengeschichten",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Operation Homecoming: Writing the Wartime Experience",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Oru Oorla Rendu Raja",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Otto Preminger",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Our Mrs. McChesney",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ourselves Alone (film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Outlaws of Santa Fe",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "P. Neelakantan",
+        "instances": 31,
+        "segmentations": 2
+      },
+      {
+        "document_title": "P. Ramlee",
+        "instances": 40,
+        "segmentations": 2
+      },
+      {
+        "document_title": "P.S. I Love You (film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Paint It Black (2016 film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Pal Do Pal",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Palle Kjærulff-Schmidt",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Paper Bullets",
+        "instances": 9,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Paradise: Hope",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Pardon My French (1921 film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Pardon My Rhythm",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Parey Hut Love",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Paris-New York",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Park Jung-bum",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Parole!",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Partners Three",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Pasó en mi barrio",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Paths of the Soul",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Paul Naschy",
+        "instances": 10,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Paul Schrader",
+        "instances": 27,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Paulette Noizeux",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Peppino, le modelle e chella là",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Personal Velocity: Three Portraits",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Pervert!",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Pete Kelly's Blues (film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Peter Duffell",
+        "instances": 10,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Peter Hyams",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Peter Shoots Down the Bird",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Peter Voss, Hero of the Day",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Phantasm IV: Oblivion",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Phil Rosen",
+        "instances": 353,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Philippe Antoine d'Ornano",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Picasso Trigger",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Pierre and Jean (film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Pinay Pie",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Pirate Treasure",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Playing Beatie Bow (film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Plunging Hoofs",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Poeten og Lillemor i forårshumør",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Pola X",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Poonthotta Kaavalkaaran",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Poultrygeist: Night of the Chicken Dead",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Practical Magic",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Prem Mhanje Prem Mhanje Prem Asta",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Princess Isabella of Bavaria",
+        "instances": 16,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Princess Maria Amélia of Brazil",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Prison Ship",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Private Snafu vs. Malaria Mike",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Project Kill",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Putani Agent 123",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Péter Bacsó",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Queen Margot (1954 film)",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Quo Vadis, Baby?",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Radio Surprises",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Rafael Gil",
+        "instances": 11,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Rainbow Over the Rockies",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Raja Rani (1973 film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Rajotto",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ralph Murphy",
+        "instances": 69,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ram Gopal Varma",
+        "instances": 34,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Rathimanmadhan",
+        "instances": 9,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ratko: The Dictator's Son",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ravi Tandon",
+        "instances": 26,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Razor's Edge: The Legacy of Iranian Actresses",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ready Money (film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ready? OK!",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Rebellion: the Litvinenko Case",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Red Dust (1999 film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Reed: Insurgent Mexico",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Regino Sainz de la Maza",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Registered Nurse (film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Reinier van Oldenbarnevelt",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Remember Me? (film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Renny Harlin",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Reno: Rebel without a Pause",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Richard Attenborough",
+        "instances": 34,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Richard Harlan",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Richard L. Bare",
+        "instances": 39,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ride Clear of Diablo",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ringside Maisie",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Rio Grande (film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Rishi (2001 film)",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Robert Florey",
+        "instances": 59,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Robert Hossein",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Robert Rossen",
+        "instances": 31,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Robert Wise",
+        "instances": 65,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Robert Zimmermann Is Tangled Up in Love",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Roger Corman",
+        "instances": 18,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Roman J. Israel, Esq.",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Rose Kennedy: A Life to Remember",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Rose o' the River",
+        "instances": 9,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Rose o' the Sea",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Roy William Neill",
+        "instances": 125,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Rubén W. Cavallotti",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Rudolf Walther-Fein",
+        "instances": 34,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Rustlers (1949 film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ry Russo-Young",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sacrifice (1917 film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sagar Alias Jacky Reloaded",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sail a Crooked Ship",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sakkarakatti",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Salome (1953 film)",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Salt (1985 film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Salvatore Piscicelli",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Samsara: Death and Rebirth in Cambodia",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sangamam",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sanjay Surkar",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Santa Claus Is a Stinker",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Santa Rosa del Sara Airport",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Santha Oru Devatha",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sathi Leelavathi (1936 film)",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sattam Sirikkiradhu",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Satyajit Ray",
+        "instances": 78,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Schamyl Bauman",
+        "instances": 26,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Scott Spiegel",
+        "instances": 9,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Scotty Finds a Home",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Scusa se è poco",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Se non avessi più te",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Segundo de Chomón",
+        "instances": 10,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Selfish Yates",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Send In the Clowns",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Separado!",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sergio Mimica-Gezzan",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Seven Golden Men Strike Again",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Seven Years Bad Luck",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Severed (film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sex and Blood in the Trail of the Treasure",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sex-Business: Made in Pasing",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Shadows of the Underworld",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Shafi Inamdar",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Shahnawaz Bhutto",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sharmeen Obaid-Chinoy",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "She Hate Me",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "She's Been Away",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sheila Levine Is Dead and Living in New York",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Should Husbands Work?",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Should a Girl Marry?",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sibylle of Cleves",
+        "instances": 10,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Silent Night, Zombie Night",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Silken Shackles",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Simon (1980 film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Simon Hartog",
+        "instances": 14,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sing Me the Songs That Say I Love You: A Concert for Kate McGarrigle",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sing Sing (film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sing While You're Able",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sissi – The Young Empress",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Siti Nurhaliza",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Skirts Ahoy!",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Slap Her... She's French",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Small Voices: The Stories of Cambodia's Children",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Snehikkan Samayamilla",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sohrab Shahid-Saless",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sole Sisters",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Solva Saal",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Som sendt fra himlen",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Some Boy!",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Some Call It Loving",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Some Like It Cool",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Something to Believe In (film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Song o' My Heart",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Soorakottai Singakutti",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Spare a Copper",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Special When Lit",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Spy Kids: All the Time in the World",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sreekrishna Parunthu",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sri Ramanjaneya Yuddham",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Srijit Mukherji",
+        "instances": 11,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Standing Room Only (1944 film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Stanisław Bareja",
+        "instances": 25,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Star Trek III: The Search for Spock",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Stealing America: Vote by Vote",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Stefan Borsch",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Steve Miner",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Steven Spielberg",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Stig Olin",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Stomp the Yard",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Stop That Man!",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Stop, You're Killing Me",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Story of Wine",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Strange Alibi",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sua Eccellenza si fermò a mangiare",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Such Women Are Dangerous",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Suddenly, a Woman!",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Supernatural Activity",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Swing (1938 film)",
+        "instances": 9,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Swing it, magistern!",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sällskapsresan",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sällskapsresan 2 – Snowroller",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Sømand i knibe",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Take Heed Mr. Tojo",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Take the High Ground!",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Tall: The American Skyscraper and Louis Sullivan",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Tanel Toom",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Tapan Sinha",
+        "instances": 72,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Teeth (1924 film)",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Tempo! Tempo!",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Terence Fisher",
+        "instances": 23,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Texas Across the River",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Texas Rangers Ride Again",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Thank You, Jeeves!",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "That Lady from Peking",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "That Man's Here Again",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "That Summer!",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "That Was Then... This Is Now",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The American Venus",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Beauty Market",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Black Camel (film)",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Black Monocle",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Bride Is Much Too Beautiful",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Broadway Melody",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Bugle Sounds",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Butterfly Lifts the Cat Up",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Captive: The Longest Drive 2",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Charm of La Boheme",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Circus Cyclone",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Clash of the Wolves",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Colossus of Rhodes (film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Crimean Bridge. Made with Love!",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Crimson Stain Mystery",
+        "instances": 17,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Cup (2011 film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Da Vinci Treasure",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Daring Years",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Day of the Locust (film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Day the Earth Stopped",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Devil Wears Prada (film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Devil's Saddle",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Dogwalker",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Dragon Pearl",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Earth Is Thirsty",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Emperor's Shadow",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Face at Your Window",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Fast and the Furious (1955 film)",
+        "instances": 9,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Fighting Eagle",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Flood: Who Will Save Our Children?",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Flying Mail",
+        "instances": 9,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Flying Marine",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Frozen Limits",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Gallant Hours",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Good Mother (1988 film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Great K & A Train Robbery",
+        "instances": 9,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Great Leap; Until Death Do Us Part",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Great Sioux Massacre",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Gunfighter (1917 film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Hanoi Hilton (film)",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Interferin' Gent",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Irish in Us",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Jazz Cinderella",
+        "instances": 10,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Knack ...and How to Get It",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Ladies in the Green Hats (1937 film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Lady Is Willing (1942 film)",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Land Before Time IX: Journey to Big Water",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Law vs. Billy the Kid",
+        "instances": 66,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Learning Tree",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Lion of Amalfi",
+        "instances": 15,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Love Mask",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Maker (film)",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Man Is Armed",
+        "instances": 11,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Man Who Never Was",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Man Who Wasn't There (1983 film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Man at Midnight",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Mass Is Ended",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Mondesir Heir",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Naked Eye (1998 film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Naked Gun: From the Files of Police Squad!",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Night Has Eyes",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Old Homestead (1942 film)",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Other Side of the Mirror (film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Paris Waltz",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Password Is Courage",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Patent Leather Kid",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Pennsylvania Miners' Story",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Peterville Diamond",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Phantom of Crestwood",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Pirates of the Mississippi",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Powers Girl",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Prairie Wife",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Rainbow Princess",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Rats Are Coming! The Werewolves Are Here!",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Renegade Ranger",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Rise of Catherine the Great",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The River Why (film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Road to Glory",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Road to Where",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Scarlet Empress",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Secret Life: Jeffrey Dahmer",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Seven-Ups",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Siren (1917 film)",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Skipper Surprised His Wife",
+        "instances": 13,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Sky's the Limit (1943 film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Sniper (1952 film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Soul of Broadway",
+        "instances": 25,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Splendid Sinner",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Spy (1917 American film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Star Witness",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Strange Death of Adolf Hitler",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Strangers: Prey at Night",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Tall Texan",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Thirteenth Chair (1937 film)",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Three Stooges in Orbit",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Town Went Wild",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Tragedy of Flight 103: The Inside Story",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Trail of the Lonesome Pine (1923 film)",
+        "instances": 17,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Treasure of Gesine Jacobsen",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Trial of Donald Westhof",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Untouchables (film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Veil (2017 film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Village Sleuth",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Western Rover",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Wolf Man (1924 film)",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Woman That Dreamed About a Man",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The World Moves On",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The World Owes Me a Living",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The World's Great Snare",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "The Wrong Couples",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Theodora Goes Wild",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "There's a Zulu On My Stoep",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "They All Kissed the Bride",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "They Call It Love",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Thieves Fall Out",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Thirumbi Paar (1953 film)",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "This Earth Is Mine (1961 film)",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "This Reckless Age",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "This Woman Is Dangerous",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Thomas (2001 film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Thomas Arundell, 1st Baron Arundell of Wardour",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Thomas Vinterberg",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Thoppil Bhasi",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Those Magnificent Men in their Flying Machines",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Those Were the Days!",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ti Oluwa Ni Ile",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Tigmanshu Dhulia",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Toh Baat Pakki!",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Tom Laughlin",
+        "instances": 11,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ton van Os",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Tony Bill",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Too Outrageous!",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Top o' the Morning (1949 film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Tornado: The Last Blood",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Torrente 2: Misión en Marbella",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Toto and Peppino Divided in Berlin",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Tough Guys Don't Dance (film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Tova Magnusson",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Trailer Park Boys: The Movie",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Transylvania Twist",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Treachery Rides the Range",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Treasure of the Petrified Forest",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Tremors 3: Back to Perfection",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Troublesome Creek: A Midwestern",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Trubachyov's Detachment Is Fighting",
+        "instances": 9,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Try and Get It",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Tum, My Pledge of Love",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Tumhari Kasam",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Turtle: The Incredible Journey",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Twenty Million Sweethearts",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Twin Peaks: The Missing Pieces",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "U nás v Kocourkově",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Uday Shankar",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ugler i mosen",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Ulidavaru Kandanthe",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Underwater!",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Une nuit à l'Assemblée Nationale",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Until Money Departs You",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Untraceable",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Urho Kekkonen",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Uri Barbash",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Vadim Abdrashitov",
+        "instances": 9,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Vai Trabalhar, Vagabundo!",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Varina Anne Davis",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Vastadu Naa Raju",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Veiko Õunpuu",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Vent d'est",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Vice Academy",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Vienna, How it Cries and Laughs",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Violent Shit III",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Visions of Light",
+        "instances": 13,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Vive la France",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "W Django!",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "W. E. D. Ross",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "W. S. Van Dyke",
+        "instances": 18,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Wagon Wheels Westward",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Wallace Worsley",
+        "instances": 14,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Walter Kolm-Veltée",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Wang Lung-wei",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Watch Out, We're Mad!",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "We Are No Angels (1975 film)",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "We Too Walked on the Moon",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Weddings Are Wonderful",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Wes Craven",
+        "instances": 23,
+        "segmentations": 2
+      },
+      {
+        "document_title": "West Is West (1920 film)",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Wharf Angel",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "What Do Men Want?",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "What Does Brigitte Want?",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "What Happened to Harkness?",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "What Is Democracy?",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "What No Man Knows",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "What Will People Say?",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "What a Man! (1938 film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "What a Man! (1944 film)",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "What if Gargiulo Finds Out?",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "What's Good for the Goose",
+        "instances": 8,
+        "segmentations": 2
+      },
+      {
+        "document_title": "What's So Bad About Feeling Good?",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Whatever Happened to Green Valley?",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "When Do We Eat? (1918 film)",
+        "instances": 9,
+        "segmentations": 2
+      },
+      {
+        "document_title": "When Women Keep Silent",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "When You Comin' Back, Red Ryder? (film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Where Are Your Children?",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Where Does It Hurt?",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Where Is the Body, Moeller?",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Where There's a Will (1936 film)",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Where's My Wandering Boy Tonight?",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Which Way to the Front?",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Whirl of Youth",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Who Is Killing the Great Chefs of Europe?",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Who Is Number One?",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Who Shall Take My Life?",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Who's Afraid of Vagina Wolf?",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Who's Been Sleeping in My Bed?",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Who's Got the Action?",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Who's Minding the Store?",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Who's That Girl (1987 film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Why Change Your Wife?",
+        "instances": 23,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Why? (film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Wife in Name Only",
+        "instances": 10,
+        "segmentations": 2
+      },
+      {
+        "document_title": "William A. Fraker",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "William Conrad",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "William Desmond Taylor",
+        "instances": 48,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Winner Take All (1924 film)",
+        "instances": 14,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Winner Take All (1932 film)",
+        "instances": 7,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Winner Takes All (2000 film)",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Winnetou (2016 film)",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Winterhawk",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Wohin?",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Wolves Cry Under the Moon",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "XCU: Extreme Close Up",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Yaar Mera",
+        "instances": 2,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Yamla Pagla Deewana 2",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Yellowstone (film)",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Yellowstone Kelly",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Yes or No?",
+        "instances": 4,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Yes, Madam?",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Yesterday's Guys Used No Arsenic",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Yo maté a Facundo",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "You Are My Adventure",
+        "instances": 16,
+        "segmentations": 2
+      },
+      {
+        "document_title": "You Can't Get Away with It",
+        "instances": 6,
+        "segmentations": 2
+      },
+      {
+        "document_title": "You Must Be Joking! (1965 film)",
+        "instances": 5,
+        "segmentations": 2
+      },
+      {
+        "document_title": "You My Rose Mellow",
+        "instances": 3,
+        "segmentations": 2
+      },
+      {
+        "document_title": "Zainab Sultan Begum",
+        "instances": 12,
+        "segmentations": 2
+      }
+    ]
+  },
+  "chunks": 446798,
+  "chunk_file": "data/2wiki/chunks/sentence_256.jsonl",
+  "chunk_file_sha256": "6f15420b6e9a7c9d168f28fa872032fa0c1a2fb02f67a3d9696b455671eee727",
+  "supporting_fact_mapping": {
+    "gold_supporting_facts": 435571,
+    "mapped_supporting_facts": 435571,
+    "mapping_rate": 1.0,
+    "by_split": {
+      "dev_calibration": {
+        "gold": 4787,
+        "mapped": 4787,
+        "mapping_rate": 1.0
+      },
+      "dev_policy": {
+        "gold": 4852,
+        "mapped": 4852,
+        "mapping_rate": 1.0
+      },
+      "heldout": {
+        "gold": 30687,
+        "mapped": 30687,
+        "mapping_rate": 1.0
+      },
+      "train_core": {
+        "gold": 395245,
+        "mapped": 395245,
+        "mapping_rate": 1.0
+      }
+    },
+    "missing_supporting_facts": []
+  },
+  "tokenizer": "/home/sunjb/RAG/ekrag/ekrag/models/bge-large-en-v1.5",
+  "tokenizer_revision": null,
+  "environment": {
+    "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.39",
+    "packages": {
+      "torch": "2.5.1+cu121",
+      "transformers": "4.44.2",
+      "sentence-transformers": "5.6.0",
+      "datasets": "5.0.0",
+      "faiss-cpu": "1.14.3",
+      "faiss-gpu": "1.14.3",
+      "rank-bm25": "0.2.2",
+      "numpy": "1.26.4",
+      "scikit-learn": "1.9.0"
+    },
+    "git_commit": "c66690f3754e81c4a89da786bb7d7ee489770076",
+    "cuda_visible_devices": null,
+    "cuda": "12.1",
+    "gpus": [
+      "NVIDIA GeForce RTX 4090",
+      "NVIDIA GeForce RTX 4090"
+    ]
+  }
+}

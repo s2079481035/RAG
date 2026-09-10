@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-10T08:24:34.910288+00:00",
+  "phase": 4,
+  "phase1_frozen_commit": null,
+  "phase3b_frozen_commit": "1ed762c",
+  "git_commit": "7964e9a3575442b909dfba7a60194b69a349418a",
+  "config": "configs/phase4/protocol.json",
+  "variant": "sentence_256",
+  "run_scope": "smoke_throughput_only",
+  "limit_per_split": 100,
+  "output_label": "dev_policy_100_parallel8",
+  "selection_order": "question_id_ascending",
+  "splits": [
+    "dev_policy"
+  ],
+  "eligible_question_counts": {
+    "dev_policy": 2000
+  },
+  "question_counts": {
+    "dev_policy": 100
+  },
+  "dense_model": "/home/sunjb/RAG/ekrag/ekrag/models/bge-large-en-v1.5",
+  "reranker_model": "/home/sunjb/RAG/ekrag/ekrag/models/bge-reranker-v2-m3",
+  "dense_candidate_k": 200,
+  "bm25_candidate_k": 200,
+  "hybrid_candidate_k": 20,
+  "saved_ranking_depth": 20,
+  "rrf_k": 60,
+  "query_embedding_seconds": 0.2617191318422556,
+  "bm25_workers": 8,
+  "bm25_wall_seconds": 19.440985745284706,
+  "dense_search_batch_size": 1,
+  "dense_search_wall_seconds": 6.329376349691302,
+  "fusion_and_record_seconds": 1.8570460407063365,
+  "first_stage_seconds": 27.627408135682344,
+  "reranking_seconds": 6.25563626177609,
+  "index_chunk_sha256": "6f15420b6e9a7c9d168f28fa872032fa0c1a2fb02f67a3d9696b455671eee727",
+  "outputs": {
+    "dev_policy": "results/phase4/2wiki/retrieval_smoke/dev_policy_100_parallel8/sentence_256/dev_policy.jsonl"
+  },
+  "environment": {
+    "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.39",
+    "packages": {
+      "torch": "2.5.1+cu121",
+      "transformers": "4.44.2",
+      "sentence-transformers": "5.6.0",
+      "datasets": "5.0.0",
+      "faiss-cpu": "1.14.3",
+      "faiss-gpu": "1.14.3",
+      "rank-bm25": "0.2.2",
+      "numpy": "1.26.4",
+      "scikit-learn": "1.9.0"
+    },
+    "git_commit": "7964e9a3575442b909dfba7a60194b69a349418a",
+    "cuda_visible_devices": "0",
+    "cuda": "12.1",
+    "gpus": [
+      "NVIDIA GeForce RTX 4090"
+    ]
+  }
+}
