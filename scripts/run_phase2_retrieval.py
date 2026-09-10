@@ -5,6 +5,8 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import multiprocessing
+import os
 import pickle
 import time
 from pathlib import Path
@@ -17,7 +19,7 @@ from phase2_retrieval import (
     deterministic_top_indices,
     ranked_entries,
     retrieval_document_text,
-    rrf_fuse_with_components,
+    rrf_fuse_precomputed_bm25,
 )
 
 
@@ -27,6 +29,8 @@ logger = logging.getLogger(__name__)
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_CONFIG = ROOT / "configs" / "phase2" / "chunk_retrieval.json"
 VALID_SPLITS = ("train", "dev", "test")
+_WORKER_BM25 = None
+_WORKER_BM25_DEPTH = None
 
 
 def parse_args() -> argparse.Namespace:
@@ -39,6 +43,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--query-batch-size", type=int, default=64)
     parser.add_argument("--reranker-batch-size", type=int, default=64)
     parser.add_argument("--reranker-query-batch", type=int, default=32)
+    parser.add_argument("--bm25-workers", type=int, default=1)
+    parser.add_argument("--dense-search-batch-size", type=int, default=1)
     parser.add_argument(
         "--limit-per-split",
         type=int,
@@ -65,6 +71,57 @@ def write_jsonl_atomic(path: Path, records: list[dict]) -> None:
         for record in records:
             handle.write(json.dumps(record, ensure_ascii=False) + "\n")
     temporary.replace(path)
+
+
+def _initialize_bm25_worker(bm25, depth: int) -> None:
+    global _WORKER_BM25, _WORKER_BM25_DEPTH
+    _WORKER_BM25 = bm25
+    _WORKER_BM25_DEPTH = depth
+
+
+def _score_bm25_worker(task: tuple[int, list[str]]) -> tuple[int, np.ndarray, np.ndarray, float]:
+    position, query_tokens = task
+    started = time.perf_counter()
+    scores = _WORKER_BM25.get_scores(query_tokens)
+    top = deterministic_top_indices(scores, _WORKER_BM25_DEPTH)
+    elapsed_ms = (time.perf_counter() - started) * 1000.0
+    return position, top, np.asarray(scores[top]), elapsed_ms
+
+
+def precompute_bm25_top(
+    bm25, tokenized_queries: list[list[str]], depth: int, workers: int
+) -> tuple[list[tuple[np.ndarray, np.ndarray, float]], float]:
+    started = time.perf_counter()
+    results: list[tuple[np.ndarray, np.ndarray, float] | None] = [
+        None
+    ] * len(tokenized_queries)
+    tasks = list(enumerate(tokenized_queries))
+    if workers == 1:
+        _initialize_bm25_worker(bm25, depth)
+        iterator = map(_score_bm25_worker, tasks)
+        pool = None
+    else:
+        if os.name != "posix":
+            raise RuntimeError("Parallel BM25 requires POSIX fork semantics")
+        context = multiprocessing.get_context("fork")
+        pool = context.Pool(
+            workers,
+            initializer=_initialize_bm25_worker,
+            initargs=(bm25, depth),
+        )
+        iterator = pool.imap_unordered(_score_bm25_worker, tasks, chunksize=1)
+    try:
+        for completed, (position, top, scores, elapsed_ms) in enumerate(iterator, start=1):
+            results[position] = (top, scores, elapsed_ms)
+            if completed % 500 == 0 or completed == len(tasks):
+                logger.info("BM25 retrieval %s/%s", completed, len(tasks))
+    finally:
+        if pool is not None:
+            pool.close()
+            pool.join()
+    if any(result is None for result in results):
+        raise RuntimeError("BM25 workers did not return every query")
+    return results, time.perf_counter() - started
 
 
 def validate_protocol(config: dict, variant: str, splits: list[str]) -> None:
@@ -127,6 +184,10 @@ def main() -> None:
         not args.output_label.replace("-", "").replace("_", "").isalnum()
     ):
         raise ValueError("--output-label may contain only letters, numbers, '-' and '_'")
+    if args.bm25_workers < 1:
+        raise ValueError("--bm25-workers must be positive")
+    if args.dense_search_batch_size < 1:
+        raise ValueError("--dense-search-batch-size must be positive")
 
     data_dir = ROOT / config.get("outputs", {}).get("data_dir", "data/phase2")
     result_dir = ROOT / config.get("outputs", {}).get("result_dir", "results/phase2")
@@ -184,6 +245,18 @@ def main() -> None:
     instruction = retrieval_config.get("query_instruction")
     encoded_queries = [f"{instruction}{query}" for query in queries] if instruction else queries
 
+    dense_depth = int(retrieval_config["dense_candidate_k"])
+    bm25_depth = int(retrieval_config["bm25_candidate_k"])
+    hybrid_depth = int(retrieval_config["hybrid_candidate_k"])
+    saved_depth = int(retrieval_config["saved_ranking_depth"])
+    if saved_depth > min(dense_depth, bm25_depth) or hybrid_depth < saved_depth:
+        raise ValueError("Saved depth must fit dense, BM25, and hybrid candidate depths")
+
+    tokenized_queries = [bm25_tokenize(question["question"]) for question in selected_questions]
+    bm25_results, bm25_wall_seconds = precompute_bm25_top(
+        bm25, tokenized_queries, bm25_depth, args.bm25_workers
+    )
+
     dense_model = SentenceTransformer(
         dense_model_name, local_files_only=not args.allow_download
     )
@@ -197,34 +270,45 @@ def main() -> None:
     embed_seconds = time.perf_counter() - embed_started
     embed_ms_per_query = embed_seconds * 1000.0 / len(selected_questions)
 
-    dense_depth = int(retrieval_config["dense_candidate_k"])
-    bm25_depth = int(retrieval_config["bm25_candidate_k"])
-    hybrid_depth = int(retrieval_config["hybrid_candidate_k"])
-    saved_depth = int(retrieval_config["saved_ranking_depth"])
-    if saved_depth > min(dense_depth, bm25_depth) or hybrid_depth < saved_depth:
-        raise ValueError("Saved depth must fit dense, BM25, and hybrid candidate depths")
+    dense_scores_by_query = []
+    dense_indices_by_query = []
+    dense_allocated_ms = []
+    dense_wall_started = time.perf_counter()
+    for batch_start in range(0, len(selected_questions), args.dense_search_batch_size):
+        embeddings = np.asarray(
+            query_embeddings[batch_start : batch_start + args.dense_search_batch_size],
+            dtype="float32",
+        )
+        started = time.perf_counter()
+        batch_scores, batch_indices = index.search(embeddings, dense_depth)
+        allocated = (time.perf_counter() - started) * 1000.0 / len(embeddings)
+        dense_scores_by_query.extend(batch_scores)
+        dense_indices_by_query.extend(batch_indices)
+        dense_allocated_ms.extend([allocated] * len(embeddings))
+    dense_search_wall_seconds = time.perf_counter() - dense_wall_started
 
     records = []
     retrieval_started = time.perf_counter()
-    for position, (question, embedding) in enumerate(zip(selected_questions, query_embeddings), start=1):
+    for position, question in enumerate(selected_questions, start=1):
+        dense_indices = dense_indices_by_query[position - 1]
+        dense_scores = dense_scores_by_query[position - 1]
+        bm25_top, bm25_top_scores, bm25_ms = bm25_results[position - 1]
         started = time.perf_counter()
-        dense_scores, dense_indices = index.search(
-            np.asarray([embedding], dtype="float32"), dense_depth
+        dense_candidate_bm25 = bm25.get_batch_scores(
+            tokenized_queries[position - 1], [int(index) for index in dense_indices]
         )
-        dense_ms = (time.perf_counter() - started) * 1000.0
-        dense_indices = dense_indices[0]
-        dense_scores = dense_scores[0]
-
+        bm25_ms += (time.perf_counter() - started) * 1000.0
+        bm25_score_by_index = {
+            int(index): float(score) for index, score in zip(bm25_top, bm25_top_scores)
+        }
+        for index, score in zip(dense_indices, dense_candidate_bm25):
+            bm25_score_by_index.setdefault(int(index), float(score))
         started = time.perf_counter()
-        bm25_scores = bm25.get_scores(bm25_tokenize(question["question"]))
-        bm25_top = deterministic_top_indices(bm25_scores, bm25_depth)
-        bm25_ms = (time.perf_counter() - started) * 1000.0
-
-        started = time.perf_counter()
-        hybrid_rows = rrf_fuse_with_components(
+        hybrid_rows = rrf_fuse_precomputed_bm25(
             dense_indices,
             dense_scores,
-            bm25_scores,
+            bm25_top,
+            bm25_score_by_index,
             dense_depth=dense_depth,
             bm25_depth=bm25_depth,
             rrf_k=int(retrieval_config["rrf_k"]),
@@ -246,14 +330,14 @@ def main() -> None:
                         dense_indices[:saved_depth], dense_scores[:saved_depth], doc_ids
                     ),
                     "bm25": ranked_entries(
-                        bm25_top[:saved_depth], bm25_scores[bm25_top[:saved_depth]], doc_ids
+                        bm25_top[:saved_depth], bm25_top_scores[:saved_depth], doc_ids
                     ),
                     "hybrid": hybrid_rows[:saved_depth],
                     "rerank": [],
                 },
                 "latency_ms": {
                     "query_embedding_run_mean": embed_ms_per_query,
-                    "dense_search": dense_ms,
+                    "dense_search": dense_allocated_ms[position - 1],
                     "bm25_scoring": bm25_ms,
                     "rrf_fusion": rrf_ms,
                     "reranker_allocated": None,
@@ -262,7 +346,8 @@ def main() -> None:
         )
         if position % 500 == 0:
             logger.info("first-stage retrieval %s/%s", position, len(selected_questions))
-    first_stage_seconds = time.perf_counter() - retrieval_started
+    fusion_seconds = time.perf_counter() - retrieval_started
+    first_stage_seconds = bm25_wall_seconds + dense_search_wall_seconds + fusion_seconds
 
     reranker = CrossEncoder(
         reranker_model_name,
@@ -346,6 +431,11 @@ def main() -> None:
         "saved_ranking_depth": saved_depth,
         "rrf_k": retrieval_config["rrf_k"],
         "query_embedding_seconds": embed_seconds,
+        "bm25_workers": args.bm25_workers,
+        "bm25_wall_seconds": bm25_wall_seconds,
+        "dense_search_batch_size": args.dense_search_batch_size,
+        "dense_search_wall_seconds": dense_search_wall_seconds,
+        "fusion_and_record_seconds": fusion_seconds,
         "first_stage_seconds": first_stage_seconds,
         "reranking_seconds": rerank_seconds,
         "index_chunk_sha256": index_manifest["chunk_file_sha256"],

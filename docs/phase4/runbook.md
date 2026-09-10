@@ -80,8 +80,23 @@ $PYTHON_BIN scripts/run_phase2_retrieval.py \
   --splits dev_policy \
   --limit-per-split 100 \
   --output-label dev_policy_100 \
+  --bm25-workers 1 \
   --dense-model /path/to/bge-large-en-v1.5 \
   --reranker-model /path/to/bge-reranker-v2-m3
+```
+
+Before using parallel BM25 for formal retrieval, repeat the same smoke subset with a
+new output label, `--bm25-workers 8`, and `--dense-search-batch-size 1`. Compare every
+saved ranking and score after excluding latency fields. Parallel scheduling is accepted
+only if the outputs match. Batched FAISS search is a separate throughput option and must
+pass the same ranking-ID and floating-score tolerance check before formal use.
+
+```bash
+$PYTHON_BIN scripts/compare_phase4_retrieval_runs.py \
+  results/phase4/2wiki/retrieval_smoke/dev_policy_100/sentence_256/dev_policy.jsonl \
+  results/phase4/2wiki/retrieval_smoke/dev_policy_100_parallel8/sentence_256/dev_policy.jsonl \
+  --atol 1e-6 \
+  --output results/phase4/2wiki/retrieval_smoke/dev_policy_100_parallel8/parity.json
 ```
 
 First run Train-derived splits:

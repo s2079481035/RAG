@@ -5,7 +5,7 @@ from __future__ import annotations
 import math
 import re
 from collections.abc import Iterable, Sequence
-from typing import Any
+from typing import Any, Mapping
 
 import numpy as np
 
@@ -99,6 +99,59 @@ def rrf_fuse_with_components(
                 "bm25_rank": bm25_rank.get(index),
                 "dense_score": dense_score.get(index),
                 "bm25_score": float(bm25_scores[index]),
+            }
+        )
+    rows.sort(key=lambda row: (-row["rrf_score"], row["index"]))
+    return rows[: min(top, len(rows))]
+
+
+def rrf_fuse_precomputed_bm25(
+    dense_indices: Sequence[int],
+    dense_scores: Sequence[float],
+    bm25_top_indices: Sequence[int],
+    bm25_score_by_index: Mapping[int, float],
+    *,
+    dense_depth: int,
+    bm25_depth: int,
+    rrf_k: int,
+    top: int,
+) -> list[dict[str, Any]]:
+    """Fuse exact precomputed BM25 ranks without retaining its corpus-sized score vector."""
+    if len(dense_indices) != len(dense_scores):
+        raise ValueError("dense indices and scores must have equal lengths")
+    if rrf_k < 0:
+        raise ValueError("rrf_k must be non-negative")
+    dense_rank = {
+        int(index): rank
+        for rank, index in enumerate(dense_indices[:dense_depth], start=1)
+    }
+    dense_score = {
+        int(index): float(score)
+        for index, score in zip(dense_indices[:dense_depth], dense_scores[:dense_depth])
+    }
+    bm25_rank = {
+        int(index): rank
+        for rank, index in enumerate(bm25_top_indices[:bm25_depth], start=1)
+    }
+    candidates = set(dense_rank) | set(bm25_rank)
+    missing_scores = candidates - set(bm25_score_by_index)
+    if missing_scores:
+        raise ValueError(f"Missing BM25 component scores for {len(missing_scores)} candidates")
+    rows = []
+    for index in candidates:
+        score = 0.0
+        if index in dense_rank:
+            score += 1.0 / (rrf_k + dense_rank[index])
+        if index in bm25_rank:
+            score += 1.0 / (rrf_k + bm25_rank[index])
+        rows.append(
+            {
+                "index": index,
+                "rrf_score": score,
+                "dense_rank": dense_rank.get(index),
+                "bm25_rank": bm25_rank.get(index),
+                "dense_score": dense_score.get(index),
+                "bm25_score": float(bm25_score_by_index[index]),
             }
         )
     rows.sort(key=lambda row: (-row["rrf_score"], row["index"]))
