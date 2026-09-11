@@ -1,0 +1,205 @@
+{
+  "schema_version": 1,
+  "variant": "sentence_256",
+  "ladder": [
+    "dense@5",
+    "hybrid@10",
+    "rerank@20"
+  ],
+  "primary_labels": {
+    "continue": 0,
+    "stop": 1
+  },
+  "diagnostic_labels": {
+    "insufficient": 0,
+    "partial": 1,
+    "sufficient": 2
+  },
+  "by_split": {
+    "train_core": {
+      "labels": {
+        "raw": {
+          "dense@5": {
+            "partial": 108902,
+            "continue": 109402,
+            "sufficient": 54052,
+            "stop": 54052,
+            "insufficient": 500
+          },
+          "hybrid@10": {
+            "partial": 107210,
+            "continue": 108132,
+            "sufficient": 55322,
+            "stop": 55322,
+            "insufficient": 922
+          },
+          "rerank@20": {
+            "partial": 103436,
+            "continue": 103623,
+            "sufficient": 59831,
+            "stop": 59831,
+            "insufficient": 187
+          }
+        },
+        "cumulative": {
+          "dense@5": {
+            "partial": 108902,
+            "continue": 109402,
+            "sufficient": 54052,
+            "stop": 54052,
+            "insufficient": 500
+          },
+          "hybrid@10": {
+            "partial": 104775,
+            "continue": 104860,
+            "sufficient": 58594,
+            "stop": 58594,
+            "insufficient": 85
+          },
+          "rerank@20": {
+            "partial": 102633,
+            "continue": 102686,
+            "sufficient": 60768,
+            "stop": 60768,
+            "insufficient": 53
+          }
+        }
+      },
+      "trajectory_monotonicity": {
+        "raw": {
+          "questions": 163454,
+          "non_monotonic": 4731,
+          "ratio": 0.02894392306092234
+        },
+        "cumulative": {
+          "questions": 163454,
+          "non_monotonic": 0,
+          "ratio": 0.0
+        }
+      },
+      "invalid_gold_questions_excluded": 0
+    },
+    "dev_calibration": {
+      "labels": {
+        "raw": {
+          "dense@5": {
+            "partial": 1316,
+            "continue": 1322,
+            "sufficient": 678,
+            "stop": 678,
+            "insufficient": 6
+          },
+          "hybrid@10": {
+            "partial": 1269,
+            "continue": 1274,
+            "sufficient": 726,
+            "stop": 726,
+            "insufficient": 5
+          },
+          "rerank@20": {
+            "partial": 1231,
+            "continue": 1233,
+            "sufficient": 767,
+            "stop": 767,
+            "insufficient": 2
+          }
+        },
+        "cumulative": {
+          "dense@5": {
+            "partial": 1316,
+            "continue": 1322,
+            "sufficient": 678,
+            "stop": 678,
+            "insufficient": 6
+          },
+          "hybrid@10": {
+            "partial": 1247,
+            "continue": 1247,
+            "sufficient": 753,
+            "stop": 753
+          },
+          "rerank@20": {
+            "partial": 1221,
+            "continue": 1221,
+            "sufficient": 779,
+            "stop": 779
+          }
+        }
+      },
+      "trajectory_monotonicity": {
+        "raw": {
+          "questions": 2000,
+          "non_monotonic": 38,
+          "ratio": 0.019
+        },
+        "cumulative": {
+          "questions": 2000,
+          "non_monotonic": 0,
+          "ratio": 0.0
+        }
+      },
+      "invalid_gold_questions_excluded": 0
+    },
+    "dev_policy": {
+      "labels": {
+        "raw": {
+          "dense@5": {
+            "partial": 1349,
+            "continue": 1356,
+            "sufficient": 644,
+            "stop": 644,
+            "insufficient": 7
+          },
+          "hybrid@10": {
+            "partial": 1323,
+            "continue": 1339,
+            "sufficient": 661,
+            "stop": 661,
+            "insufficient": 16
+          },
+          "rerank@20": {
+            "partial": 1276,
+            "continue": 1280,
+            "sufficient": 720,
+            "stop": 720,
+            "insufficient": 4
+          }
+        },
+        "cumulative": {
+          "dense@5": {
+            "partial": 1349,
+            "continue": 1356,
+            "sufficient": 644,
+            "stop": 644,
+            "insufficient": 7
+          },
+          "hybrid@10": {
+            "partial": 1299,
+            "continue": 1299,
+            "sufficient": 701,
+            "stop": 701
+          },
+          "rerank@20": {
+            "partial": 1268,
+            "continue": 1268,
+            "sufficient": 732,
+            "stop": 732
+          }
+        }
+      },
+      "trajectory_monotonicity": {
+        "raw": {
+          "questions": 2000,
+          "non_monotonic": 67,
+          "ratio": 0.0335
+        },
+        "cumulative": {
+          "questions": 2000,
+          "non_monotonic": 0,
+          "ratio": 0.0
+        }
+      },
+      "invalid_gold_questions_excluded": 0
+    }
+  }
+}
