@@ -448,7 +448,13 @@ def render_report(
             f"{percent(row['hybrid_complete_evidence_coverage'])} | "
             f"{percent(row['final_complete_evidence_coverage'])} |"
         )
-    lines.extend(["", "Small 3-fact or 4+-fact groups are descriptive only."])
+    lines.extend(
+        [
+            "",
+            "The 3-fact stratum contains only two dev-policy questions. All bucket "
+            "comparisons are descriptive; no inferential claim is made.",
+        ]
+    )
 
     lines.extend(["", "## Controller Recoverability Diagnostics", ""])
     if controller_rows:
@@ -479,6 +485,10 @@ def render_report(
     hybrid = dev_rescue["Hybrid_to_Final_Rescue"]
     dense_unrecoverable = dense["eligible_current_incomplete"] - dense["rescued"]
     hybrid_unrecoverable = hybrid["eligible_current_incomplete"] - hybrid["rescued"]
+    actionable_continue = (
+        dense["eligible_current_incomplete"] + hybrid["eligible_current_incomplete"]
+    )
+    actionable_recoverable = dense["rescued"] + hybrid["rescued"]
     lines.extend(
         [
             "",
@@ -493,7 +503,7 @@ def render_report(
                 if controller_rows
                 else "4. Recoverable false-stop attribution is pending completed Controller predictions; it is not fabricated from retrieval labels."
             ),
-            f"5. On dev_policy, {dense_unrecoverable}/{dense['eligible_current_incomplete']} Dense Continue states and {hybrid_unrecoverable}/{hybrid['eligible_current_incomplete']} Hybrid Continue states are unrecoverable within the frozen ladder; these correspond to {dev['terminal_retrieval_failure_count']}/{dev['questions']} terminal-incomplete questions.",
+            f"5. On dev_policy, {dense_unrecoverable}/{dense['eligible_current_incomplete']} ({percent(dense_unrecoverable / dense['eligible_current_incomplete'])}) Dense Continue states and {hybrid_unrecoverable}/{hybrid['eligible_current_incomplete']} ({percent(hybrid_unrecoverable / hybrid['eligible_current_incomplete'])}) Hybrid Continue states are unrecoverable within the frozen ladder. Across both actionable slots, only {actionable_recoverable}/{actionable_continue} ({percent(actionable_recoverable / actionable_continue)}) Continue states are potentially recoverable before accounting for policy reachability; {dev['terminal_retrieval_failure_count']}/{dev['questions']} questions are terminal-incomplete.",
             "6. Final forced stops are excluded from formal sequential FSR; terminal incompleteness is reported as TRFR.",
             "7. This analysis does not change the frozen Phase 4 protocol, model, retrieval parameters, labels, or thresholds, and it does not consult heldout.",
             "",
