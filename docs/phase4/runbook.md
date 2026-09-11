@@ -140,10 +140,13 @@ $PYTHON_BIN scripts/build_phase2_controller_data.py \
   --retrieval-config configs/phase4/protocol.json \
   --controller-config configs/phase4/protocol.json \
   --variant sentence_256 \
-  --splits train_core,dev_calibration,dev_policy,heldout
+  --splits train_core,dev_calibration,dev_policy \
+  --report docs/phase4/2wiki_trajectory_audit_train_derived.md
 ```
 
-Inspect `docs/phase4/2wiki_trajectory_audit.md` before training.
+Inspect `docs/phase4/2wiki_trajectory_audit_train_derived.md` before training. Build
+the held-out Controller data later with a distinct
+`docs/phase4/2wiki_trajectory_audit_heldout.md` report; do not overwrite this audit.
 
 Fit the simple score baseline only on `dev_policy`:
 

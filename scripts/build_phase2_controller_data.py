@@ -27,6 +27,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--controller-config", type=Path, default=DEFAULT_CONTROLLER_CONFIG)
     parser.add_argument("--variant", required=True)
     parser.add_argument("--splits", default="train,dev")
+    parser.add_argument("--report", type=Path, help="Optional split-specific trajectory audit path")
     parser.add_argument("--force", action="store_true")
     return parser.parse_args()
 
@@ -173,9 +174,13 @@ def main() -> None:
     output_dir = data_root / "controller" / args.variant
     output_paths = {split: output_dir / f"{split}.jsonl" for split in splits}
     distribution_path = output_dir / f"label_distribution_{'_'.join(splits)}.json"
-    report_path = ROOT / retrieval_config.get("outputs", {}).get(
-        "trajectory_audit", "docs/phase2_trajectory_audit.md"
+    report_path = args.report or Path(
+        retrieval_config.get("outputs", {}).get(
+            "trajectory_audit", "docs/phase2_trajectory_audit.md"
+        )
     )
+    if not report_path.is_absolute():
+        report_path = ROOT / report_path
     manifest_path = output_dir / f"dataset_manifest_{'_'.join(splits)}.json"
     targets = [*output_paths.values(), distribution_path, report_path, manifest_path]
     existing = [path for path in targets if path.exists()]
@@ -329,6 +334,7 @@ def main() -> None:
         "variant": args.variant,
         "splits": splits,
         "ranking_sources": ranking_sources,
+        "trajectory_audit": portable_path(report_path, ROOT),
         "outputs": {split: portable_path(path, ROOT) for split, path in output_paths.items()},
         "invalid_gold_questions_excluded": dict(excluded_invalid),
     }
