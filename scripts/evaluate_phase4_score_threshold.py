@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import math
 from pathlib import Path
 
 import numpy as np
@@ -18,6 +19,16 @@ from train_phase2_controller import read_jsonl, write_jsonl_atomic
 
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_CONFIG = ROOT / "configs" / "phase4" / "protocol.json"
+
+
+def score_threshold_values(grid: dict) -> list[float]:
+    """Include an always-final endpoint for scores clipped to [0, 1]."""
+    thresholds = threshold_values(
+        float(grid["start"]), float(grid["stop"]), float(grid["step"])
+    )
+    if math.isclose(thresholds[-1], 1.0, abs_tol=1e-12):
+        thresholds.append(math.nextafter(1.0, math.inf))
+    return thresholds
 
 
 def parse_args() -> argparse.Namespace:
@@ -144,9 +155,7 @@ def main() -> None:
         rows = controller_rows(records, normalized, ladder)
         grouped = rows_by_question(rows, ladder)
         grid = score_config["threshold_grid"]
-        thresholds = threshold_values(
-            float(grid["start"]), float(grid["stop"]), float(grid["step"])
-        )
+        thresholds = score_threshold_values(grid)
         bootstrap, _ = bootstrap_fsr(
             grouped,
             "normalized_score",
@@ -193,6 +202,8 @@ def main() -> None:
                 "created_at_utc": utc_now(),
                 "selection_split": split,
                 "heldout_consulted": False,
+                "decision_rule": "stop_if_normalized_score_greater_than_or_equal_to_threshold",
+                "always_final_threshold": thresholds[-1],
                 "policies": policies,
             },
         )

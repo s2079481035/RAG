@@ -18,6 +18,7 @@ from phase4_score_threshold import (  # noqa: E402
     fit_stage_minmax,
     minmax_score,
 )
+from evaluate_phase4_score_threshold import score_threshold_values  # noqa: E402
 from run_phase2_retrieval import select_questions_for_run  # noqa: E402
 
 
@@ -101,6 +102,11 @@ class Phase42WikiTests(unittest.TestCase):
         heldout = [stage_row("q3", "dense@5", "dense", 0.8)]
         scored = attach_normalized_scores(heldout, parameters)
         self.assertEqual(scored[0]["normalized_score"], 1.0)
+
+    def test_score_threshold_grid_has_always_final_endpoint(self):
+        thresholds = score_threshold_values({"start": 0.0, "stop": 1.0, "step": 0.01})
+        self.assertEqual(thresholds[-2], 1.0)
+        self.assertGreater(thresholds[-1], 1.0)
 
     def test_retrieval_smoke_limit_is_deterministic_per_split(self):
         questions = {
