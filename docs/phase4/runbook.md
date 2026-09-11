@@ -148,6 +148,18 @@ Inspect `docs/phase4/2wiki_trajectory_audit_train_derived.md` before training. B
 the held-out Controller data later with a distinct
 `docs/phase4/2wiki_trajectory_audit_heldout.md` report; do not overwrite this audit.
 
+Run the retrieval-ceiling analysis only on Train-derived splits. Its recoverability
+fields are evaluation diagnostics and are never training inputs or labels:
+
+```bash
+$PYTHON_BIN scripts/analyze_phase4_retrieval_ceiling.py
+cat docs/phase4/2wiki_retrieval_ceiling_analysis.md
+```
+
+After a Controller has produced frozen `dev_policy` predictions, re-run with one or
+more `--prediction LABEL PATH THRESHOLD_OR_SAVED` arguments to add operational FSR,
+RFSR, and unrecoverable early-stop diagnostics. Do not supply held-out predictions.
+
 Fit the simple score baseline only on `dev_policy`:
 
 ```bash

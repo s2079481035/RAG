@@ -87,6 +87,19 @@ class Phase3BMetricsTests(unittest.TestCase):
         self.assertEqual(metrics["false_stop_count"], 0)
         self.assertEqual(metrics["false_stop_rate"], 0.0)
 
+    def test_operational_metrics_exclude_terminal_incomplete_state(self):
+        grouped = {
+            "q1": [
+                stage("q1", "dense@5", 0, 0.1, 0.5, 1),
+                stage("q1", "hybrid@10", 0, 0.1, 0.5, 2),
+                stage("q1", "rerank@20", 0, 0.9, 0.5, 3),
+            ]
+        }
+        metrics = operational_metrics(grouped, "raw_stop_probability", 0.5)
+        self.assertEqual(metrics["reached_actionable_decisions"], 2)
+        self.assertEqual(metrics["false_stop_count"], 0)
+        self.assertEqual(metrics["false_stop_rate"], 0.0)
+
     def test_trajectory_preserves_reached_evidence(self):
         rows = [
             stage("q1", "dense@5", 0, 0.1, 0.5, 1),
