@@ -1,0 +1,4 @@
+split,gold_supporting_fact_bucket,questions,dense_complete_evidence_coverage,hybrid_complete_evidence_coverage,final_complete_evidence_coverage
+dev_policy,2,1575,0.406984126984127,0.44253968253968257,0.4622222222222222
+dev_policy,3,2,1.0,1.0,1.0
+dev_policy,4+,423,0.002364066193853428,0.004728132387706856,0.004728132387706856

@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-11T10:41:53.980000+00:00",
+  "phase": 4,
+  "git_commit": "711f1909c2f7ae4986e5775194130bd80e3b45fb",
+  "analysis_scope": [
+    "train_core",
+    "dev_calibration",
+    "dev_policy"
+  ],
+  "heldout_consulted": false,
+  "ladder": [
+    "dense@5",
+    "hybrid@10",
+    "rerank@20"
+  ],
+  "actionable_stages": [
+    "dense@5",
+    "hybrid@10"
+  ],
+  "terminal_stage": "rerank@20",
+  "terminal_incomplete_classification": "terminal_retrieval_failure",
+  "recoverability_is_evaluation_only": true,
+  "recoverability_used_as_training_feature": false,
+  "source_controller_data": {
+    "train_core": "data/2wiki/controller/sentence_256/train_core.jsonl",
+    "dev_calibration": "data/2wiki/controller/sentence_256/dev_calibration.jsonl",
+    "dev_policy": "data/2wiki/controller/sentence_256/dev_policy.jsonl"
+  },
+  "prediction_sources": [],
+  "outputs": {
+    "report": "docs/phase4/2wiki_retrieval_ceiling_analysis.md",
+    "stage_rescue": "results/phase4/2wiki/stage_rescue_analysis.csv",
+    "retrieval_ceiling": "results/phase4/2wiki/retrieval_ceiling_summary.csv",
+    "supporting_fact_retrievability": "results/phase4/2wiki/supporting_fact_retrievability.csv",
+    "recoverability_diagnostics": {
+      "train_core": "results/phase4/2wiki/recoverability/train_core.jsonl",
+      "dev_calibration": "results/phase4/2wiki/recoverability/dev_calibration.jsonl",
+      "dev_policy": "results/phase4/2wiki/recoverability/dev_policy.jsonl"
+    },
+    "controller_recoverability_metrics": null
+  }
+}

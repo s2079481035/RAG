@@ -1,0 +1,4 @@
+split,questions,dense_complete_evidence_coverage,hybrid_complete_evidence_coverage,final_complete_evidence_coverage,terminal_retrieval_failure_count,terminal_retrieval_failure_rate,oracle_average_chunks,oracle_reranker_calls,oracle_average_retrieval_latency_ms,oracle_unresolved_rate
+train_core,163454,0.3306863092980288,0.35847394373952307,0.3717743218275478,102686,0.6282256781724522,14.937144395365056,0.641526056260477,982.8698883047466,0.6282256781724522
+dev_calibration,2000,0.339,0.3765,0.3895,1221,0.6105,14.7275,0.6235,1003.1174531678148,0.6105
+dev_policy,2000,0.322,0.3505,0.366,1268,0.634,15.058,0.6495,1028.0376559752976,0.634
