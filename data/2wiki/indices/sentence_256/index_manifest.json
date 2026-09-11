@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-10T07:36:00.224991+00:00",
+  "phase": 4,
+  "phase1_frozen_commit": null,
+  "phase3b_frozen_commit": "1ed762c",
+  "git_commit": "c66690f3754e81c4a89da786bb7d7ee489770076",
+  "config": "configs/phase4/protocol.json",
+  "variant": "sentence_256",
+  "chunk_file": "data/2wiki/chunks/sentence_256.jsonl",
+  "chunk_file_sha256": "6f15420b6e9a7c9d168f28fa872032fa0c1a2fb02f67a3d9696b455671eee727",
+  "chunks": 446798,
+  "document_text_mode": "title_and_chunk_text",
+  "document_text_template": "[TITLE] {document_title} [TEXT] {chunk_text}",
+  "dense_model": "/home/sunjb/RAG/ekrag/ekrag/models/bge-large-en-v1.5",
+  "dense_dimensions": 1024,
+  "dense_normalized": true,
+  "dense_index": "IndexFlatIP",
+  "dense_build_seconds": 1113.4739596191794,
+  "bm25_implementation": "rank_bm25.BM25Okapi",
+  "bm25_parameters": "library_defaults",
+  "bm25_build_seconds": 21.07461974537,
+  "files": {
+    "dense": {
+      "path": "data/2wiki/indices/sentence_256/dense.faiss",
+      "bytes": 1830084653
+    },
+    "doc_ids": {
+      "path": "data/2wiki/indices/sentence_256/doc_ids.npy",
+      "bytes": 78636576
+    },
+    "bm25": {
+      "path": "data/2wiki/indices/sentence_256/bm25.pkl",
+      "bytes": 218239847
+    }
+  },
+  "environment": {
+    "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.39",
+    "packages": {
+      "torch": "2.5.1+cu121",
+      "transformers": "4.44.2",
+      "sentence-transformers": "5.6.0",
+      "datasets": "5.0.0",
+      "faiss-cpu": "1.14.3",
+      "faiss-gpu": "1.14.3",
+      "rank-bm25": "0.2.2",
+      "numpy": "1.26.4",
+      "scikit-learn": "1.9.0"
+    },
+    "git_commit": "c66690f3754e81c4a89da786bb7d7ee489770076",
+    "cuda_visible_devices": "0",
+    "cuda": "12.1",
+    "gpus": [
+      "NVIDIA GeForce RTX 4090"
+    ]
+  }
+}
