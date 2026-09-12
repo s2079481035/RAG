@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-12T13:13:53.974135+00:00",
+  "fit_split": "dev_calibration",
+  "fit_questions": 2000,
+  "fit_stage_decisions": 4000,
+  "fit_stages": [
+    "dense@5",
+    "hybrid@10"
+  ],
+  "operational_seed": 42,
+  "operational_seed_rule": "fixed_before_dev_policy_metrics_not_selected_by_performance",
+  "temperature": 1.3473834252368755,
+  "optimized_nll": 0.02707970615436361,
+  "probability_epsilon": 1e-07,
+  "source_predictions": "experiments/phase4/2wiki/final_evidence_aware/seed42/dev_predictions.jsonl",
+  "source_predictions_sha256": "78714f61663912449af17541ce83fc853feac581b6fffdcb4cfc649374b4bc54",
+  "heldout_consulted": false
+}

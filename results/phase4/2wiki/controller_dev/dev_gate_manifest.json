@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-12T13:14:11.346713+00:00",
+  "phase": 4,
+  "git_commit": "f6b1f6ee41fce4ac0cc50fd2c99a1bd7becd6d8f",
+  "config": "configs/phase4/protocol.json",
+  "config_sha256": "9983dfe158a6b8b9fbd13d1c9aa95181851697acefe75daec5fda0047e7f3986",
+  "controller_config": "configs/phase4/controller.json",
+  "controller_config_sha256": "7577e08e2b42359e579542c180051a069da4269d6e86abf137cdca8ff9e92e5b",
+  "allowed_input_splits": [
+    "dev_calibration",
+    "dev_policy"
+  ],
+  "heldout_consulted": false,
+  "operational_seed": 42,
+  "run_sources": {
+    "query_stage_seed42": {
+      "run_manifest": "experiments/phase4/2wiki/query_stage/seed42/run_manifest.json",
+      "run_manifest_sha256": "9a4d8cf84cec0ffb5cdde4a5d641235780311ebe283091c1040350333c2961fd",
+      "dev_policy_predictions": "experiments/phase4/2wiki/query_stage/seed42/evaluation/dev_policy/original_predictions.jsonl",
+      "dev_policy_predictions_sha256": "6452c31dff329e505552b43e0533abcf76e22ef644bcd9226a58c58d517a3cbc"
+    },
+    "query_stage_seed123": {
+      "run_manifest": "experiments/phase4/2wiki/query_stage/seed123/run_manifest.json",
+      "run_manifest_sha256": "7ca94f5489986e422b108d2ea792a7acb189dd109bc94022a467b0c7f73a4d0f",
+      "dev_policy_predictions": "experiments/phase4/2wiki/query_stage/seed123/evaluation/dev_policy/original_predictions.jsonl",
+      "dev_policy_predictions_sha256": "384fa66a7750c25f4b6814eba2f1a38c7b02bd7f6dba995a6aaa3074585b49a6"
+    },
+    "query_stage_seed2026": {
+      "run_manifest": "experiments/phase4/2wiki/query_stage/seed2026/run_manifest.json",
+      "run_manifest_sha256": "4e66b962a1ca8a3b034a6fae83dd603e08b90e5d39fc16c3f747e0177086c7a3",
+      "dev_policy_predictions": "experiments/phase4/2wiki/query_stage/seed2026/evaluation/dev_policy/original_predictions.jsonl",
+      "dev_policy_predictions_sha256": "51fe8c625784115e78a9f3643b5afc1e85bca51334771d7f1abb46851696c9ff"
+    },
+    "final_evidence_aware_seed42": {
+      "run_manifest": "experiments/phase4/2wiki/final_evidence_aware/seed42/run_manifest.json",
+      "run_manifest_sha256": "ffada583f8268d848e1ecabc97be38bbab927d04c31e89849341488794660adb",
+      "dev_policy_predictions": "experiments/phase4/2wiki/final_evidence_aware/seed42/evaluation/dev_policy/original_predictions.jsonl",
+      "dev_policy_predictions_sha256": "b44d59cab2b54df1fbbfe24c374b51cf6e8cd1e2bbac038f362f5463d34b9d3d"
+    },
+    "final_evidence_aware_seed123": {
+      "run_manifest": "experiments/phase4/2wiki/final_evidence_aware/seed123/run_manifest.json",
+      "run_manifest_sha256": "4c01380627fd2c1564a655abe75053158f278e689cb409ddb249782e48a3b316",
+      "dev_policy_predictions": "experiments/phase4/2wiki/final_evidence_aware/seed123/evaluation/dev_policy/original_predictions.jsonl",
+      "dev_policy_predictions_sha256": "fb80eb8a5430dcdfc183ed9e0d010f0fac496238080fa15c02bac1b1d7a34680"
+    },
+    "final_evidence_aware_seed2026": {
+      "run_manifest": "experiments/phase4/2wiki/final_evidence_aware/seed2026/run_manifest.json",
+      "run_manifest_sha256": "46f4fe56b6b26dc976c391d654ec8c288431a387ccab4ad7462c0240825576a2",
+      "dev_policy_predictions": "experiments/phase4/2wiki/final_evidence_aware/seed2026/evaluation/dev_policy/original_predictions.jsonl",
+      "dev_policy_predictions_sha256": "ad3afc69ced01addb4ebfdb8a6c4b9a1154e199d66ec8695ef9f800ccb7202a6"
+    }
+  },
+  "source_data": {
+    "dev_calibration": {
+      "path": "data/2wiki/controller/sentence_256/dev_calibration.jsonl",
+      "sha256": "574bfbd93ed1d99dbedc4fa5402511f0f8e4b96102926d9d37e034cb22107032"
+    },
+    "dev_policy": {
+      "path": "data/2wiki/controller/sentence_256/dev_policy.jsonl",
+      "sha256": "7b5c503ff75a7be849fe5136baec67f67ee1e6538119d196e1a1aa3a231082ec"
+    }
+  },
+  "outputs": {
+    "report": "docs/phase4/2wiki_controller_dev_analysis.md",
+    "seed_results": "results/phase4/2wiki/controller_dev/dev_seed_results.csv",
+    "seed_summary": "results/phase4/2wiki/controller_dev/dev_multiseed_summary.csv",
+    "calibration_metrics": "results/phase4/2wiki/controller_dev/calibration_metrics.csv",
+    "temperature": "results/phase4/2wiki/controller_dev/temperature_scaling.json",
+    "calibrated_predictions": "results/phase4/2wiki/controller_dev/calibrated_dev_policy_predictions.jsonl",
+    "threshold_sweep": "results/phase4/2wiki/controller_dev/dev_policy_threshold_sweep.csv",
+    "bootstrap": "results/phase4/2wiki/controller_dev/dev_policy_bootstrap_fsr.jsonl",
+    "threshold_trajectories": "results/phase4/2wiki/controller_dev/dev_policy_threshold_trajectories.jsonl",
+    "selected_thresholds": "results/phase4/2wiki/controller_dev/selected_thresholds.json",
+    "recoverability": "results/phase4/2wiki/controller_dev/primary_policy_recoverability.json"
+  }
+}
