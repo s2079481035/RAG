@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-12T14:19:44.076091+00:00",
+  "phase": 4,
+  "status": "frozen_protocol_execution_deferred",
+  "formal_name": "Adaptive-RAG-style Query Complexity Router",
+  "official_reproduction": false,
+  "adaptation_reason": "official no/single/iterative ladder is not equivalent to dense/hybrid/rerank",
+  "router_input": "question_only",
+  "route_mapping": {
+    "light": "dense@5",
+    "medium": "hybrid@10",
+    "heavy": "rerank@20"
+  },
+  "training_label": "earliest_frozen_stage_with_complete_gold_supporting_fact_coverage_else_heavy",
+  "training_split": "train_core",
+  "development_splits": [
+    "dev_calibration",
+    "dev_policy"
+  ],
+  "heldout_consulted": false,
+  "execution_status": "deferred_unless_low_cost",
+  "audit": "docs/phase4/adaptive_rag_protocol_audit.md",
+  "audit_sha256": "d7a0fab34cf1d4948487d22d627c796692ed3f0c0eb478dad33a47f85b68ed4c",
+  "config": "configs/phase4/protocol.json",
+  "config_sha256": "c5e6f254918bee716dcdea7668fd08244ca62112055c03dd59e51365ed14132e",
+  "git_commit": "5b6ce70494491b8235fb2d88c4e94bfcaca0a020"
+}
