@@ -132,6 +132,7 @@ def main() -> None:
             adaptive.get("status") == "frozen_protocol_execution_deferred"
             and adaptive.get("official_reproduction") is False
             and adaptive.get("heldout_consulted") is False
+            and adaptive.get("config_sha256") == sha256(protocol_path)
         ),
         "score_threshold_baseline_frozen": (
             score.get("selection_split") == "dev_policy"
