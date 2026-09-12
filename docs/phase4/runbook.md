@@ -233,3 +233,110 @@ The formal FSR scope is sequentially reached Dense/Hybrid decisions only.
 not as a Controller false stop. Commit the Dev-gate code, protocol, report, and
 small CSV/JSON manifests before unlocking `heldout`; generated prediction,
 trajectory, and bootstrap JSONL files remain ignored.
+
+## 8. Frozen LLM-as-a-Judge Baseline
+
+The Judge has two representations. `judge_512` is the primary fair comparison
+with the Critic's score-aware 512-token pair budget. `judge_full` uses the same
+cumulative chunks in retrieval order but may use the frozen Qwen 4096-token
+input budget. Both evaluate only `dense@5` and `hybrid@10`.
+
+Set the local model paths once:
+
+```bash
+export LLM_MODEL_PATH=/home/sunjb/RAG/ekrag/ekrag/models/Qwen2.5-7B-Instruct
+export PACKING_TOKENIZER=/home/sunjb/RAG/ekrag/ekrag/models/bge-large-en-v1.5
+export CONTROLLER_MODEL=BAAI/bge-reranker-base
+export HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELISM=false
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+```
+
+First run the format-only gate on exactly 100 sorted `dev_calibration`
+questions. This is not a prompt-quality selection experiment.
+
+```bash
+SESSION=phase4-judge-gate
+LOG=results/phase4_judge_gate_$(date +%Y%m%dT%H%M%S).log
+tmux new-session -d -s "$SESSION" \
+  "cd /home/sunjb/RAG/RAG_paper && \
+   export CUDA_VISIBLE_DEVICES=1 HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELISM=false \
+     PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True && \
+   python3.12 scripts/run_phase4_llm_judge.py \
+     --split dev_calibration --limit-questions 100 \
+     --model $LLM_MODEL_PATH --packing-tokenizer $PACKING_TOKENIZER \
+     2>&1 | tee $LOG"
+
+tail -f "$LOG"
+```
+
+After the process exits, freeze the prompt only if both strict parse rates meet
+the preregistered 99% gate:
+
+```bash
+python3.12 scripts/freeze_phase4_llm_judge_prompt.py
+cat results/phase4/2wiki/llm_judge/prompt_freeze_manifest.json
+```
+
+Only then run the complete formal `dev_policy` Judge evaluation. Do not pass a
+question limit.
+
+```bash
+SESSION=phase4-judge-dev
+LOG=results/phase4_judge_dev_$(date +%Y%m%dT%H%M%S).log
+tmux new-session -d -s "$SESSION" \
+  "cd /home/sunjb/RAG/RAG_paper && \
+   export CUDA_VISIBLE_DEVICES=1 HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELISM=false \
+     PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True && \
+   python3.12 scripts/run_phase4_llm_judge.py \
+     --split dev_policy \
+     --model $LLM_MODEL_PATH --packing-tokenizer $PACKING_TOKENIZER \
+     2>&1 | tee $LOG"
+```
+
+In a separate short GPU run, replay the frozen seed-42 Controller at batch size
+one using the same latency convention:
+
+```bash
+CUDA_VISIBLE_DEVICES=1 python3.12 scripts/benchmark_phase4_controller.py \
+  --backbone "$CONTROLLER_MODEL"
+```
+
+Then produce the CPU-only comparison:
+
+```bash
+python3.12 scripts/analyze_phase4_llm_judge.py
+cat docs/phase4/llm_judge_analysis.md
+cat results/phase4/2wiki/llm_judge_summary.csv
+```
+
+Judge hard labels do not support AUROC or a risk-threshold sweep. Invalid text
+is recorded and conservatively treated as Continue.
+
+## 9. Adaptive-RAG Protocol Boundary
+
+Freeze the audit without training or evaluating a new model:
+
+```bash
+python3.12 scripts/freeze_phase4_adaptive_protocol.py
+cat docs/phase4/adaptive_rag_protocol_audit.md
+cat results/phase4/2wiki/adaptive_rag_protocol_manifest.json
+```
+
+The official no/single/iterative strategy ladder is not equivalent to the
+current dense/hybrid/rerank ladder. Any later implementation must therefore be
+reported as `Adaptive-RAG-style Query Complexity Router`. Its optional learned
+three-seed run is deferred because it is not a negligible-cost baseline.
+
+## 10. Heldout Unlock Audit
+
+Commit all code and frozen Dev artifacts before running this audit. It inspects
+only configurations and Train-derived Dev manifests; it does not open heldout.
+
+```bash
+python3.12 scripts/audit_phase4_heldout_unlock.py
+cat docs/phase4/heldout_unlock_checklist.md
+cat results/phase4/heldout_unlock_manifest.json
+```
+
+When every item passes, stop and obtain explicit researcher confirmation. The
+audit records readiness but never launches heldout evaluation.

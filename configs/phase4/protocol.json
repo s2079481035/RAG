@@ -161,6 +161,20 @@
       "selection": "conservative",
       "risk_target": 0.1
     },
+    "frozen_dev_gate": {
+      "classification_operating_point": {
+        "probability": "raw",
+        "threshold": 0.7900000000000001,
+        "purpose": "critic_discrimination"
+      },
+      "temperature": 1.3473834252368755,
+      "risk_controlled_operating_point": {
+        "policy": "temperature_conservative_risk_10",
+        "threshold": 0.01,
+        "risk_target": 0.1,
+        "purpose": "retrieval_efficiency_under_dev_risk_budget"
+      }
+    },
     "heldout_tuning_forbidden": true
   },
   "score_threshold": {
@@ -176,21 +190,69 @@
   },
   "llm_judge": {
     "model": "Qwen/Qwen2.5-7B-Instruct",
-    "prompt_template": "Question:\n{question}\n\nRetrieved Evidence:\n{evidence}\n\nDetermine whether the retrieved evidence is sufficient to answer the question correctly.\n\nOutput exactly one label:\n\nSUFFICIENT\n\nor\n\nINSUFFICIENT",
-    "temperature": 0,
+    "model_source": "phase3a_frozen_generator",
+    "prompt_path": "configs/phase4/llm_judge_prompt.txt",
+    "representations": [
+      "judge_512",
+      "judge_full"
+    ],
+    "actionable_stages": [
+      "dense@5",
+      "hybrid@10"
+    ],
+    "judge_512": {
+      "packing_tokenizer": "BAAI/bge-large-en-v1.5",
+      "representation": "score_aware_packing",
+      "critic_pair_max_length": 512,
+      "minimum_chunk_tokens": 12,
+      "include_stage_metadata_in_packing_budget": true
+    },
+    "judge_full": {
+      "packing": "retrieval_order_full_chunks_then_final_prefix_truncation",
+      "max_input_tokens": 4096
+    },
+    "decoding": {
+      "do_sample": false,
+      "temperature": null,
+      "num_beams": 1
+    },
     "max_new_tokens": 8,
+    "latency_warmup_states": 5,
+    "controller_probability_replay_tolerance": 0.0001,
     "allowed_labels": [
       "SUFFICIENT",
       "INSUFFICIENT"
     ],
-    "prompt_check_split": "dev_policy",
+    "invalid_output_action": "continue",
+    "prompt_check_split": "dev_calibration",
+    "prompt_check_questions": 100,
+    "minimum_parse_rate": 0.99,
+    "formal_dev_split": "dev_policy",
+    "label_probability_available": false,
+    "auroc_reported": false,
     "heldout_prompt_tuning_forbidden": true
   },
   "external_baselines": {
     "adaptive_rag": {
       "official_repository": "https://github.com/starsuzi/Adaptive-RAG",
       "paper": "https://aclanthology.org/2024.naacl-long.389/",
-      "status": "not_yet_audited"
+      "status": "adapted_protocol_only",
+      "formal_name": "Adaptive-RAG-style Query Complexity Router",
+      "strict_official_reproduction": false,
+      "router_input": "question_only",
+      "route_mapping": {
+        "light": "dense@5",
+        "medium": "hybrid@10",
+        "heavy": "rerank@20"
+      },
+      "training_label": "earliest_frozen_stage_with_complete_gold_supporting_fact_coverage_else_heavy",
+      "training_split": "train_core",
+      "development_splits": [
+        "dev_calibration",
+        "dev_policy"
+      ],
+      "heldout_tuning_forbidden": true,
+      "execution_status": "deferred_unless_low_cost"
     },
     "s2g_rag": {
       "official_repository": "https://github.com/nianaaa/S2G-RAG",
