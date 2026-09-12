@@ -195,4 +195,41 @@ for SEED in 42 123 2026; do
 done
 ```
 
-Do not evaluate `heldout` until the in-domain calibration and policy-selection manifests are committed. Later runbook sections are added only after those gates are implemented and tested.
+Do not evaluate `heldout` until the in-domain calibration and policy-selection manifests are committed.
+
+## 7. Train-derived Controller Dev Gate
+
+After all six runs are complete, generate `dev_policy` predictions for every run.
+The training-produced `dev_predictions.jsonl` already provides each run's
+`dev_calibration` predictions; do not rerun those.
+
+```bash
+for GROUP in query_stage final_evidence_aware; do
+  for SEED in 42 123 2026; do
+    RUN_DIR="experiments/phase4/2wiki/${GROUP}/seed${SEED}"
+    $PYTHON_BIN scripts/evaluate_phase3a_controller.py \
+      --run-dir "$RUN_DIR" \
+      --split dev_policy
+  done
+done
+```
+
+Freeze the multi-seed summary, seed-42 temperature, and `dev_policy` risk
+thresholds with the CPU-only analysis below. The operational seed is fixed to 42
+in the protocol and is not selected from `dev_policy` performance.
+
+```bash
+$PYTHON_BIN scripts/analyze_phase4_controller_dev.py
+
+cat docs/phase4/2wiki_controller_dev_analysis.md
+cat results/phase4/2wiki/controller_dev/dev_multiseed_summary.csv
+cat results/phase4/2wiki/controller_dev/calibration_metrics.csv
+cat results/phase4/2wiki/controller_dev/selected_thresholds.json
+cat results/phase4/2wiki/controller_dev/primary_policy_recoverability.json
+```
+
+The formal FSR scope is sequentially reached Dense/Hybrid decisions only.
+`rerank@20` is terminal and is reported through retrieval-ceiling diagnostics,
+not as a Controller false stop. Commit the Dev-gate code, protocol, report, and
+small CSV/JSON manifests before unlocking `heldout`; generated prediction,
+trajectory, and bootstrap JSONL files remain ignored.
