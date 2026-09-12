@@ -2,13 +2,12 @@ You are given a question and the evidence currently retrieved by a retrieval-aug
 
 Determine whether the evidence is already sufficient to answer the question correctly.
 
-Output exactly one label:
+Your entire response must be exactly one label from this list:
 
 SUFFICIENT
-
-or
-
 INSUFFICIENT
+
+Do not output punctuation, reasoning, an explanation, or a second line.
 
 Question:
 {question}

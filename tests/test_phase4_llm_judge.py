@@ -101,18 +101,17 @@ class Phase4LLMJudgeTests(unittest.TestCase):
         )
         self.assertEqual(frozen["risk_controlled_operating_point"]["threshold"], 0.01)
 
-    def test_prompt_text_is_the_preregistered_first_version(self):
+    def test_prompt_text_is_the_frozen_format_revision(self):
         expected = """You are given a question and the evidence currently retrieved by a retrieval-augmented generation system.
 
 Determine whether the evidence is already sufficient to answer the question correctly.
 
-Output exactly one label:
+Your entire response must be exactly one label from this list:
 
 SUFFICIENT
-
-or
-
 INSUFFICIENT
+
+Do not output punctuation, reasoning, an explanation, or a second line.
 
 Question:
 {question}
@@ -122,6 +121,10 @@ Evidence:
 """
         actual = (ROOT / "configs" / "phase4" / "llm_judge_prompt.txt").read_text()
         self.assertEqual(actual, expected)
+
+        config = json.loads((ROOT / "configs" / "phase4" / "protocol.json").read_text())
+        self.assertEqual(config["llm_judge"]["prompt_version"], 2)
+        self.assertEqual(config["llm_judge"]["prompt_debugging_rounds"], 1)
 
     def test_sequential_metrics_skip_unreached_hybrid_state(self):
         rows = [

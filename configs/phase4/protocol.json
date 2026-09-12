@@ -192,6 +192,9 @@
     "model": "Qwen/Qwen2.5-7B-Instruct",
     "model_source": "phase3a_frozen_generator",
     "prompt_path": "configs/phase4/llm_judge_prompt.txt",
+    "prompt_version": 2,
+    "prompt_debugging_rounds": 1,
+    "prompt_revision_basis": "format_only_all_round1_invalid_outputs_added_second_line_explanations",
     "representations": [
       "judge_512",
       "judge_full"
