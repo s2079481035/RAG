@@ -9,6 +9,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from analyze_phase4_controller_dev import (  # noqa: E402
     aggregate_seed_rows,
+    enrich_selection,
     select_primary,
     validate_split_rows,
 )
@@ -89,6 +90,32 @@ class Phase4ControllerDevTests(unittest.TestCase):
             {"calibration": "temperature", "selection": "conservative", "risk_target": 0.1},
         )
         self.assertEqual(primary["threshold"], 0.93)
+
+    def test_selected_policy_is_enriched_from_exact_sweep_row(self):
+        selection = {
+            "calibration_method": "temperature",
+            "selection": "conservative",
+            "risk_target": 0.1,
+            "status": "selected",
+            "threshold": 0.5,
+        }
+        sweep = [
+            {
+                "calibration_method": "temperature",
+                "threshold": 0.5,
+                "macro_f1": 0.8,
+                "auroc": 0.9,
+                "hard_partial_false_stop_rate": 0.1,
+                "unnecessary_escalation_rate": 0.2,
+                "final_supporting_fact_recall": 0.7,
+                "final_complete_evidence_coverage": 0.6,
+                "average_unique_titles": 8.0,
+                "average_controller_calls": 1.5,
+            }
+        ]
+        enriched = enrich_selection(selection, sweep)
+        self.assertEqual(enriched["macro_f1"], 0.8)
+        self.assertEqual(enriched["final_complete_evidence_coverage"], 0.6)
 
 
 if __name__ == "__main__":

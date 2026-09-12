@@ -286,6 +286,30 @@ def select_primary(selections: list[dict], primary: dict) -> dict:
     return matches[0]
 
 
+def enrich_selection(selection: dict, sweep_rows: list[dict]) -> dict:
+    if selection["status"] != "selected":
+        return selection
+    matches = [
+        row for row in sweep_rows
+        if row["calibration_method"] == selection["calibration_method"]
+        and float(row["threshold"]) == float(selection["threshold"])
+    ]
+    if len(matches) != 1:
+        raise ValueError(f"Selected threshold does not identify one sweep row: {selection}")
+    row = matches[0]
+    return {
+        **selection,
+        "macro_f1": row["macro_f1"],
+        "auroc": row["auroc"],
+        "hard_partial_false_stop_rate": row["hard_partial_false_stop_rate"],
+        "unnecessary_escalation_rate": row["unnecessary_escalation_rate"],
+        "final_supporting_fact_recall": row["final_supporting_fact_recall"],
+        "final_complete_evidence_coverage": row["final_complete_evidence_coverage"],
+        "average_unique_titles": row["average_unique_titles"],
+        "average_controller_calls": row["average_controller_calls"],
+    }
+
+
 def percent(value) -> str:
     return "N/A" if value is None else f"{100 * float(value):.2f}%"
 
@@ -298,7 +322,9 @@ def render_report(
     summary_rows: list[dict],
     calibration: list[dict],
     temperature: float,
+    selections: list[dict],
     primary: dict,
+    always_final: dict,
     recoverability: dict | None,
 ) -> str:
     sequential = [
@@ -351,6 +377,52 @@ def render_report(
             f"{number(row['brier'])} | {number(row['ece'])} | {number(row['auroc'])} |"
         )
 
+    temperature_selections = [
+        row for row in selections if row["calibration_method"] == "temperature"
+    ]
+    lines.extend(
+        [
+            "",
+            "Scalar Temperature Scaling preserves AUROC ranking. Here it improves NLL, "
+            "Brier score, and ECE on both Train-derived Dev subsets; this is a "
+            "calibration result, not a discrimination gain.",
+            "",
+            "## Dev Risk-Efficiency Boundary",
+            "",
+            "| Target | Selection | Threshold | FSR | FSR CI high | Hard Partial FSR | Chunks | Rerank calls | Latency ms | Final coverage |",
+            "|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|",
+        ]
+    )
+    for row in temperature_selections:
+        if row["status"] != "selected":
+            lines.append(
+                f"| {percent(row['risk_target'])} | {row['selection']} | infeasible | "
+                "N/A | N/A | N/A | N/A | N/A | N/A | N/A |"
+            )
+            continue
+        lines.append(
+            f"| {percent(row['risk_target'])} | {row['selection']} | "
+            f"{number(row['threshold'], 3)} | {percent(row['observed_false_stop_rate'])} | "
+            f"{percent(row['fsr_ci95_high'])} | "
+            f"{percent(row['hard_partial_false_stop_rate'])} | "
+            f"{number(row['average_retrieved_chunks'], 3)} | "
+            f"{number(row['average_reranker_calls'], 3)} | "
+            f"{number(row['estimated_average_retrieval_latency_ms'], 2)} | "
+            f"{percent(row['final_complete_evidence_coverage'])} |"
+        )
+
+    chunk_reduction = (
+        float(always_final["average_retrieved_chunks"])
+        - float(primary["average_retrieved_chunks"])
+    ) / float(always_final["average_retrieved_chunks"])
+    rerank_reduction = (
+        float(always_final["average_reranker_calls"])
+        - float(primary["average_reranker_calls"])
+    ) / float(always_final["average_reranker_calls"])
+    latency_reduction = (
+        float(always_final["estimated_average_retrieval_latency_ms"])
+        - float(primary["estimated_average_retrieval_latency_ms"])
+    ) / float(always_final["estimated_average_retrieval_latency_ms"])
     lines.extend(
         [
             "",
@@ -363,6 +435,8 @@ def render_report(
             f"- Average retrieved chunks: {number(primary['average_retrieved_chunks'], 3)}",
             f"- Average reranker calls: {number(primary['average_reranker_calls'], 3)}",
             f"- Estimated retrieval latency: {number(primary['estimated_average_retrieval_latency_ms'], 2)} ms",
+            f"- Final complete evidence coverage: {percent(primary['final_complete_evidence_coverage'])}",
+            f"- Cost reduction vs always-final: chunks {percent(chunk_reduction)}, reranker calls {percent(rerank_reduction)}, estimated retrieval latency {percent(latency_reduction)}",
         ]
     )
     if recoverability is not None:
@@ -371,6 +445,7 @@ def render_report(
                 f"- Recoverable FSR: {percent(recoverability['recoverable_false_stop_rate'])}",
                 f"- Unrecoverable early-stop rate: {percent(recoverability['unrecoverable_early_stop_rate'])}",
                 f"- Recoverable share of false stops: {percent(recoverability['recoverable_share_of_false_stops'])}",
+                f"- Recoverable share of reached Continue states: {percent(recoverability['reached_recoverable_continue_states'] / recoverability['reached_continue_states'])}",
             ]
         )
     lines.extend(
@@ -648,22 +723,30 @@ def main() -> None:
         method_rows = [row for row in sweep_rows if row["calibration_method"] == method]
         for target in (float(value) for value in policy["risk_targets"]):
             selections.append(
-                {
+                enrich_selection({
                     "calibration_method": method,
                     "selection": "point",
                     "risk_target": target,
                     **select_threshold(method_rows, target, "false_stop_rate"),
-                }
+                }, sweep_rows)
             )
             selections.append(
-                {
+                enrich_selection({
                     "calibration_method": method,
                     "selection": "conservative",
                     "risk_target": target,
                     **select_threshold(method_rows, target, "fsr_ci95_high"),
-                }
+                }, sweep_rows)
             )
     primary = select_primary(selections, policy["primary_report_policy"])
+    always_final_matches = [
+        row for row in sweep_rows
+        if row["calibration_method"] == "temperature"
+        and float(row["threshold"]) == math.nextafter(1.0, math.inf)
+    ]
+    if len(always_final_matches) != 1:
+        raise ValueError("Always-final endpoint is missing or duplicated")
+    always_final = always_final_matches[0]
     write_json_atomic(
         selection_path,
         {
@@ -708,7 +791,15 @@ def main() -> None:
 
     report_path.parent.mkdir(parents=True, exist_ok=True)
     report_path.write_text(
-        render_report(seed_summary, calibration_output, temperature, primary, recoverability),
+        render_report(
+            seed_summary,
+            calibration_output,
+            temperature,
+            selections,
+            primary,
+            always_final,
+            recoverability,
+        ),
         encoding="utf-8",
         newline="\n",
     )
