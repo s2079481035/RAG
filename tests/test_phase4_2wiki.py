@@ -1,5 +1,6 @@
 import sys
 import unittest
+import json
 from pathlib import Path
 
 
@@ -19,6 +20,11 @@ from phase4_score_threshold import (  # noqa: E402
     minmax_score,
 )
 from evaluate_phase4_score_threshold import score_threshold_values  # noqa: E402
+from phase4_adaptive_router import (  # noqa: E402
+    route_target,
+    router_record,
+    summarize_routes,
+)
 from run_phase2_retrieval import select_questions_for_run  # noqa: E402
 
 
@@ -35,6 +41,47 @@ def record(qid="q1"):
         "type": "comparison",
         "evidences": [["Alice", "birth year", "1900"]],
     }
+
+
+def router_stage(qid, stage, coverage, stop, chunks, latency):
+    return {
+        "question_id": qid,
+        "split": "dev_policy",
+        "question": "Which route is needed?",
+        "stage": stage,
+        "cumulative_evidence_memory": {
+            "supporting_fact_recall": coverage,
+            "stop_label": stop,
+            "items": [
+                {"chunk_id": f"{qid}-{index}"} for index in range(chunks)
+            ],
+            "document_titles": [f"title-{index}" for index in range(chunks)],
+        },
+        "latency_ms": {
+            "query_embedding_run_mean": 1.0,
+            "dense_search": 2.0,
+            "bm25_scoring": 3.0,
+            "rrf_fusion": 4.0,
+            "reranker_allocated": latency - 10.0,
+        },
+    }
+
+
+def router_trajectory(qid, complete_stage=None):
+    stops = [False, False, False]
+    if complete_stage is not None:
+        for index in range(complete_stage, 3):
+            stops[index] = True
+    coverage = [0.0, 0.5, 1.0] if complete_stage is not None else [0.0, 0.5, 0.5]
+    if complete_stage == 0:
+        coverage = [1.0, 1.0, 1.0]
+    elif complete_stage == 1:
+        coverage = [0.5, 1.0, 1.0]
+    return [
+        router_stage(qid, "dense@5", coverage[0], stops[0], 5, 3.0),
+        router_stage(qid, "hybrid@10", coverage[1], stops[1], 10, 10.0),
+        router_stage(qid, "rerank@20", coverage[2], stops[2], 20, 15.0),
+    ]
 
 
 class Phase42WikiTests(unittest.TestCase):
@@ -120,6 +167,38 @@ class Phase42WikiTests(unittest.TestCase):
         )
         self.assertEqual([row["question_id"] for row in selected], ["a", "b"])
         self.assertEqual(eligible, {"train_core": 2, "dev_policy": 2})
+
+    def test_adaptive_router_target_is_earliest_complete_else_heavy(self):
+        medium = router_trajectory("q1", complete_stage=1)
+        unresolved = router_trajectory("q2")
+        self.assertEqual(route_target(medium)["route"], "medium")
+        self.assertTrue(route_target(medium)["recoverable"])
+        self.assertEqual(route_target(unresolved)["route"], "heavy")
+        self.assertFalse(route_target(unresolved)["recoverable"])
+        self.assertEqual(router_record(medium, "dev_policy")["label"], 1)
+
+    def test_adaptive_router_under_retrieval_excludes_unrecoverable(self):
+        trajectories = {
+            "q1": router_trajectory("q1", complete_stage=1),
+            "q2": router_trajectory("q2"),
+        }
+        metrics = summarize_routes(trajectories, {"q1": 0, "q2": 0})
+        self.assertEqual(metrics["recoverable_questions"], 1)
+        self.assertEqual(metrics["unrecoverable_questions"], 1)
+        self.assertEqual(metrics["recoverable_under_retrieval_rate"], 1.0)
+        self.assertEqual(metrics["terminal_retrieval_failure_rate"], 0.5)
+        self.assertEqual(metrics["light_route_rate"], 1.0)
+
+    def test_adaptive_router_protocol_requires_dev_gate(self):
+        protocol = json.loads(
+            (ROOT / "configs" / "phase4" / "protocol.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        adaptive = protocol["external_baselines"]["adaptive_rag"]
+        self.assertEqual(adaptive["execution_status"], "required_before_heldout")
+        self.assertEqual(adaptive["router_input"], "question_only")
+        self.assertFalse(adaptive["strict_official_reproduction"])
 
 
 if __name__ == "__main__":

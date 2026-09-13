@@ -238,9 +238,10 @@
   "external_baselines": {
     "adaptive_rag": {
       "official_repository": "https://github.com/starsuzi/Adaptive-RAG",
+      "official_repository_commit": "0c88670af8707667eb5c1163151bb5ce61b14acb",
       "paper": "https://aclanthology.org/2024.naacl-long.389/",
-      "status": "adapted_protocol_only",
-      "formal_name": "Adaptive-RAG-style Query Complexity Router",
+      "status": "adapted_dev_gate_required",
+      "formal_name": "Adaptive-RAG-style Query-Complexity Router",
       "strict_official_reproduction": false,
       "router_input": "question_only",
       "route_mapping": {
@@ -248,6 +249,8 @@
         "medium": "hybrid@10",
         "heavy": "rerank@20"
       },
+      "stage_mapping_file": "configs/phase4/adaptive_rag_stage_mapping.yaml",
+      "router_config": "configs/phase4/adaptive_rag_router.json",
       "training_label": "earliest_frozen_stage_with_complete_gold_supporting_fact_coverage_else_heavy",
       "training_split": "train_core",
       "development_splits": [
@@ -255,7 +258,7 @@
         "dev_policy"
       ],
       "heldout_tuning_forbidden": true,
-      "execution_status": "deferred_unless_low_cost"
+      "execution_status": "required_before_heldout"
     },
     "s2g_rag": {
       "official_repository": "https://github.com/nianaaa/S2G-RAG",

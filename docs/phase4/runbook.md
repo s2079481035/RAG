@@ -312,7 +312,7 @@ cat results/phase4/2wiki/llm_judge_summary.csv
 Judge hard labels do not support AUROC or a risk-threshold sweep. Invalid text
 is recorded and conservatively treated as Continue.
 
-## 9. Adaptive-RAG Protocol Boundary
+## 9. Adaptive-RAG-style Router Dev Gate
 
 Freeze the audit without training or evaluating a new model:
 
@@ -323,9 +323,45 @@ cat results/phase4/2wiki/adaptive_rag_protocol_manifest.json
 ```
 
 The official no/single/iterative strategy ladder is not equivalent to the
-current dense/hybrid/rerank ladder. Any later implementation must therefore be
-reported as `Adaptive-RAG-style Query Complexity Router`. Its optional learned
-three-seed run is deferred because it is not a negligible-cost baseline.
+current dense/hybrid/rerank ladder. This baseline is therefore reported as
+`Adaptive-RAG-style Query-Complexity Router`, not an official reproduction.
+
+Build the frozen question-level route targets without reading heldout:
+
+```bash
+python3.12 scripts/build_phase4_adaptive_router_data.py
+cat results/phase4/2wiki/adaptive_rag/label_distribution.json
+cat results/phase4/2wiki/adaptive_rag/leakage_audit.json
+```
+
+Run all three seeds. Router input is question text only; `dev_calibration` is
+used for epoch selection and `dev_policy` is not loaded by training:
+
+```bash
+for SEED in 42 123 2026; do
+  CUDA_VISIBLE_DEVICES=1 python3.12 scripts/train_phase4_adaptive_router.py \
+    --seed "$SEED" \
+    --run-dir "experiments/phase4/2wiki/adaptive_rag_router/seed${SEED}"
+done
+```
+
+Evaluate each frozen checkpoint once on `dev_policy`, then write the CPU-only
+comparison:
+
+```bash
+for SEED in 42 123 2026; do
+  CUDA_VISIBLE_DEVICES=1 python3.12 scripts/evaluate_phase4_adaptive_router.py \
+    --run-dir "experiments/phase4/2wiki/adaptive_rag_router/seed${SEED}"
+done
+
+CUDA_VISIBLE_DEVICES=1 python3.12 scripts/benchmark_phase4_adaptive_router.py
+python3.12 scripts/analyze_phase4_adaptive_router.py
+cat docs/phase4/adaptive_rag_dev_analysis.md
+cat results/phase4/2wiki/adaptive_rag_dev_summary.csv
+```
+
+The Router's diagnostic error is Recoverable Under-Retrieval Rate, not
+Controller FSR. Do not retune the Router after `dev_policy` evaluation.
 
 ## 10. Heldout Unlock Audit
 

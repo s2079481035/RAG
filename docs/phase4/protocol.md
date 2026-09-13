@@ -38,7 +38,7 @@ The in-domain Controller uses the frozen architecture and hyperparameters. Only 
 
 - Score Threshold uses only the top-1 retrieval score, with stage-wise normalization fitted on `dev_policy`.
 - LLM Judge uses the frozen Qwen generator, greedy decoding, and an exact binary-label prompt frozen before held-out evaluation. AUROC is reported only if genuine label probabilities are available.
-- Official Adaptive-RAG reproduction is kept separate from an Adaptive-RAG-style Query Complexity Router adapted to this pipeline.
+- Official Adaptive-RAG reproduction is kept separate from an Adaptive-RAG-style Query-Complexity Router adapted to this pipeline.
 - S2G-RAG has a two-working-day reproduction limit. Partial or failed reproduction remains documented and is not relabeled as a successful fair baseline.
 
 ## Statistical Reporting

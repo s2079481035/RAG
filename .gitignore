@@ -25,6 +25,7 @@ data/2wiki/questions.json
 data/2wiki/chunks/
 data/2wiki/indices/
 data/2wiki/controller/**/*.jsonl
+data/2wiki/adaptive_rag/**/*.jsonl
 results/phase4/**/*.jsonl
 results/phase4/*.log
 experiments/phase4/

@@ -35,6 +35,10 @@ def load(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def load_optional(path: Path) -> dict:
+    return load(path) if path.exists() else {}
+
+
 def code_is_committed(paths: list[str]) -> bool:
     for path in paths:
         tracked = subprocess.run(
@@ -74,6 +78,18 @@ def main() -> None:
     judge_analysis = load(judge_analysis_path)
     adaptive_path = ROOT / "results" / "phase4" / "2wiki" / "adaptive_rag_protocol_manifest.json"
     adaptive = load(adaptive_path)
+    adaptive_gate_path = (
+        ROOT / "results" / "phase4" / "2wiki" / "adaptive_rag"
+        / "dev_gate_manifest.json"
+    )
+    adaptive_gate = load_optional(adaptive_gate_path)
+    adaptive_leakage_path = (
+        ROOT / "results" / "phase4" / "2wiki" / "adaptive_rag"
+        / "leakage_audit.json"
+    )
+    adaptive_leakage = load_optional(adaptive_leakage_path)
+    adaptive_router_config_path = ROOT / "configs" / "phase4" / "adaptive_rag_router.json"
+    adaptive_mapping_path = ROOT / "configs" / "phase4" / "adaptive_rag_stage_mapping.yaml"
 
     primary = thresholds["primary_selected_policy"]
     expected_primary = protocol["in_domain_policy"]["primary_report_policy"]
@@ -84,11 +100,31 @@ def main() -> None:
         "configs/phase4/protocol.json",
         "configs/phase4/controller.json",
         "configs/phase4/llm_judge_prompt.txt",
+        "configs/phase4/adaptive_rag_router.json",
+        "configs/phase4/adaptive_rag_stage_mapping.yaml",
         "scripts/analyze_phase4_controller_dev.py",
         "scripts/analyze_phase4_retrieval_ceiling.py",
         "scripts/analyze_phase4_llm_judge.py",
         "scripts/evaluate_phase4_score_threshold.py",
         "scripts/run_phase4_llm_judge.py",
+        "scripts/phase4_adaptive_router.py",
+        "scripts/build_phase4_adaptive_router_data.py",
+        "scripts/train_phase4_adaptive_router.py",
+        "scripts/evaluate_phase4_adaptive_router.py",
+        "scripts/benchmark_phase4_adaptive_router.py",
+        "scripts/analyze_phase4_adaptive_router.py",
+        "scripts/audit_phase4_heldout_unlock.py",
+    ]
+    protected_adaptive_artifacts = [
+        "docs/phase4/adaptive_rag_protocol_audit.md",
+        "docs/phase4/adaptive_rag_dev_analysis.md",
+        "results/phase4/2wiki/adaptive_rag_protocol_manifest.json",
+        "results/phase4/2wiki/adaptive_rag_dev_summary.csv",
+        "results/phase4/2wiki/adaptive_rag/dataset_manifest.json",
+        "results/phase4/2wiki/adaptive_rag/label_distribution.json",
+        "results/phase4/2wiki/adaptive_rag/leakage_audit.json",
+        "results/phase4/2wiki/adaptive_rag/router_latency_manifest.json",
+        "results/phase4/2wiki/adaptive_rag/dev_gate_manifest.json",
     ]
     checks = {
         "controller_frozen": (
@@ -108,11 +144,23 @@ def main() -> None:
             and float(primary.get("risk_target")) == float(frozen_risk["risk_target"])
             and float(temperature["temperature"]) == float(frozen_gate["temperature"])
         ),
+        "controller_classification_threshold_frozen": (
+            float(judge_analysis.get("classification_threshold"))
+            == float(frozen_gate["classification_operating_point"]["threshold"])
+        ),
+        "risk10_threshold_frozen": (
+            primary.get("status") == "selected"
+            and float(primary.get("threshold")) == float(frozen_risk["threshold"])
+            and float(primary.get("risk_target")) == 0.1
+            and float(judge_analysis.get("risk_policy_threshold"))
+            == float(frozen_risk["threshold"])
+        ),
         "retrieval_frozen": (
             protocol["retrieval"] == phase4_freeze["retrieval"]
             and protocol["chunking"] == phase4_freeze["chunking"]
             and protocol["controller_ladder"] == ["dense@5", "hybrid@10", "rerank@20"]
         ),
+        "chunking_frozen": protocol["chunking"] == phase4_freeze["chunking"],
         "generator_frozen": (
             phase4_freeze["models"]["generator"]["configured_name"]
             == protocol["llm_judge"]["model"]
@@ -129,24 +177,69 @@ def main() -> None:
             and judge_analysis.get("judge_threshold_sweep_performed") is False
         ),
         "adaptive_rag_protocol_frozen": (
-            adaptive.get("status") == "frozen_protocol_execution_deferred"
+            adaptive.get("status") == "frozen_protocol_pending_dev_gate"
             and adaptive.get("official_reproduction") is False
             and adaptive.get("heldout_consulted") is False
             and adaptive.get("config_sha256") == sha256(protocol_path)
+            and adaptive.get("router_config_sha256")
+            == sha256(adaptive_router_config_path)
+            and adaptive.get("stage_mapping_sha256") == sha256(adaptive_mapping_path)
+        ),
+        "adaptive_rag_model_frozen": (
+            adaptive_gate.get("status") == "frozen"
+            and adaptive_gate.get("official_reproduction") is False
+            and adaptive_gate.get("training_split") == "train_core"
+            and adaptive_gate.get("selection_split") == "dev_calibration"
+            and adaptive_gate.get("evaluation_split") == "dev_policy"
+            and adaptive_gate.get("heldout_consulted") is False
+            and adaptive_gate.get("seeds") == [42, 123, 2026]
+            and adaptive_gate.get("operational_seed") == 42
+            and adaptive_gate.get("prediction_rule")
+            == "three_class_argmax_no_threshold_sweep"
+            and adaptive_gate.get("router_input") == "question_only"
+            and adaptive_gate.get("leakage_detected") is False
+            and adaptive_gate.get("router_config_sha256")
+            == sha256(adaptive_router_config_path)
+            and adaptive_gate.get("protocol_config_sha256") == sha256(protocol_path)
+            and adaptive_gate.get("stage_mapping_sha256") == sha256(adaptive_mapping_path)
+            and set(adaptive_gate.get("run_sources", {}))
+            == {"seed42", "seed123", "seed2026"}
+            and adaptive_leakage.get("heldout_consulted") is False
+            and adaptive_leakage.get("leakage_detected") is False
         ),
         "score_threshold_baseline_frozen": (
             score.get("selection_split") == "dev_policy"
             and score.get("heldout_consulted") is False
         ),
+        "score_threshold_frozen": (
+            score.get("selection_split") == "dev_policy"
+            and score.get("heldout_consulted") is False
+        ),
         "metrics_frozen": code_is_committed(protected_code),
+        "adaptive_rag_dev_artifacts_frozen": code_is_committed(
+            protected_adaptive_artifacts
+        ),
     }
     checks["no_outstanding_dev_tuning"] = (
         checks["llm_judge_prompt_frozen"]
         and checks["adaptive_rag_protocol_frozen"]
+        and checks["adaptive_rag_model_frozen"]
+        and checks["adaptive_rag_dev_artifacts_frozen"]
         and checks["metrics_frozen"]
     )
-    consumed = [controller_gate, thresholds, score, judge_prompt, judge_analysis, adaptive]
-    heldout_consulted = any(item.get("heldout_consulted") is not False for item in consumed)
+    consumed = [
+        controller_gate,
+        thresholds,
+        score,
+        judge_prompt,
+        judge_analysis,
+        adaptive,
+        adaptive_gate,
+        adaptive_leakage,
+    ]
+    heldout_consulted = any(
+        item.get("heldout_consulted") is not False for item in consumed if item
+    )
     ready = all(checks.values()) and not heldout_consulted
 
     output_path = ROOT / "results" / "phase4" / "heldout_unlock_manifest.json"
@@ -170,6 +263,10 @@ def main() -> None:
         "protected_code": {
             path: sha256(ROOT / path) for path in protected_code
         },
+        "protected_adaptive_artifacts": {
+            path: sha256(ROOT / path) if (ROOT / path).exists() else None
+            for path in protected_adaptive_artifacts
+        },
         "sources": {
             "phase4_freeze": portable_path(phase4_freeze_path, ROOT),
             "controller_dev_gate": portable_path(controller_gate_path, ROOT),
@@ -178,6 +275,8 @@ def main() -> None:
             "llm_judge_prompt_gate": portable_path(judge_prompt_path, ROOT),
             "llm_judge_analysis": portable_path(judge_analysis_path, ROOT),
             "adaptive_rag_protocol": portable_path(adaptive_path, ROOT),
+            "adaptive_rag_dev_gate": portable_path(adaptive_gate_path, ROOT),
+            "adaptive_rag_leakage_audit": portable_path(adaptive_leakage_path, ROOT),
         },
         "git_commit": git_commit(ROOT),
     }

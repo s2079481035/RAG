@@ -1,0 +1,16 @@
+schema_version: 1
+formal_name: Adaptive-RAG-style Query-Complexity Router
+official_reproduction: false
+decision_timing: pre_retrieval_one_shot
+router_input: question_only
+evidence_accumulation: cumulative
+routes:
+  light:
+    class_id: 0
+    final_stage: dense@5
+  medium:
+    class_id: 1
+    final_stage: hybrid@10
+  heavy:
+    class_id: 2
+    final_stage: rerank@20

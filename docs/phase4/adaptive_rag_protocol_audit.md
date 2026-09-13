@@ -2,16 +2,23 @@
 
 ## Audit Decision
 
-The current 2Wiki experiment cannot be described as an official Adaptive-RAG reproduction. The only defensible unified-environment baseline is named **Adaptive-RAG-style Query Complexity Router**. It transfers the query-only routing principle, not the original paper's numerical setting.
+The current 2Wiki experiment cannot be described as an official Adaptive-RAG reproduction. The only defensible unified-environment baseline is named **Adaptive-RAG-style Query-Complexity Router**. It transfers the query-only routing principle, not the original paper's numerical setting.
 
 ## Original Method
 
 The [Adaptive-RAG paper](https://aclanthology.org/2024.naacl-long.389/) predicts query complexity from the question and selects among three strategies: no retrieval, one retrieval-and-generation step, or iterative multi-step retrieval and generation. The [official repository](https://github.com/starsuzi/Adaptive-RAG) exposes these as `nor_qa`, `oner_qa`, and `ircot_qa`.
 
+- Paper: *Adaptive-RAG: Learning to Adapt Retrieval-Augmented Large Language Models through Question Complexity*
+- Venue/year: NAACL 2024
+- Audited official repository revision: `0c88670af8707667eb5c1163151bb5ce61b14acb` (`main`, verified 2026-09-13)
+
 | Audit item | Original protocol |
 |---|---|
 | Router input | Query text |
 | Complexity output | Three strategy labels |
+| Retrieved evidence used for routing | No |
+| Decision timing | One-shot routing before retrieval |
+| Re-decision during retrieval | No |
 | Strategy A | No retrieval |
 | Strategy B | Single-step retrieval |
 | Strategy C | Iterative multi-step retrieval |
@@ -44,7 +51,7 @@ Renaming this mapping “Adaptive-RAG” would overstate fidelity.
 
 ## Frozen Adapted Protocol
 
-If the optional Dev baseline is executed, its formal name is **Adaptive-RAG-style Query Complexity Router**.
+Its formal name is **Adaptive-RAG-style Query-Complexity Router**.
 
 | Component | Frozen adapted choice |
 |---|---|
@@ -61,6 +68,8 @@ If the optional Dev baseline is executed, its formal name is **Adaptive-RAG-styl
 | Training target | Earliest frozen cumulative stage with complete gold supporting-fact coverage; Heavy if no stage is complete |
 | Backbone | Same `BAAI/bge-reranker-base` family as the lightweight Controller |
 | Input length | 512 tokens, question only |
+| Optimization | AdamW, 4 epochs, batch size 16, learning rate 2e-5, natural sampling |
+| Checkpoint selection | Highest `dev_calibration` macro F1 within each seed |
 | Prediction | Three-way argmax; no threshold sweep |
 | Seeds if learned | 42, 123, 2026 |
 
@@ -79,6 +88,12 @@ Report Answer EM/F1, supporting-fact recall, complete evidence coverage, average
 
 ## Execution Decision
 
-The protocol is frozen, but execution is deferred. A learned three-seed router over 163,454 training questions is not a negligible-cost add-on, and the user instruction makes the Dev run optional only when cost is very low. Deferral does not block the primary LLM Judge comparison or invalidate the heldout protocol; it means no `adaptive_rag_dev_summary.csv` may be claimed unless the complete three-seed adapted baseline is later run exactly as specified above.
+The adapted protocol is frozen before training. Its complete three-seed Dev Gate
+is required before heldout can be unlocked. Each Router is trained on
+`train_core`, selected by `dev_calibration`, and evaluated once on `dev_policy`.
+The operational seed is fixed as 42 before viewing `dev_policy`; aggregate
+results report seeds 42, 123, and 2026. The route mapping, label construction,
+training hyperparameters, and argmax decision rule cannot be changed from Dev
+outcomes.
 
 No heldout example or metric was consulted for this audit.
