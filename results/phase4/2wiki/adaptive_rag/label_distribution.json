@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-13T05:47:12.716899+00:00",
+  "heldout_consulted": false,
+  "label_construction": "earliest_frozen_cumulative_stage_with_complete_gold_supporting_fact_coverage_else_heavy",
+  "by_split": {
+    "train_core": {
+      "questions": 163454,
+      "routes": {
+        "light": 54052,
+        "medium": 4542,
+        "heavy": 104860
+      }
+    },
+    "dev_calibration": {
+      "questions": 2000,
+      "routes": {
+        "light": 678,
+        "medium": 75,
+        "heavy": 1247
+      }
+    },
+    "dev_policy": {
+      "questions": 2000,
+      "routes": {
+        "light": 644,
+        "medium": 57,
+        "heavy": 1299
+      }
+    }
+  }
+}

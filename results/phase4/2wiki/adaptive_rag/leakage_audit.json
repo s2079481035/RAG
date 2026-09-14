@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-13T05:47:12.717128+00:00",
+  "baseline": "Adaptive-RAG-style Query-Complexity Router",
+  "inference_feature_keys": [
+    "question"
+  ],
+  "forbidden_inference_feature_keys": [
+    "answer",
+    "supporting_facts",
+    "gold_supporting_facts",
+    "retrieved_chunks",
+    "retrieval_scores",
+    "complete_coverage",
+    "final_stage_evidence",
+    "recoverability",
+    "critic_probability"
+  ],
+  "model_input_builder": "tokenizer(question_text_only)",
+  "gold_used_for_training_target_only": true,
+  "retrieved_evidence_used_for_inference": false,
+  "future_stage_results_used_for_inference": false,
+  "critic_probability_used_for_inference": false,
+  "heldout_consulted": false,
+  "leakage_detected": false
+}

@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-13T05:47:12.717239+00:00",
+  "phase": 4,
+  "formal_name": "Adaptive-RAG-style Query-Complexity Router",
+  "splits": [
+    "train_core",
+    "dev_calibration",
+    "dev_policy"
+  ],
+  "heldout_consulted": false,
+  "route_names": [
+    "light",
+    "medium",
+    "heavy"
+  ],
+  "stage_names": [
+    "dense@5",
+    "hybrid@10",
+    "rerank@20"
+  ],
+  "label_construction": "earliest_frozen_cumulative_stage_with_complete_gold_supporting_fact_coverage_else_heavy",
+  "inference_features": [
+    "question"
+  ],
+  "sources": {
+    "train_core": {
+      "path": "data/2wiki/controller/sentence_256/train_core.jsonl",
+      "sha256": "80de118de9eeedf14b57becab2010cbae5c80075f3b8a8ca45f6c9696a34bffc",
+      "output": "data/2wiki/adaptive_rag/train_core.jsonl",
+      "output_sha256": "fe460b627badc8171f842afede9b45bc74c2f2788e0c9515ef8e7b7a241d2263"
+    },
+    "dev_calibration": {
+      "path": "data/2wiki/controller/sentence_256/dev_calibration.jsonl",
+      "sha256": "574bfbd93ed1d99dbedc4fa5402511f0f8e4b96102926d9d37e034cb22107032",
+      "output": "data/2wiki/adaptive_rag/dev_calibration.jsonl",
+      "output_sha256": "99f1d2a587854558892477ec9c0781c312db1ea847979b943b56da3c3fc0abe3"
+    },
+    "dev_policy": {
+      "path": "data/2wiki/controller/sentence_256/dev_policy.jsonl",
+      "sha256": "7b5c503ff75a7be849fe5136baec67f67ee1e6538119d196e1a1aa3a231082ec",
+      "output": "data/2wiki/adaptive_rag/dev_policy.jsonl",
+      "output_sha256": "64512a5d9c048472335b478c5029b69c6250b3e77029f66483b1ca87f7199d3b"
+    }
+  },
+  "config": "configs/phase4/adaptive_rag_router.json",
+  "config_sha256": "b15c69e20e51023c712a719bcd7e3de36c7ff390e884444b5c9ede6b662ea88e",
+  "git_commit": "686b1c6af334c6146cde8994d286be66bd1abd65"
+}

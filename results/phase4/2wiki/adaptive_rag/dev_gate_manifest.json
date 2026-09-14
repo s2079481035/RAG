@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-14T02:35:20.951467+00:00",
+  "phase": 4,
+  "status": "frozen",
+  "formal_name": "Adaptive-RAG-style Query-Complexity Router",
+  "official_reproduction": false,
+  "training_split": "train_core",
+  "selection_split": "dev_calibration",
+  "evaluation_split": "dev_policy",
+  "heldout_consulted": false,
+  "seeds": [
+    42,
+    123,
+    2026
+  ],
+  "operational_seed": 42,
+  "prediction_rule": "three_class_argmax_no_threshold_sweep",
+  "router_input": "question_only",
+  "leakage_detected": false,
+  "router_config": "configs/phase4/adaptive_rag_router.json",
+  "router_config_sha256": "b15c69e20e51023c712a719bcd7e3de36c7ff390e884444b5c9ede6b662ea88e",
+  "protocol_config_sha256": "c8f8cd0c143f09e8691c8cfeade7c8c87bc654a33e0afdedda45e70d00966289",
+  "stage_mapping": "configs/phase4/adaptive_rag_stage_mapping.yaml",
+  "stage_mapping_sha256": "301d34d1b8651ab3924aa5d09ad4fbcc33f4f6da4f27b328ea16d0dd6042ba77",
+  "dataset_manifest": "results/phase4/2wiki/adaptive_rag/dataset_manifest.json",
+  "dataset_manifest_sha256": "8aeadddaef91ee8d6e0bda1b9ca63a465631a541824fc0e8b8288ceb1c0c652c",
+  "leakage_audit": "results/phase4/2wiki/adaptive_rag/leakage_audit.json",
+  "leakage_audit_sha256": "3f6c31c86be570f80e4c9bbd2ae40b8189fd5a74e18838a13d77d31e77d75183",
+  "router_latency_manifest": "results/phase4/2wiki/adaptive_rag/router_latency_manifest.json",
+  "router_latency_manifest_sha256": "d53ca8b6ed5f5edbdde68a15800a8d4d13f96d1655dae2bb23ea58d396826036",
+  "operational_checkpoint_sha256": "e88c870ef2fdca20049262aa34c9e27f9ad35e2216d055286e1f1e0a62d6c90d",
+  "run_sources": {
+    "seed42": {
+      "run_manifest": "experiments/phase4/2wiki/adaptive_rag_router/seed42/run_manifest.json",
+      "run_manifest_sha256": "7ada925cd7f01a554fae179dfa736f6fd748ef3ff981834426bd91729637c2dc",
+      "checkpoint": "experiments/phase4/2wiki/adaptive_rag_router/seed42/best.pt",
+      "checkpoint_sha256": "e88c870ef2fdca20049262aa34c9e27f9ad35e2216d055286e1f1e0a62d6c90d",
+      "dev_policy_evaluation": "experiments/phase4/2wiki/adaptive_rag_router/seed42/evaluation/dev_policy/evaluation_manifest.json",
+      "dev_policy_evaluation_sha256": "3a043f463a939cfdd822f65a0a6776281fbfe539924542855de6351687469337",
+      "dev_policy_predictions_sha256": "240195ef4afd58f1c270a814d3353bc532dcb53d3664bca1afaf0fd6a924ebfa"
+    },
+    "seed123": {
+      "run_manifest": "experiments/phase4/2wiki/adaptive_rag_router/seed123/run_manifest.json",
+      "run_manifest_sha256": "4e4e97d201b50ea0af16be9ec06eabc7c011ba1cb630571314c5c0ab9d5720fa",
+      "checkpoint": "experiments/phase4/2wiki/adaptive_rag_router/seed123/best.pt",
+      "checkpoint_sha256": "d28060aadce0e27a0e281543dc4e81d88e32112110b18d2e19fad527916584c6",
+      "dev_policy_evaluation": "experiments/phase4/2wiki/adaptive_rag_router/seed123/evaluation/dev_policy/evaluation_manifest.json",
+      "dev_policy_evaluation_sha256": "f85037d6bb6756167dc4e058325c9ffe5b7fec35cac1efe3ff414f0574ecd408",
+      "dev_policy_predictions_sha256": "73648f6a41bcd72fc0bb02664e8716cb2fe0f75152b4d95272dba6f43cf9d0bf"
+    },
+    "seed2026": {
+      "run_manifest": "experiments/phase4/2wiki/adaptive_rag_router/seed2026/run_manifest.json",
+      "run_manifest_sha256": "49ed5debd998ba8ab276576104a61224b54cfeb691718b8c8cbcd480d104b92e",
+      "checkpoint": "experiments/phase4/2wiki/adaptive_rag_router/seed2026/best.pt",
+      "checkpoint_sha256": "9dd2d306a5818ec05be30bc3e2767629b620dbfc347634c8218a986ed1ef9ead",
+      "dev_policy_evaluation": "experiments/phase4/2wiki/adaptive_rag_router/seed2026/evaluation/dev_policy/evaluation_manifest.json",
+      "dev_policy_evaluation_sha256": "4c4f5067df8e1704991d929150673cf48de4395222cc96f2de8453872f7b24b8",
+      "dev_policy_predictions_sha256": "afb61dfce062a2a3dc88f566d308a0c815474a73c9a3c81da2619b5a95733dc3"
+    }
+  },
+  "summary": "results/phase4/2wiki/adaptive_rag_dev_summary.csv",
+  "summary_sha256": "5a95982443a02b07b778e918f5add8ee00095f15e2c47c613c5f291aac827d49",
+  "report": "docs/phase4/adaptive_rag_dev_analysis.md",
+  "report_sha256": "b9ff2992042d9204cbe4ebbd75e1313b3939cbd39ce0b7b61d43959011f590c7",
+  "git_commit": "924346cca55f001b95c5615afe3691fa251daff3"
+}

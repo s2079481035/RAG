@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-13T08:56:40.280983+00:00",
+  "phase": 4,
+  "split": "dev_policy",
+  "heldout_consulted": false,
+  "operational_seed": 42,
+  "model_input_fields": [
+    "question"
+  ],
+  "questions": 2000,
+  "warmup_questions": 5,
+  "batch_size": 1,
+  "cuda_synchronized": true,
+  "latency": {
+    "mean_ms": 12.797455423278734,
+    "median_ms": 12.784337159246206,
+    "p95_ms": 12.895577098242939
+  },
+  "maximum_probability_replay_difference": 2.086162567138672e-06,
+  "probability_replay_tolerance": 0.0001,
+  "checkpoint_sha256": "e88c870ef2fdca20049262aa34c9e27f9ad35e2216d055286e1f1e0a62d6c90d",
+  "source_predictions": "experiments/phase4/2wiki/adaptive_rag_router/seed42/evaluation/dev_policy/predictions.jsonl",
+  "source_predictions_sha256": "240195ef4afd58f1c270a814d3353bc532dcb53d3664bca1afaf0fd6a924ebfa",
+  "output": "results/phase4/2wiki/adaptive_rag/router_latency.jsonl",
+  "output_sha256": "1626ae7823abd72df6f97202d44c8b6d4baa1ad5f7d30ed88580ea27066bf874",
+  "git_commit": "686b1c6af334c6146cde8994d286be66bd1abd65",
+  "environment": {
+    "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.39",
+    "packages": {
+      "torch": "2.5.1+cu121",
+      "transformers": "4.44.2",
+      "sentence-transformers": "5.6.0",
+      "datasets": "5.0.0",
+      "faiss-cpu": "1.14.3",
+      "faiss-gpu": "1.14.3",
+      "rank-bm25": "0.2.2",
+      "numpy": "1.26.4",
+      "scikit-learn": "1.9.0"
+    },
+    "git_commit": "686b1c6af334c6146cde8994d286be66bd1abd65",
+    "cuda_visible_devices": "1",
+    "cuda": "12.1",
+    "gpus": [
+      "NVIDIA GeForce RTX 4090"
+    ]
+  }
+}
