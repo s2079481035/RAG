@@ -238,6 +238,16 @@ def main() -> None:
         ),
     ]
     comparison_rows = []
+    fixed_heavy = system_row(
+        "FixedHeavy",
+        "frozen",
+        "frozen_reference",
+        summarize_routes(
+            trajectories,
+            {question_id: 2 for question_id in trajectories},
+        ),
+    )
+    rows.append(fixed_heavy)
     for name, probability_key, threshold in comparisons:
         predicted = controller_predictions(controller_rows, probability_key, threshold)
         metrics = summarize_routes(trajectories, predicted)
@@ -256,6 +266,36 @@ def main() -> None:
 
     mean_router = aggregate
     classification, risk10 = comparison_rows
+    router_chunk_saving = (
+        fixed_heavy["average_retrieved_chunks"]
+        - mean_router["average_retrieved_chunks"]
+    )
+    router_reranker_saving = (
+        fixed_heavy["average_reranker_calls"]
+        - mean_router["average_reranker_calls"]
+    )
+    router_latency_saving = (
+        fixed_heavy["average_retrieval_latency_ms"]
+        - mean_router["average_retrieval_latency_ms"]
+    )
+    router_coverage_loss = (
+        fixed_heavy["complete_evidence_coverage"]
+        - mean_router["complete_evidence_coverage"]
+    )
+    risk10_coverage_gain = (
+        risk10["complete_evidence_coverage"]
+        - mean_router["complete_evidence_coverage"]
+    )
+    risk10_chunk_saving = (
+        mean_router["average_retrieved_chunks"]
+        - risk10["average_retrieved_chunks"]
+    )
+    true_medium = sum(router_rows[0]["confusion_matrix"][1])
+    predicted_medium = sum(
+        row["confusion_matrix"][actual][1]
+        for row in router_rows
+        for actual in range(len(ROUTE_NAMES))
+    )
     lines = [
         "# 2Wiki Adaptive-RAG-style Router Dev Analysis",
         "",
@@ -282,7 +322,7 @@ def main() -> None:
             "|---|---:|---:|---:|---:|---:|---:|---:|",
         ]
     )
-    for row in [mean_router, classification, risk10]:
+    for row in [fixed_heavy, mean_router, classification, risk10]:
         lines.append(
             f"| {row['system']} | {float(row['average_final_stage']):.3f} | "
             f"{float(row['average_retrieved_chunks']):.3f} | "
@@ -298,6 +338,7 @@ def main() -> None:
             "## Retrieval-limited Diagnostics",
             "",
             f"- Frozen terminal retrieval failure rate: {fmt(float(mean_router['terminal_retrieval_failure_rate']))}.",
+            f"- The Dev target contains {true_medium} Medium questions, but the three Router seeds produced {predicted_medium} Medium predictions in total.",
             f"- Router route accuracy on recoverable questions: {fmt(float(mean_router['recoverable_route_accuracy']))}.",
             f"- Router recoverable under-retrieval rate: {fmt(float(mean_router['recoverable_under_retrieval_rate']))}.",
             f"- Operational Router inference latency is {router_latency_ms:.2f} ms/question at synchronized batch size one; Router plus retrieval latency is {float(mean_router['total_routing_retrieval_latency_ms']):.2f} ms/question.",
@@ -305,10 +346,10 @@ def main() -> None:
             "",
             "## Research Questions",
             "",
-            "- RQ-A is answered by the Router's average chunks, reranker calls, and latency relative to the frozen evidence-aware systems.",
-            "- RQ-B is answered by the complete-coverage and supporting-fact-recall differences in the table.",
-            "- RQ-C is answered by Recoverable Under-Retrieval Rate, not Controller FSR.",
-            "- RQ-D is descriptive: the Router decides once from the query, whereas the proposed Controller observes current evidence and decides sequentially.",
+            f"- RQ-A: Yes, query-only routing reduces cost relative to FixedHeavy by {router_chunk_saving:.3f} chunks, {router_reranker_saving:.3f} reranker calls, and {router_latency_saving:.2f} retrieval ms per question.",
+            f"- RQ-B: This saving costs {100 * router_coverage_loss:.2f} percentage points of complete evidence coverage relative to FixedHeavy.",
+            f"- RQ-C: Recoverable Under-Retrieval Rate is {fmt(float(mean_router['recoverable_under_retrieval_rate']))}. The zero Medium prediction rate is a material three-class failure and explains why accuracy alone overstates Router quality.",
+            f"- RQ-D: On the frozen retrieval metrics, EvidenceAwareRisk10 uses {risk10_chunk_saving:.3f} fewer chunks than the Router while gaining {100 * risk10_coverage_gain:.2f} percentage points of complete coverage and lowering recoverable under-retrieval. This supports a better descriptive quality-cost trade-off for evidence-conditioned sequential stopping.",
             "",
             "No model, label construction, route mapping, threshold, or retrieval setting is changed from this Dev result.",
             "",
