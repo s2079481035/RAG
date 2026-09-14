@@ -251,7 +251,7 @@
       },
       "stage_mapping_file": "configs/phase4/adaptive_rag_stage_mapping.yaml",
       "router_config": "configs/phase4/adaptive_rag_router.json",
-      "training_label": "earliest_frozen_stage_with_complete_gold_supporting_fact_coverage_else_heavy",
+      "training_label": "earliest_frozen_cumulative_stage_with_complete_gold_supporting_fact_coverage_else_heavy",
       "training_split": "train_core",
       "development_splits": [
         "dev_calibration",
