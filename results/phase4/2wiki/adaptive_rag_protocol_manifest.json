@@ -1,10 +1,12 @@
 {
   "schema_version": 1,
-  "created_at_utc": "2026-09-12T14:19:44.076091+00:00",
+  "created_at_utc": "2026-09-14T02:44:35.034390+00:00",
   "phase": 4,
-  "status": "frozen_protocol_execution_deferred",
-  "formal_name": "Adaptive-RAG-style Query Complexity Router",
+  "status": "frozen_protocol_pending_dev_gate",
+  "formal_name": "Adaptive-RAG-style Query-Complexity Router",
   "official_reproduction": false,
+  "official_repository": "https://github.com/starsuzi/Adaptive-RAG",
+  "official_repository_commit": "0c88670af8707667eb5c1163151bb5ce61b14acb",
   "adaptation_reason": "official no/single/iterative ladder is not equivalent to dense/hybrid/rerank",
   "router_input": "question_only",
   "route_mapping": {
@@ -12,17 +14,21 @@
     "medium": "hybrid@10",
     "heavy": "rerank@20"
   },
-  "training_label": "earliest_frozen_stage_with_complete_gold_supporting_fact_coverage_else_heavy",
+  "training_label": "earliest_frozen_cumulative_stage_with_complete_gold_supporting_fact_coverage_else_heavy",
   "training_split": "train_core",
   "development_splits": [
     "dev_calibration",
     "dev_policy"
   ],
   "heldout_consulted": false,
-  "execution_status": "deferred_unless_low_cost",
+  "execution_status": "required_before_heldout",
+  "stage_mapping": "configs/phase4/adaptive_rag_stage_mapping.yaml",
+  "stage_mapping_sha256": "301d34d1b8651ab3924aa5d09ad4fbcc33f4f6da4f27b328ea16d0dd6042ba77",
+  "router_config": "configs/phase4/adaptive_rag_router.json",
+  "router_config_sha256": "b15c69e20e51023c712a719bcd7e3de36c7ff390e884444b5c9ede6b662ea88e",
   "audit": "docs/phase4/adaptive_rag_protocol_audit.md",
-  "audit_sha256": "d7a0fab34cf1d4948487d22d627c796692ed3f0c0eb478dad33a47f85b68ed4c",
+  "audit_sha256": "0b88267f8f5a63e1a8f170b07b4a2eba7e890769af95f3e50aa7c0742a12d994",
   "config": "configs/phase4/protocol.json",
-  "config_sha256": "c5e6f254918bee716dcdea7668fd08244ca62112055c03dd59e51365ed14132e",
-  "git_commit": "5b6ce70494491b8235fb2d88c4e94bfcaca0a020"
+  "config_sha256": "89789281cadd15514c0ee8e83e02086760339bb3f7242a4dacb3cbf5dacbf4fb",
+  "git_commit": "fcd4f859c72e4d8808eac04d2da062185dfc70b1"
 }
