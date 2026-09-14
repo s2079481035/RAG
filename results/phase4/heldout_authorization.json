@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-14T03:20:13.847676+00:00",
+  "phase": 4,
+  "status": "authorized",
+  "run_heldout": "YES",
+  "researcher": "sunjb",
+  "confirmation": "I confirm that all Phase 4 Dev choices are frozen and authorize one-time heldout evaluation without heldout tuning.",
+  "frozen_choices_commit": "48791e7",
+  "authorization_recorded_at_git_commit": "f76c04fe86e159d329c28af9a4a3d14e71c7388c",
+  "heldout_consulted_at_authorization": false,
+  "one_time_evaluation": true,
+  "heldout_tuning_forbidden": true,
+  "unlock_manifest": "results/phase4/heldout_unlock_manifest.json",
+  "unlock_manifest_sha256": "8f08c0abfa8b8846d6d5542e300186eda888f15e1fe4b6b7d2d042b07c375148",
+  "unlock_status": "ready_for_human_confirmation",
+  "evaluation_config": "configs/phase4/heldout_evaluation.json",
+  "evaluation_config_sha256": "adefb37493b4b5dc4500d9e615d412ad1523f38fe52fb6bc6aea7278cf266d62"
+}
