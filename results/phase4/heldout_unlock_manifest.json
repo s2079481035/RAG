@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "created_at_utc": "2026-09-14T02:41:02.406302+00:00",
+  "created_at_utc": "2026-09-14T02:45:52.835945+00:00",
   "phase": 4,
   "controller_frozen": true,
   "controller_threshold_frozen": true,
@@ -11,20 +11,20 @@
   "generator_frozen": true,
   "generation_prompt_frozen": true,
   "llm_judge_prompt_frozen": true,
-  "adaptive_rag_protocol_frozen": false,
+  "adaptive_rag_protocol_frozen": true,
   "adaptive_rag_model_frozen": true,
   "score_threshold_baseline_frozen": true,
   "score_threshold_frozen": true,
   "metrics_frozen": true,
   "adaptive_rag_dev_artifacts_frozen": true,
-  "no_outstanding_dev_tuning": false,
+  "no_outstanding_dev_tuning": true,
   "heldout_consulted": false,
-  "ready_for_heldout": false,
-  "ready_for_heldout_label": "NO",
+  "ready_for_heldout": true,
+  "ready_for_heldout_label": "YES",
   "human_confirmation_required": true,
   "human_confirmation_recorded": false,
   "heldout_execution_started": false,
-  "status": "not_ready",
+  "status": "ready_for_human_confirmation",
   "frozen_primary_policy": {
     "calibration_method": "temperature",
     "selection": "conservative",
@@ -48,7 +48,7 @@
     "average_controller_calls": 1.649
   },
   "protected_code": {
-    "configs/phase4/protocol.json": "c8f8cd0c143f09e8691c8cfeade7c8c87bc654a33e0afdedda45e70d00966289",
+    "configs/phase4/protocol.json": "89789281cadd15514c0ee8e83e02086760339bb3f7242a4dacb3cbf5dacbf4fb",
     "configs/phase4/controller.json": "7577e08e2b42359e579542c180051a069da4269d6e86abf137cdca8ff9e92e5b",
     "configs/phase4/llm_judge_prompt.txt": "67f526d8d66fd2a7aa1f5648134c45b0af0cc60a8acb3db265f10b9d04056dd9",
     "configs/phase4/adaptive_rag_router.json": "b15c69e20e51023c712a719bcd7e3de36c7ff390e884444b5c9ede6b662ea88e",
@@ -69,13 +69,13 @@
   "protected_adaptive_artifacts": {
     "docs/phase4/adaptive_rag_protocol_audit.md": "0b88267f8f5a63e1a8f170b07b4a2eba7e890769af95f3e50aa7c0742a12d994",
     "docs/phase4/adaptive_rag_dev_analysis.md": "b9ff2992042d9204cbe4ebbd75e1313b3939cbd39ce0b7b61d43959011f590c7",
-    "results/phase4/2wiki/adaptive_rag_protocol_manifest.json": "35021af2f97972cb9453beba6a1335d3a8b49eed81742b9aa57d997b8146b428",
+    "results/phase4/2wiki/adaptive_rag_protocol_manifest.json": "ac3d929bd6d12174c7c9e76cdf0862480aeff4e3452da12824ce6fc2ea98a164",
     "results/phase4/2wiki/adaptive_rag_dev_summary.csv": "5a95982443a02b07b778e918f5add8ee00095f15e2c47c613c5f291aac827d49",
     "results/phase4/2wiki/adaptive_rag/dataset_manifest.json": "8aeadddaef91ee8d6e0bda1b9ca63a465631a541824fc0e8b8288ceb1c0c652c",
     "results/phase4/2wiki/adaptive_rag/label_distribution.json": "0fccbfc16a466e8fabe0a07677a2ccc62d6fdbe2b70072ba7343aff38729853d",
     "results/phase4/2wiki/adaptive_rag/leakage_audit.json": "3f6c31c86be570f80e4c9bbd2ae40b8189fd5a74e18838a13d77d31e77d75183",
     "results/phase4/2wiki/adaptive_rag/router_latency_manifest.json": "d53ca8b6ed5f5edbdde68a15800a8d4d13f96d1655dae2bb23ea58d396826036",
-    "results/phase4/2wiki/adaptive_rag/dev_gate_manifest.json": "f5ee33874da57b3d81a89904963c3eebeb762ca1ea1ad49ac9a34221b8e17b72"
+    "results/phase4/2wiki/adaptive_rag/dev_gate_manifest.json": "b44be8e22f0d4cf619e1f86cf1fa7e9f885ece5ae056a6896c96eca3ac9ca90e"
   },
   "sources": {
     "phase4_freeze": "results/phase4/freeze_manifest.json",
@@ -88,5 +88,5 @@
     "adaptive_rag_dev_gate": "results/phase4/2wiki/adaptive_rag/dev_gate_manifest.json",
     "adaptive_rag_leakage_audit": "results/phase4/2wiki/adaptive_rag/leakage_audit.json"
   },
-  "git_commit": "fc792895db3a9aad9c4c6b3d86341768a6beec02"
+  "git_commit": "3570ffcbd2aa4c8e7c9a6d26a6e5b8ccef414e77"
 }

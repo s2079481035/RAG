@@ -13,15 +13,15 @@ This audit reads only frozen configuration and Train-derived Dev manifests. It d
 | `generator_frozen` | PASS |
 | `generation_prompt_frozen` | PASS |
 | `llm_judge_prompt_frozen` | PASS |
-| `adaptive_rag_protocol_frozen` | FAIL |
+| `adaptive_rag_protocol_frozen` | PASS |
 | `adaptive_rag_model_frozen` | PASS |
 | `score_threshold_baseline_frozen` | PASS |
 | `score_threshold_frozen` | PASS |
 | `metrics_frozen` | PASS |
 | `adaptive_rag_dev_artifacts_frozen` | PASS |
-| `no_outstanding_dev_tuning` | FAIL |
+| `no_outstanding_dev_tuning` | PASS |
 | `heldout_consulted == false` | PASS |
 
-## READY_FOR_HELDOUT = NO
+## READY_FOR_HELDOUT = YES
 
 Even when this checklist is fully green, heldout remains operationally locked until the researcher records explicit human confirmation. This script never starts heldout evaluation.
