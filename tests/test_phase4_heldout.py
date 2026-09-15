@@ -12,6 +12,7 @@ from analyze_phase4_heldout import (  # noqa: E402
     bootstrap,
     decision_metrics,
     report_table,
+    replace_exact_wording,
     retrieval_tables,
     risk_interval_statement,
     select_threshold_policy,
@@ -65,6 +66,14 @@ def outcome(question_id: str, f1: float, chunks: int, false_stop: int = 0):
 
 
 class Phase4HeldoutTests(unittest.TestCase):
+    def test_completed_report_wording_repair_is_exact_and_idempotent(self):
+        old = "It crosses the nominal target."
+        new = "The interval is wholly above 10%."
+        repaired, changed = replace_exact_wording(old, old, new)
+        self.assertTrue(changed)
+        self.assertEqual(repaired, new)
+        self.assertEqual(replace_exact_wording(repaired, old, new), (new, False))
+
     def test_risk_interval_relation_distinguishes_crossing_and_above(self):
         self.assertIn("wholly below", risk_interval_statement(0.05, 0.09, 0.1))
         self.assertIn("crosses", risk_interval_statement(0.08, 0.12, 0.1))

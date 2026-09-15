@@ -32,6 +32,11 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Recompute derived summaries after an interrupted analysis",
     )
+    parser.add_argument(
+        "--repair-completed-wording",
+        action="store_true",
+        help="Repair frozen report wording and refresh manifest hashes without recomputing metrics",
+    )
     return parser.parse_args()
 
 
@@ -591,8 +596,75 @@ def risk_interval_statement(low: float, high: float, target: float) -> str:
     return f"The interval crosses {target:.0%}, so no finite-sample guarantee is claimed."
 
 
+def replace_exact_wording(text: str, old: str, new: str) -> tuple[str, bool]:
+    if old in text:
+        if text.count(old) != 1:
+            raise ValueError(f"Expected exactly one report phrase, found {text.count(old)}")
+        return text.replace(old, new), True
+    if new not in text:
+        raise ValueError("Report contains neither the old nor corrected frozen phrase")
+    return text, False
+
+
+def repair_completed_wording() -> None:
+    heldout_config = load_json(ROOT / "configs" / "phase4" / "heldout_evaluation.json")
+    completion_path = repo_path(heldout_config["completion_manifest"])
+    run_path = repo_path(heldout_config["run_manifest"])
+    completion = load_json(completion_path)
+    run = load_json(run_path)
+    if completion.get("status") != "complete" or run.get("status") != "complete":
+        raise ValueError("Report wording repair requires a completed heldout evaluation")
+    if completion.get("heldout_tuning") is not False:
+        raise ValueError("Completed heldout manifest does not preserve the no-tuning invariant")
+
+    replacements = {
+        "docs/phase4/2wiki_heldout_analysis.md": (
+            "The interval crosses 10%, so no finite-sample guarantee is claimed.",
+            "The interval is wholly above 10%, so the frozen policy fails the heldout risk target.",
+        ),
+        "docs/phase4/phase4_closing_report.md": (
+            "It crosses the nominal target.",
+            "The interval is wholly above 10%, so the frozen policy fails the heldout risk target.",
+        ),
+    }
+    changed = []
+    for relative, (old, new) in replacements.items():
+        path = ROOT / relative
+        updated, did_change = replace_exact_wording(
+            path.read_text(encoding="utf-8"), old, new
+        )
+        if did_change:
+            temporary = path.with_suffix(path.suffix + ".tmp")
+            temporary.write_text(updated, encoding="utf-8", newline="\n")
+            temporary.replace(path)
+            changed.append(relative)
+        completion["outputs"][relative] = file_sha256(path)
+
+    repairs = completion.setdefault("post_completion_report_repairs", [])
+    if changed:
+        repairs.append(
+            {
+                "created_at_utc": utc_now(),
+                "git_commit": git_commit(ROOT),
+                "reason": "correct_ci_relation_wording_wholly_above_not_crossing",
+                "files": changed,
+                "metrics_changed": False,
+                "heldout_tuning": False,
+            }
+        )
+    write_json_atomic(completion_path, completion)
+    run["completion_manifest_sha256"] = file_sha256(completion_path)
+    write_json_atomic(run_path, run)
+    print(f"repaired completed heldout wording: {changed or 'already corrected'}")
+
+
 def main() -> None:
     args = parse_args()
+    if args.repair_completed_wording:
+        if args.resume_incomplete:
+            raise ValueError("Choose only one heldout analysis recovery mode")
+        repair_completed_wording()
+        return
     heldout_config, _ = guard_heldout_access()
     final_dir = ROOT / "results" / "phase4" / "final"
     heldout_dir = ROOT / "results" / "phase4" / "2wiki" / "heldout"
