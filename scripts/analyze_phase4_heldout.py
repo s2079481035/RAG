@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import csv
 import json
 import math
@@ -22,6 +23,16 @@ from train_phase2_controller import read_jsonl, write_jsonl_atomic
 
 LADDER = ["dense@5", "hybrid@10", "rerank@20"]
 ACTIONABLE = LADDER[:-1]
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--resume-incomplete",
+        action="store_true",
+        help="Recompute derived summaries after an interrupted analysis",
+    )
+    return parser.parse_args()
 
 
 def write_csv(path: Path, rows: list[dict]) -> None:
@@ -550,7 +561,12 @@ def save_figures(end_rows: list[dict], controller_rows: list[dict], risk_rows: l
 
 
 def fmt(value, digits: int = 4) -> str:
-    return "N/A" if value in (None, "") else f"{float(value):.{digits}f}"
+    if value in (None, ""):
+        return "N/A"
+    try:
+        return f"{float(value):.{digits}f}"
+    except (TypeError, ValueError):
+        return str(value)
 
 
 def report_table(rows: list[dict], columns: list[tuple[str, str]]) -> list[str]:
@@ -558,13 +574,14 @@ def report_table(rows: list[dict], columns: list[tuple[str, str]]) -> list[str]:
         "| " + " | ".join(label for _, label in columns) + " |",
         "|" + "|".join("---" if index == 0 else "---:" for index in range(len(columns))) + "|",
         *[
-            "| " + " | ".join(str(row[key]) if index == 0 else fmt(row.get(key)) for index, (key, _) in enumerate(columns)) + " |"
+            "| " + " | ".join(fmt(row.get(key)) for key, _ in columns) + " |"
             for row in rows
         ],
     ]
 
 
 def main() -> None:
+    args = parse_args()
     heldout_config, _ = guard_heldout_access()
     final_dir = ROOT / "results" / "phase4" / "final"
     heldout_dir = ROOT / "results" / "phase4" / "2wiki" / "heldout"
@@ -580,8 +597,12 @@ def main() -> None:
         ]
     )
     existing = [path for path in targets if path.exists()]
-    if existing:
+    if existing and not args.resume_incomplete:
         raise FileExistsError(f"Refusing to overwrite final heldout summaries: {existing}")
+    if existing:
+        print(
+            "[resume] recomputing derived heldout summaries after interrupted analysis"
+        )
 
     protocol = load_json(ROOT / "configs" / "phase4" / "protocol.json")
     source_path = ROOT / "data" / "2wiki" / "controller" / "sentence_256" / "heldout.jsonl"

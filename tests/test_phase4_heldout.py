@@ -11,6 +11,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from analyze_phase4_heldout import (  # noqa: E402
     bootstrap,
     decision_metrics,
+    report_table,
     retrieval_tables,
     select_threshold_policy,
 )
@@ -63,6 +64,13 @@ def outcome(question_id: str, f1: float, chunks: int, false_stop: int = 0):
 
 
 class Phase4HeldoutTests(unittest.TestCase):
+    def test_report_table_supports_multiple_text_columns(self):
+        table = report_table(
+            [{"dataset": "2Wiki", "system": "FixedHeavy", "f1": 0.5}],
+            [("dataset", "Dataset"), ("system", "System"), ("f1", "F1")],
+        )
+        self.assertEqual(table[-1], "| 2Wiki | FixedHeavy | 0.5000 |")
+
     def test_generation_resume_keeps_only_valid_frozen_prefix(self):
         records = [
             {"question_id": "q1", "stage": "dense@5", "stage_index": 0},

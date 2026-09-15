@@ -116,5 +116,5 @@ else
 fi
 
 echo "[run] final frozen heldout analysis"
-python3.12 scripts/analyze_phase4_heldout.py
+python3.12 scripts/analyze_phase4_heldout.py --resume-incomplete
 echo "[complete] Phase 4 heldout evaluation"
