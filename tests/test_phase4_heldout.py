@@ -13,6 +13,7 @@ from analyze_phase4_heldout import (  # noqa: E402
     decision_metrics,
     report_table,
     retrieval_tables,
+    risk_interval_statement,
     select_threshold_policy,
 )
 from build_phase2_controller_data import resolve_controller_ladder  # noqa: E402
@@ -64,6 +65,11 @@ def outcome(question_id: str, f1: float, chunks: int, false_stop: int = 0):
 
 
 class Phase4HeldoutTests(unittest.TestCase):
+    def test_risk_interval_relation_distinguishes_crossing_and_above(self):
+        self.assertIn("wholly below", risk_interval_statement(0.05, 0.09, 0.1))
+        self.assertIn("crosses", risk_interval_statement(0.08, 0.12, 0.1))
+        self.assertIn("wholly above", risk_interval_statement(0.11, 0.13, 0.1))
+
     def test_report_table_supports_multiple_text_columns(self):
         table = report_table(
             [{"dataset": "2Wiki", "system": "FixedHeavy", "f1": 0.5}],

@@ -580,6 +580,17 @@ def report_table(rows: list[dict], columns: list[tuple[str, str]]) -> list[str]:
     ]
 
 
+def risk_interval_statement(low: float, high: float, target: float) -> str:
+    if high <= target:
+        return f"The interval is wholly below {target:.0%}."
+    if low > target:
+        return (
+            f"The interval is wholly above {target:.0%}, so the frozen policy "
+            "fails the heldout risk target."
+        )
+    return f"The interval crosses {target:.0%}, so no finite-sample guarantee is claimed."
+
+
 def main() -> None:
     args = parse_args()
     heldout_config, _ = guard_heldout_access()
@@ -830,7 +841,9 @@ def main() -> None:
             [("system", "Policy"), ("false_stop_rate", "FSR"), ("recoverable_false_stop_rate", "RFSR"), ("unnecessary_escalation_rate", "UER"), ("answer_f1", "Answer F1"), ("average_retrieved_chunks", "Chunks"), ("average_reranker_calls", "Reranker")],
         ), "",
         f"The primary alpha=10% policy has observed FSR {primary['false_stop_rate']:.4f} with question-level 95% CI [{primary_fsr['ci95_low']:.4f}, {primary_fsr['ci95_high']:.4f}]. "
-        + ("The interval is wholly below 10%." if risk_ci_below_target else "The interval crosses 10%, so no finite-sample guarantee is claimed."),
+        + risk_interval_statement(
+            primary_fsr["ci95_low"], primary_fsr["ci95_high"], 0.1
+        ),
         "",
         "## Retrieval Ceiling", "",
         f"Final complete-evidence coverage is {ceiling['final_complete_evidence_coverage']:.4f}; TRFR is {ceiling['terminal_retrieval_failure_rate']:.4f}. The two values are exact complements. Terminal forced stop is excluded from every Controller FSR.",
@@ -921,7 +934,10 @@ def main() -> None:
             "- Latency is hardware- and corpus-dependent; Controller/Router latency uses the frozen synchronized batch-one Dev benchmark while retrieval and generation use heldout measurements.",
             "- The same generator supplies QA answers and LLM-Judge labels, so the Judge is a compute-heavy baseline rather than an independent human oracle.", "",
             "## Unexpected Results", "",
-            f"- Risk10 FSR 95% CI is [{primary_fsr['ci95_low']:.4f}, {primary_fsr['ci95_high']:.4f}]. " + ("It remains below the target." if risk_ci_below_target else "It crosses the nominal target."),
+            f"- Risk10 FSR 95% CI is [{primary_fsr['ci95_low']:.4f}, {primary_fsr['ci95_high']:.4f}]. "
+            + risk_interval_statement(
+                primary_fsr["ci95_low"], primary_fsr["ci95_high"], 0.1
+            ),
             f"- The query-only Router Medium-route mean is {external_rows[len(router_seed_rows)]['medium_route_rate']:.4f}.",
             "- Alpha=5% behavior is retained exactly as frozen, including an always-final outcome if that is what the Dev gate selected.", "",
             "No Phase 5 is started. No heldout threshold, prompt, model, retrieval setting, or routing label is changed.",
