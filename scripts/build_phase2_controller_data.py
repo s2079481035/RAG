@@ -21,6 +21,19 @@ DEFAULT_RETRIEVAL_CONFIG = ROOT / "configs" / "phase2" / "chunk_retrieval.json"
 DEFAULT_CONTROLLER_CONFIG = ROOT / "configs" / "phase2" / "controller.json"
 
 
+def resolve_controller_ladder(
+    controller_config: dict, retrieval_config: dict
+) -> list[str]:
+    ladder = controller_config.get("controller_ladder")
+    if ladder is None:
+        ladder = retrieval_config.get("controller_ladder")
+    if not isinstance(ladder, list) or not ladder:
+        raise ValueError(
+            "Missing non-empty controller_ladder in Controller or retrieval config"
+        )
+    return ladder
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--retrieval-config", type=Path, default=DEFAULT_RETRIEVAL_CONFIG)
@@ -169,7 +182,7 @@ def main() -> None:
     questions = json.loads(
         (data_root / "questions.json").read_text(encoding="utf-8")
     )
-    ladder = controller_config["controller_ladder"]
+    ladder = resolve_controller_ladder(controller_config, retrieval_config)
     parsed_ladder = [parse_stage(stage) for stage in ladder]
     output_dir = data_root / "controller" / args.variant
     output_paths = {split: output_dir / f"{split}.jsonl" for split in splits}

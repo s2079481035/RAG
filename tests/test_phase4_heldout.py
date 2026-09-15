@@ -12,6 +12,7 @@ from analyze_phase4_heldout import (  # noqa: E402
     retrieval_tables,
     select_threshold_policy,
 )
+from build_phase2_controller_data import resolve_controller_ladder  # noqa: E402
 
 
 def source_trajectory(question_id: str, labels: list[int], coverages: list[float]):
@@ -59,6 +60,15 @@ def outcome(question_id: str, f1: float, chunks: int, false_stop: int = 0):
 
 
 class Phase4HeldoutTests(unittest.TestCase):
+    def test_phase4_controller_ladder_falls_back_to_protocol(self):
+        protocol = {"controller_ladder": ["dense@5", "hybrid@10", "rerank@20"]}
+        self.assertEqual(resolve_controller_ladder({}, protocol), protocol["controller_ladder"])
+
+    def test_controller_ladder_prefers_controller_config(self):
+        controller = {"controller_ladder": ["dense@5"]}
+        protocol = {"controller_ladder": ["hybrid@10"]}
+        self.assertEqual(resolve_controller_ladder(controller, protocol), ["dense@5"])
+
     def test_terminal_stage_is_not_a_controller_decision(self):
         rows = source_trajectory("q1", [0, 0, 0], [0.5, 0.5, 0.5])
         trajectory = select_threshold_policy(rows, "raw_stop_probability", 0.5, "x")
