@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-15T07:07:15.768533+00:00",
+  "phase": 4,
+  "git_commit": "f41fa7282bb5427d149a115abe11294d5c5a991a",
+  "split": "heldout",
+  "heldout_consulted": true,
+  "heldout_tuning": false,
+  "questions": 12576,
+  "actionable_states": 25152,
+  "actionable_stages": [
+    "dense@5",
+    "hybrid@10"
+  ],
+  "terminal_stage_excluded": "rerank@20",
+  "representation": "judge_full",
+  "prompt": "configs/phase4/llm_judge_prompt.txt",
+  "prompt_sha256": "67f526d8d66fd2a7aa1f5648134c45b0af0cc60a8acb3db265f10b9d04056dd9",
+  "llm_judge_config_sha256": "567f9c7500cbd5baf91b53d1ffafbd225b86f8163b0db94ae86efc509d452f6e",
+  "prompt_gate_sha256": "05ffca543aece281d38f72db9f55dd4df8e354255d2f0eb4d4725816066aacb4",
+  "source": "data/2wiki/controller/sentence_256/heldout.jsonl",
+  "source_sha256": "c9b44e95f83617a80c204fe0bdeb59de4f90fc0a134410fbb5054b9d3dc733c9",
+  "output": "results/phase4/2wiki/llm_judge/heldout/judge_full.jsonl",
+  "output_sha256": "31fded91f67cc81cab17268faf6e62c4b71ee62a98b0f561342e4ac878a65e9e",
+  "model": "/home/sunjb/RAG/ekrag/ekrag/models/Qwen2.5-7B-Instruct",
+  "model_config_sha256": "7463bb0ea78315365e6c6b74de4e73bbcc8359dfb0c5a737584e077d42c0b03c",
+  "torch_dtype": "torch.float16",
+  "max_context_tokens": 4096,
+  "decoding": {
+    "do_sample": false,
+    "temperature": null,
+    "num_beams": 1
+  },
+  "max_new_tokens": 8,
+  "label_probability_available": false,
+  "strict_parse_rate": 1.0,
+  "invalid_outputs": 0,
+  "average_input_tokens": 1070.9279977735368,
+  "average_output_tokens": 3.0,
+  "average_judge_latency_ms": 222.155086662897,
+  "latency_warmup_states": 5,
+  "environment": {
+    "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.39",
+    "packages": {
+      "torch": "2.5.1+cu121",
+      "transformers": "4.44.2",
+      "sentence-transformers": "5.6.0",
+      "datasets": "5.0.0",
+      "faiss-cpu": "1.14.3",
+      "faiss-gpu": "1.14.3",
+      "rank-bm25": "0.2.2",
+      "numpy": "1.26.4",
+      "scikit-learn": "1.9.0"
+    },
+    "git_commit": "f41fa7282bb5427d149a115abe11294d5c5a991a",
+    "cuda_visible_devices": "1",
+    "cuda": "12.1",
+    "gpus": [
+      "NVIDIA GeForce RTX 4090"
+    ]
+  }
+}

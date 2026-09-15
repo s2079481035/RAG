@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-14T03:22:04.992708+00:00",
+  "phase": 4,
+  "status": "complete",
+  "one_time_formal_heldout_evaluation": true,
+  "split": "heldout",
+  "expected_questions": 12576,
+  "heldout_consulted_before_run": false,
+  "heldout_consulted": true,
+  "heldout_tuning_forbidden": true,
+  "frozen_choices_commit": "48791e7",
+  "execution_code_commit": "7c1448140201d69cd7541944663bf1d5cfdbd6f9",
+  "git_status_before_run": "",
+  "authorization": "results/phase4/heldout_authorization.json",
+  "authorization_sha256": "88d8eb55f69917a2ff6cb51bc15d0536fd09adb79c256f11d7209c49fda9eab9",
+  "researcher": "sunjb",
+  "environment": {
+    "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.39",
+    "packages": {
+      "torch": "2.5.1+cu121",
+      "transformers": "4.44.2",
+      "sentence-transformers": "5.6.0",
+      "datasets": "5.0.0",
+      "faiss-cpu": "1.14.3",
+      "faiss-gpu": "1.14.3",
+      "rank-bm25": "0.2.2",
+      "numpy": "1.26.4",
+      "scikit-learn": "1.9.0"
+    },
+    "git_commit": "7c1448140201d69cd7541944663bf1d5cfdbd6f9",
+    "cuda_visible_devices": "1",
+    "cuda": "12.1",
+    "gpus": [
+      "NVIDIA GeForce RTX 4090"
+    ]
+  },
+  "frozen_values": {
+    "controller": 42,
+    "classification_threshold": 0.7900000000000001,
+    "temperature": 1.3473834252368755,
+    "primary_policy": {
+      "calibration_method": "temperature",
+      "selection": "conservative",
+      "risk_target": 0.1,
+      "status": "selected",
+      "threshold": 0.01,
+      "observed_false_stop_rate": 0.05206738131699847,
+      "fsr_ci95_low": 0.0435117369719024,
+      "fsr_ci95_high": 0.06035459433640091,
+      "average_retrieved_chunks": 14.3385,
+      "estimated_average_retrieval_latency_ms": 986.606416118826,
+      "average_reranker_calls": 0.589,
+      "average_final_stage": 2.238,
+      "macro_f1": 0.9415423819294997,
+      "auroc": 0.9996428236575751,
+      "hard_partial_false_stop_rate": 0.048953809711804186,
+      "unnecessary_escalation_rate": 0.0,
+      "final_supporting_fact_recall": 0.6802999999999999,
+      "final_complete_evidence_coverage": 0.3515,
+      "average_unique_titles": 11.906,
+      "average_controller_calls": 1.649
+    },
+    "adaptive_router_operational_seed": 42,
+    "adaptive_router_checkpoint_sha256": "e88c870ef2fdca20049262aa34c9e27f9ad35e2216d055286e1f1e0a62d6c90d",
+    "generator_model": {
+      "configured_name": "Qwen/Qwen2.5-7B-Instruct",
+      "local_path": "/home/sunjb/RAG/ekrag/ekrag/models/Qwen2.5-7B-Instruct",
+      "config_sha256": "7463bb0ea78315365e6c6b74de4e73bbcc8359dfb0c5a737584e077d42c0b03c"
+    }
+  },
+  "frozen_file_sha256": {
+    "configs/phase4/protocol.json": "89789281cadd15514c0ee8e83e02086760339bb3f7242a4dacb3cbf5dacbf4fb",
+    "configs/phase4/controller.json": "7577e08e2b42359e579542c180051a069da4269d6e86abf137cdca8ff9e92e5b",
+    "configs/phase4/adaptive_rag_router.json": "b15c69e20e51023c712a719bcd7e3de36c7ff390e884444b5c9ede6b662ea88e",
+    "configs/phase4/llm_judge_prompt.txt": "67f526d8d66fd2a7aa1f5648134c45b0af0cc60a8acb3db265f10b9d04056dd9",
+    "results/phase4/freeze_manifest.json": "f479dc490717f61f0d618046909827424992877bc5aa8b398cc7753645e5bebe",
+    "results/phase4/2wiki/controller_dev/dev_gate_manifest.json": "b9ec6f8e4c8775bee93613e076ce5e7a7898c43949431d9d291d91943fb5ae96",
+    "results/phase4/2wiki/adaptive_rag/dev_gate_manifest.json": "b44be8e22f0d4cf619e1f86cf1fa7e9f885ece5ae056a6896c96eca3ac9ca90e",
+    "configs/phase4/heldout_evaluation.json": "adefb37493b4b5dc4500d9e615d412ad1523f38fe52fb6bc6aea7278cf266d62"
+  },
+  "completed_at_utc": "2026-09-15T14:48:03.209583+00:00",
+  "heldout_tuning": false,
+  "completion_manifest": "results/phase4/heldout_completion_manifest.json",
+  "completion_manifest_sha256": "d9dd4b91c9404fbacf0428f030896a7997a209536212fe71cd858a2d7d75fbf8"
+}

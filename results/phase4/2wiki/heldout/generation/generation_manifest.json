@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-15T14:36:36.723451+00:00",
+  "phase": 4,
+  "git_commit": "112ad1ca156a35d7d9e337a95de3029c3341a414",
+  "split": "heldout",
+  "heldout_consulted": true,
+  "heldout_tuning": false,
+  "questions": 12576,
+  "stage_generations": 37728,
+  "resumed_from_partial_cache": true,
+  "resumed_stage_generations": 33174,
+  "stages": [
+    "dense@5",
+    "hybrid@10",
+    "rerank@20"
+  ],
+  "source": "data/2wiki/controller/sentence_256/heldout.jsonl",
+  "output": "results/phase4/2wiki/heldout/generation/stage_generations.jsonl",
+  "output_sha256": "901cb9172826d990b08e1c03b3da932bdace28eec86a20083fdde852c331eb7f",
+  "frozen_generation_config": "configs/phase3a/generation.json",
+  "frozen_generation_config_sha256": "76df4cbd8517f6acffdda6befa3ac5fde78db6e36281c892c06b4d224e308bbf",
+  "model": "/home/sunjb/RAG/ekrag/ekrag/models/Qwen2.5-7B-Instruct",
+  "model_config_sha256": "7463bb0ea78315365e6c6b74de4e73bbcc8359dfb0c5a737584e077d42c0b03c",
+  "decoding": {
+    "do_sample": false,
+    "temperature": null,
+    "num_beams": 1
+  },
+  "answer_extraction": "first_nonempty_line_strip_answer_prefix",
+  "normalization": "official_hotpotqa_lower_punctuation_articles_whitespace",
+  "generation_latency_cuda_synchronized": true,
+  "environment": {
+    "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.39",
+    "packages": {
+      "torch": "2.5.1+cu121",
+      "transformers": "4.44.2",
+      "sentence-transformers": "5.6.0",
+      "datasets": "5.0.0",
+      "faiss-cpu": "1.14.3",
+      "faiss-gpu": "1.14.3",
+      "rank-bm25": "0.2.2",
+      "numpy": "1.26.4",
+      "scikit-learn": "1.9.0"
+    },
+    "git_commit": "112ad1ca156a35d7d9e337a95de3029c3341a414",
+    "cuda_visible_devices": "1",
+    "cuda": "12.1",
+    "gpus": [
+      "NVIDIA GeForce RTX 4090"
+    ]
+  }
+}

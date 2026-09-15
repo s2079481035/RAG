@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-15T14:48:03.195539+00:00",
+  "phase": 4,
+  "status": "complete",
+  "heldout_consulted": true,
+  "heldout_tuning": false,
+  "questions": 12576,
+  "bootstrap_replicates": 5000,
+  "go_for_paper_writing": true,
+  "observed_primary_fsr_target_met": false,
+  "primary_fsr_ci95_wholly_below_target": false,
+  "answer_f1_noninferiority_supported": true,
+  "outputs": {
+    "results/phase4/final/table_retrieval.csv": "c44e974eddf1e3a8b96c48ee04395a7a5bbe36065e335c3879faf27d65d1119c",
+    "results/phase4/final/table_controller.csv": "4cd7a2f52646a6cabdbf37563db42162803c1f8dda191037c9e6d5bbbbae320d",
+    "results/phase4/final/table_end_to_end.csv": "6e8d1f359fb97ae7ac784f0e86cfbeddc494088f05a4514320abee0f0a8104c4",
+    "results/phase4/final/table_external_baselines.csv": "46ffa9dddb2903faeeb0da5cb3e2ac5f3a29330676489242e30dd86d6870cf12",
+    "results/phase4/final/table_risk_boundary.csv": "175cf53970b390d9d11354701d6c8ddd4aff724d6103153b83897811b494e5fe",
+    "docs/phase4/2wiki_heldout_analysis.md": "5689eb0ff54e250dd76eec9e9e9d12ee7b9e196efbf58563241c4d46b47445ab",
+    "docs/phase4/cross_dataset_analysis.md": "969f548ceaa45fbc81ba32dcbb76cc7e5ecddd8a7c7c048c4f5daf93942723e9",
+    "docs/phase4/phase4_closing_report.md": "29ca45f00ef4957c38cd90839b4f01ea7aa52445b85af037f9b56afd8b4bcca9",
+    "results/phase4/final/bootstrap_ci.csv": "74597bebc91fcb02b09039c1c34b26815328d5bb96f21fca66dfc8029f568b47",
+    "results/phase4/final/cross_dataset_table.csv": "8922036062371f9188fe4da6f14aaee12d388b3b137adfc7f37ffadee4f5cd79",
+    "results/phase4/2wiki/heldout/stage_rescue_analysis.csv": "1289dd785c993c96f0902f949b60d671c75812169a1284b0a7596c05abdff936",
+    "results/phase4/2wiki/heldout/answer_failure_groups.csv": "c137f5f35deb5da46ee52e6a0db7a8011a6bb018ce3a81d4363a1e394bb5b03d",
+    "results/phase4/2wiki/heldout/retrieval_ceiling.json": "6d2530ab71fa0514d2da070faf0c9d61e5c3aabaa23bb7bab8c1544a4a58806d"
+  },
+  "large_uncommitted_outputs": [
+    "results/phase4/2wiki/heldout/generation/stage_generations.jsonl",
+    "results/phase4/2wiki/heldout/policy_trajectories.jsonl",
+    "results/phase4/2wiki/heldout/bootstrap_replicates.jsonl"
+  ],
+  "git_commit": "3d55a0ca3f800bed1198f0c1356df1e157e67588",
+  "post_completion_report_repairs": [
+    {
+      "created_at_utc": "2026-09-15T15:00:51.130541+00:00",
+      "git_commit": "5a1caeff9517fa5058a7b4f634374e6829245ccf",
+      "reason": "correct_ci_relation_wording_wholly_above_not_crossing",
+      "files": [
+        "docs/phase4/2wiki_heldout_analysis.md",
+        "docs/phase4/phase4_closing_report.md"
+      ],
+      "metrics_changed": false,
+      "heldout_tuning": false
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "questions": 12576,
+  "final_complete_evidence_coverage": 0.39782124681933845,
+  "terminal_retrieval_failure_rate": 0.6021787531806615,
+  "oracle_average_chunks": 14.994115776081426,
+  "oracle_average_reranker_calls": 0.6349395674300254,
+  "oracle_average_retrieval_latency_ms": 916.2910005067052
+}
