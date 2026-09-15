@@ -1,4 +1,6 @@
 import sys
+import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -13,6 +15,7 @@ from analyze_phase4_heldout import (  # noqa: E402
     select_threshold_policy,
 )
 from build_phase2_controller_data import resolve_controller_ladder  # noqa: E402
+from generate_phase4_heldout_stage_answers import validated_resume_prefix  # noqa: E402
 
 
 def source_trajectory(question_id: str, labels: list[int], coverages: list[float]):
@@ -60,6 +63,47 @@ def outcome(question_id: str, f1: float, chunks: int, false_stop: int = 0):
 
 
 class Phase4HeldoutTests(unittest.TestCase):
+    def test_generation_resume_keeps_only_valid_frozen_prefix(self):
+        records = [
+            {"question_id": "q1", "stage": "dense@5", "stage_index": 0},
+            {"question_id": "q1", "stage": "hybrid@10", "stage_index": 1},
+            {"question_id": "q1", "stage": "rerank@20", "stage_index": 2},
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "stage_generations.jsonl.tmp"
+            with path.open("wb") as handle:
+                for record in records[:2]:
+                    row = {
+                        "question_id": record["question_id"],
+                        "split": "heldout",
+                        "stage": record["stage"],
+                        "stage_index": record["stage_index"] + 1,
+                    }
+                    handle.write((json.dumps(row) + "\n").encode())
+                handle.write(b'{"question_id":"incomplete"')
+
+            self.assertEqual(validated_resume_prefix(path, records, "heldout"), 2)
+            self.assertTrue(path.read_bytes().endswith(b"\n"))
+            self.assertEqual(len(path.read_text().splitlines()), 2)
+
+    def test_generation_resume_rejects_nonmatching_prefix(self):
+        records = [{"question_id": "q1", "stage": "dense@5", "stage_index": 0}]
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "stage_generations.jsonl.tmp"
+            path.write_text(
+                json.dumps(
+                    {
+                        "question_id": "wrong",
+                        "split": "heldout",
+                        "stage": "dense@5",
+                        "stage_index": 1,
+                    }
+                )
+                + "\n"
+            )
+            with self.assertRaises(ValueError):
+                validated_resume_prefix(path, records, "heldout")
+
     def test_phase4_controller_ladder_falls_back_to_protocol(self):
         protocol = {"controller_ladder": ["dense@5", "hybrid@10", "rerank@20"]}
         self.assertEqual(resolve_controller_ladder({}, protocol), protocol["controller_ladder"])

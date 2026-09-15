@@ -46,6 +46,58 @@ def timed_generate(model, encoded: dict, generation_config: dict, torch_module):
     return output, (time.perf_counter() - started) * 1000.0
 
 
+def validated_resume_prefix(path: Path, records: list[dict], split: str) -> int:
+    """Validate and retain only the complete JSONL prefix from an interrupted run."""
+    if not path.exists():
+        return 0
+
+    completed = 0
+    last_complete_offset = 0
+    with path.open("rb") as handle:
+        while line := handle.readline():
+            next_offset = handle.tell()
+            if not line.endswith(b"\n"):
+                break
+            if completed >= len(records):
+                raise ValueError("Partial generation cache has more rows than expected")
+            try:
+                row = json.loads(line.decode("utf-8"))
+            except (UnicodeDecodeError, json.JSONDecodeError) as error:
+                raise ValueError(
+                    f"Invalid complete row {completed + 1} in partial generation cache"
+                ) from error
+            expected = records[completed]
+            identity = (
+                row.get("question_id"),
+                row.get("split"),
+                row.get("stage"),
+                row.get("stage_index"),
+            )
+            expected_identity = (
+                expected["question_id"],
+                split,
+                expected["stage"],
+                int(expected["stage_index"]) + 1,
+            )
+            if identity != expected_identity:
+                raise ValueError(
+                    "Partial generation cache is not an exact prefix of the frozen "
+                    f"heldout records at row {completed + 1}"
+                )
+            completed += 1
+            last_complete_offset = next_offset
+
+    file_size = path.stat().st_size
+    if last_complete_offset != file_size:
+        with path.open("r+b") as handle:
+            handle.truncate(last_complete_offset)
+        logger.warning(
+            "discarded %s trailing bytes from an incomplete JSONL row",
+            file_size - last_complete_offset,
+        )
+    return completed
+
+
 def main() -> None:
     args = parse_args()
     heldout_config, _ = guard_heldout_access()
@@ -109,9 +161,19 @@ def main() -> None:
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     temporary = output_path.with_suffix(".jsonl.tmp")
+    resumed_stage_generations = validated_resume_prefix(temporary, records, split)
+    if resumed_stage_generations:
+        logger.info(
+            "resuming heldout generation from validated row %s/%s",
+            resumed_stage_generations,
+            len(records),
+        )
     started_all = time.perf_counter()
-    with temporary.open("w", encoding="utf-8", newline="\n") as handle:
-        for index, record in enumerate(records, start=1):
+    mode = "a" if resumed_stage_generations else "w"
+    with temporary.open(mode, encoding="utf-8", newline="\n") as handle:
+        for index, record in enumerate(
+            records[resumed_stage_generations:], start=resumed_stage_generations + 1
+        ):
             view = record[evidence_key("cumulative")]
             evidence_chunks = [chunk_by_id[item["chunk_id"]] for item in view["items"]]
             prompt, used_chunk_ids, context_truncated = fit_prompt(
@@ -159,10 +221,13 @@ def main() -> None:
             }
             handle.write(json.dumps(row, ensure_ascii=False) + "\n")
             if index % 250 == 0:
+                handle.flush()
                 elapsed = time.perf_counter() - started_all
                 logger.info(
                     "generated heldout %s/%s stage answers (%.3f/s)",
-                    index, len(records), index / elapsed,
+                    index,
+                    len(records),
+                    (index - resumed_stage_generations) / elapsed,
                 )
     temporary.replace(output_path)
     write_json_atomic(
@@ -177,6 +242,8 @@ def main() -> None:
             "heldout_tuning": False,
             "questions": int(heldout_config["expected_questions"]),
             "stage_generations": len(records),
+            "resumed_from_partial_cache": bool(resumed_stage_generations),
+            "resumed_stage_generations": resumed_stage_generations,
             "stages": ["dense@5", "hybrid@10", "rerank@20"],
             "source": portable_path(source_path, ROOT),
             "output": portable_path(output_path, ROOT),
