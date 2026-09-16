@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "phase": "external_related_baselines",
+  "frozen_main_commit": "cc6951529fe77811bb287ed885b19ddbe9f7059c",
+  "time_budget_working_days": 3,
+  "priority": [
+    "S2G-RAG",
+    "Stop-RAG protocol audit",
+    "SURE-RAG protocol audit"
+  ],
+  "reference_subset": {
+    "seed": 20260916,
+    "selection": "sort_by_sha256(question_id + decimal_seed)_ascending",
+    "questions_per_dataset": 1000,
+    "enabled_only_after_smoke_success": true
+  },
+  "smoke_questions_per_dataset": 32,
+  "guardrails": {
+    "modify_ours": false,
+    "retune_ours": false,
+    "reopen_heldout_for_tuning": false,
+    "rewrite_external_methods": false,
+    "claim_unified_fair_comparison": false
+  },
+  "s2g_stop_conditions": [
+    "official_checkpoint_unavailable",
+    "large_model_retraining_required",
+    "unavailable_proprietary_api_required",
+    "unstable_after_two_working_days",
+    "large_environment_reconstruction_required"
+  ],
+  "stop_rag_smoke_requirements": {
+    "official_checkpoint_required": true,
+    "retraining_allowed": false,
+    "maximum_environment_setup_hours": 4,
+    "maximum_inference_gpu_hours": 4
+  }
+}

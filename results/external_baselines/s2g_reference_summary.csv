@@ -1,0 +1,3 @@
+Dataset,Method,N,EM,F1,Avg Retrieval Rounds,Avg Retrieved Units,Avg LLM Calls,Avg Tokens,Avg Latency,Success Rate,Protocol,Status,Reason
+HotpotQA,S2G-RAG,0,,,,,,,,,official-pipeline-reference,SKIPPED,Official trained S2G-Judge LoRA unavailable; no retraining permitted
+2WikiMultiHopQA,S2G-RAG,0,,,,,,,,,official-pipeline-reference,SKIPPED,Official trained S2G-Judge LoRA unavailable; no retraining permitted

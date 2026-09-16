@@ -30,3 +30,11 @@ results/phase4/**/*.jsonl
 results/phase4/*.log
 experiments/phase4/
 external/
+
+# External reference baseline workspaces and runtime artifacts.
+third_party/
+experiments/external_baselines/
+results/external_baselines/logs/
+results/external_baselines/**/*.jsonl
+data/external_baselines/raw/
+data/external_baselines/cache/

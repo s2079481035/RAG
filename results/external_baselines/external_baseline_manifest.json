@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-16T01:16:02.3664424Z",
+  "designation": "External Reference Experiments",
+  "frozen_main_commit": "cc6951529fe77811bb287ed885b19ddbe9f7059c",
+  "ours_modified": false,
+  "ours_retrained": false,
+  "ours_threshold_changed": false,
+  "heldout_rerun": false,
+  "heldout_used_for_tuning": false,
+  "methods": {
+    "S2G-RAG": {
+      "repository": "https://github.com/nianaaa/S2G-RAG",
+      "commit": "5d842a67a0a99a7b545bbad0dc402ceaae0e5eff",
+      "status": "PARTIAL",
+      "smoke_test": "not_started_stop_condition",
+      "formal_reference_run": "not_started",
+      "reason": "Mandatory trained S2G-Judge LoRA is not distributed by the official repository."
+    },
+    "Stop-RAG": {
+      "repository": "https://github.com/chosolbee/Stop-RAG",
+      "commit": "fcbcb781fd95d56b1fde72ada15357a6a6f03941",
+      "status": "protocol_audit_complete",
+      "STOP_RAG_EXPERIMENT_SKIPPED": true,
+      "reason": "No official trained value-model checkpoint was identified; official reproduction requires trajectory generation and value-model training on four H100 GPUs, and its retrieval protocol is not the frozen three-stage ladder."
+    },
+    "SURE-RAG": {
+      "paper": "https://arxiv.org/abs/2605.03534",
+      "status": "method_audit_complete",
+      "experiment_run": false,
+      "reason": "Pre-registered as method audit only; it evaluates answer verification/selective answering rather than retrieval stopping."
+    }
+  },
+  "strict_unified_numerical_comparison_available": false,
+  "more_experiments_needed": false,
+  "artifacts": [
+    "docs/external_baselines/s2g_protocol_audit.md",
+    "docs/external_baselines/s2g_reproduction_status.md",
+    "docs/external_baselines/stop_rag_protocol_audit.md",
+    "docs/external_baselines/sure_rag_protocol_audit.md",
+    "docs/external_baselines/related_work_comparison_table.md",
+    "docs/external_baselines/retrieval_limited_discussion.md",
+    "docs/external_baselines/external_related_work_closing_report.md",
+    "results/external_baselines/s2g_smoke_test.json",
+    "results/external_baselines/s2g_reference_summary.csv"
+  ]
+}

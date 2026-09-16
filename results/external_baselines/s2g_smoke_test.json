@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-16T01:16:02.3664424Z",
+  "method": "S2G-RAG",
+  "designation": "External Reference Experiment",
+  "official_repository": "https://github.com/nianaaa/S2G-RAG",
+  "official_commit": "5d842a67a0a99a7b545bbad0dc402ceaae0e5eff",
+  "reproduction_status": "PARTIAL",
+  "execution_status": "not_started_stop_condition",
+  "stop_condition": "official_checkpoint_unavailable",
+  "reason": "The official inference entry points require SUFF_LORA_PATH and load a trained S2G-Judge adapter, but no trained adapter, release asset, model identifier, or download URI is supplied by the audited official repository. Producing one would require teacher labeling and LoRA training, which is outside the no-retraining smoke protocol.",
+  "official_checkpoint_loaded": false,
+  "pipeline_started": false,
+  "heldout_examples_read": false,
+  "datasets": {
+    "HotpotQA": {
+      "requested_questions": 32,
+      "executed_questions": 0
+    },
+    "2WikiMultiHopQA": {
+      "requested_questions": 32,
+      "executed_questions": 0
+    }
+  },
+  "retrieval_trajectory_obtained": false,
+  "final_answer_obtained": false,
+  "evaluation_completed": false,
+  "metrics": {
+    "em": null,
+    "f1": null,
+    "average_retrieval_rounds": null,
+    "average_retrieved_units": null,
+    "average_llm_calls": null,
+    "average_tokens": null,
+    "average_latency_ms": null,
+    "success_rate": null,
+    "gpu_memory_mib": null,
+    "wall_clock_seconds": null
+  },
+  "algorithm_modified": false
+}
