@@ -26,6 +26,8 @@ SIM-RAG 与 S2G-RAG 已直接研究 sufficiency-guided stopping；Stop-RAG 已�
 
 每项新增方法投入上限两个工作日，无法跑通时记录具体证据；不能把未运行写成零分。IRCoT-inspired 必须记录每轮生成推理及其实际用于检索的 query，不能重复原问题增加 K。
 
+IRCoT-inspired Dev32 的 trace 证实 post-first-round query 来自上一轮推理，共有 50 个 changed-query continuation rounds；但 17/32 题最终重复 query，只有 15/32 是无重复有效轨迹，Answer F1 为 0.0625。因此“形成了真实迭代机制”成立，“形成了可靠统一环境 baseline”不成立。
+
 ## Sources
 
 - Adaptive-RAG: https://aclanthology.org/2024.naacl-long.389/

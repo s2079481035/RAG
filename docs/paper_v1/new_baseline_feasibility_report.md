@@ -18,12 +18,30 @@ Tokenizer 加载代码假定 checkpoint 路径后有 `_tokenizer` sibling，而 
 
 新增 `scripts/run_recent_rag_dev.py` 为 inspired implementation：使用冻结共享 BM25 索引、原 Qwen generator 与最终 answer evaluator；每次产生一个推理句，并将该句实际用于下轮检索。保留 query、retrieved IDs、reasoning、calls、tokens、latency。最大 8 轮、top2、最多15累计 chunks。显式 adaptation 是 zero-shot 提示与 sentence chunks，不能称官方复现。
 
-Dev ID 按固定前缀 SHA-256 排序，32 为预先冻结100的前缀。脚本将重复/空 continuation query 明确记为 invalid 并结束该题检索，汇总有效轨迹率；超预算 prompt 仍直接失败。失败不得当作成功 smoke。未完成运行前只可宣称机制已实现，不可宣称有效、结果可靠或增强 QA。
+Dev ID 按固定前缀 SHA-256 排序，32 为预先冻结100的前缀。脚本将重复/空 continuation query 明确记为 invalid 并结束该题检索，汇总有效轨迹率；超预算 prompt 仍直接失败。失败不得当作成功 smoke。
+
+### 32-question result
+
+Server commit: `9c8369518873102879b70f2cc694cb6b0a56a01a`; output: `results/paper_v1/ircot_inspired_dev32_v2/`.
+
+| Metric | Value |
+|---|---:|
+| Questions / unique IDs | 32 / 32 |
+| Answer EM / F1 | 0.0625 / 0.0625 |
+| SF recall / complete coverage | 0.53125 / 0.15625 |
+| Average retrieval rounds / chunks | 2.5625 / 4.0625 |
+| Average total LLM calls / tokens | 3.5625 / 1545.09375 |
+| Changed-query continuation rounds | 50 |
+| Valid iterative questions | 15 / 32 (0.46875) |
+| Invalid repeated-query questions | 17 / 32 |
+| Diagnostic latency | 50562.55 ms/question |
+
+The stored trace assertion verifies that every post-first-round query equals the immediately preceding generated reasoning sentence. Thus this implementation did perform true reasoning-conditioned retrieval, rather than repeating the original question with a larger K. It is not a reliable baseline: more than half the questions repeat a continuation query, and only 2/32 have non-zero answer F1. Shared GPU execution and CPU offload also make latency non-comparable. Stop after 32; do not extend to 100 or heldout without redesigning the prompt/adaptation, which would exceed this frozen supplement's scope.
 
 ## 服务器与资源
 
 服务器 `/home/sunjb/RAG/RAG_paper` 当前为 `research/sufficiency-phase4`，初查 HEAD `cc69515`。两张4090各24GB；GPU0约15.5GB已占用，GPU1约8.5GB已占用，任务属于其他用户。保留其任务和服务器未跟踪文件。可用内存约206GiB。
 
-GPU 共享策略已询问用户，回复前只运行 CPU preflight。后续必须本地 commit/push → 服务器 Git 拉取相同 commit → 执行实验，禁止临时 scp 修改服务器脚本。新增输出独立目录，主实验冻结文件不写入。
+执行遵循本地 commit/push → 服务器 Git 拉取相同 commit → 实验。服务器未直接修改代码；结果复制回本地后提交。新增输出使用独立目录，主实验冻结文件未写入。
 
 不重训 Adaptive Router / S2G / Stop-RAG / SURE。S2G 的已有 PARTIAL 状态保留。SIM、IRCoT各最多两个工作日，实际未到截止不能用预算作为已失败理由。

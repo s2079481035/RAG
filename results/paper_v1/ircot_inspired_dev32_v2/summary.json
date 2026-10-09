@@ -1,0 +1,21 @@
+{
+  "answer_em": 0.0625,
+  "answer_f1": 0.0625,
+  "supporting_fact_recall": 0.53125,
+  "complete_evidence_coverage": 0.15625,
+  "retrieval_rounds": 2.5625,
+  "retrieved_chunks": 4.0625,
+  "total_llm_calls": 3.5625,
+  "total_tokens": 1545.09375,
+  "total_latency_ms": 50562.5529115714,
+  "status": "SMOKE_COMPLETE_NOT_FORMAL_COMPARISON",
+  "questions": 32,
+  "changed_query_rounds": 50,
+  "valid_iterative_questions": 15,
+  "valid_iterative_rate": 0.46875,
+  "stop_reason_counts": {
+    "answer_marker": 15,
+    "invalid_repeated_query": 17
+  },
+  "latency_limitation": "shared GPU and possible CPU offload; not comparable to frozen latency"
+}

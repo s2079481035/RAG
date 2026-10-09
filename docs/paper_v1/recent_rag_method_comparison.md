@@ -48,10 +48,10 @@ Answer EM、SF Recall、tokens、calls 与风险见 CSV。Frozen latency 是原�
 
 ## 仍需完成的工作
 
-1. SIM-RAG checkpoint 下载与 32→100 Dev smoke；审计训练集重叠和完整调用成本。
-2. IRCoT-inspired 服务器运行、逐轮 query 轨迹核验及 32→100 Dev 扩展。
+1. SIM-RAG checkpoint 下载与 32-question Dev smoke；若 32 条通过质量闸门才扩到 100，并审计训练集重叠和完整调用成本。
+2. IRCoT-inspired Dev32 已执行：真实发生 50 个 reasoning-conditioned continuation rounds，但仅 15/32 题形成无重复的有效轨迹，Answer F1=0.0625；停止，不扩到 100，也不进入正式 Table 2。
 3. 新增方法若进入 Table 2，需在同一冻结问题集合上取得全部 comparator 结果；不能把 Dev smoke 接到 12576-question heldout 表。
-4. 完整的六篇成本/训练字段逐项审计，以及对应原表视觉复核尚未全部完成。
+4. CSV 已将未报告或尚不能从原文定位的字段记为 NR；在声称最终 ready 前仍需完成剩余来源核对与 SIM-RAG 可运行性结论。
 
 QUANTITATIVE_COMPARISON_READY = NO
 
