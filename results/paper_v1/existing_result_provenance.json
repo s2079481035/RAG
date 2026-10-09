@@ -1,0 +1,10 @@
+{
+  "source_sha256": {
+    "results/phase4/final/table_end_to_end.csv": "6e8d1f359fb97ae7ac784f0e86cfbeddc494088f05a4514320abee0f0a8104c4",
+    "results/phase4/final/table_external_baselines.csv": "46ffa9dddb2903faeeb0da5cb3e2ac5f3a29330676489242e30dd86d6870cf12",
+    "results/phase4/2wiki/adaptive_rag_dev_summary.csv": "5a95982443a02b07b778e918f5add8ee00095f15e2c47c613c5f291aac827d49",
+    "results/phase3b/test_risk_policy.csv": "dae107bc0b6c532ae86aecf5d8a8b0b97b75d50802f34a99e1d46d1ca6e3658e"
+  },
+  "rows": 24,
+  "note": "Original numeric strings retained. Judge total tokens add separately stored Judge tokens. Dev and heldout are separate groups; std rows do not sum marginal standard deviations."
+}
