@@ -10,7 +10,7 @@
 
 `inference/inference.py::call_gate_batch` 输入包含 Question/context、Answer、Rationale，生成文本恰好为 `1` 时接受。必须保留 candidate/rationale，不能仅把 query/evidence 塞给新二分类器。代码还在 verdict 过滤前对整批发起下一轮 query/search；若移除这些额外工作必须标注优化差异，不能少算官方执行成本。
 
-Tokenizer 加载代码假定 checkpoint 路径后有 `_tokenizer` sibling，而 HF release 包含 tokenizer 本身；部署须显式适配路径。当前状态是 CHECKPOINT_AVAILABLE_NOT_RUNTIME_VERIFIED，不是成功复现。
+Tokenizer 加载代码假定 checkpoint 路径后有 `_tokenizer` sibling，而 HF release 包含 tokenizer 本身；`scripts/run_sim_rag_dev.py` 从同一官方 HF snapshot 加载二者。该 adapted runner 保留 Question/context + Answer + Rationale → Accept/Reject，并在 Reject 后生成新 query；reasoner、query generator 与 Critic 的 calls/tokens 全部计入。当前状态仍是 CHECKPOINT_AVAILABLE_NOT_RUNTIME_VERIFIED，未完成 32 条运行前不是成功复现。
 
 ## IRCoT
 

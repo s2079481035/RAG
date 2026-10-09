@@ -69,3 +69,29 @@ git diff --check
 ```
 
 Latency collected while the GPU is shared or while CPU offload occurs is diagnostic only and must not be placed beside frozen dedicated-run latency as a comparable number.
+
+## SIM-RAG adapted Dev smoke
+
+Use the author-linked general-purpose checkpoint. The script preserves its answer/rationale-conditioned binary Critic and counts reasoner, query-generator, and Critic calls/tokens. The Critic runs on CPU to preserve GPU headroom for other users, so latency is diagnostic.
+
+```bash
+python3.12 scripts/run_sim_rag_dev.py \
+  --reasoner "$LLM_MODEL_PATH" \
+  --critic dyang39/SIM-RAG-Llama3-2B \
+  --n 32 \
+  --output results/paper_v1/sim_rag_dev32_preflight \
+  --preflight
+```
+
+Then run the 32-question smoke in a new directory:
+
+```bash
+python3.12 scripts/run_sim_rag_dev.py \
+  --reasoner "$LLM_MODEL_PATH" \
+  --critic dyang39/SIM-RAG-Llama3-2B \
+  --n 32 \
+  --output results/paper_v1/sim_rag_dev32 \
+  --reasoner-gpu-memory-gib 10
+```
+
+The HF model name contains `Llama3-2B`, but its published config identifies a 24+24-layer T5 with d_model 2048. Do not describe the Critic architecture from the repository name. This is an adapted reproduction because the reasoner, query prompt, chunk granularity, and corpus differ from the paper setting.
