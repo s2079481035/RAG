@@ -31,6 +31,10 @@ def first_sentence(text):
     return re.split(r'(?<=[.!?])\s+', text.strip())[0].strip()
 
 
+def query_key(text):
+    return ' '.join(text.lower().split()).strip(' .?!')
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument('--model', required=True)
@@ -103,9 +107,12 @@ def main():
         selected, history, trace = [], [], []
         query = q['question']
         stop_reason = 'horizon'
+        invalid_query = None
         for step in range(8):
-            if step and query in [t['query'] for t in trace]:
-                raise RuntimeError(f'Repeated query for {qid}; failed smoke, not valid iterative result')
+            if step and query_key(query) in {query_key(t['query']) for t in trace}:
+                stop_reason = 'invalid_repeated_query'
+                invalid_query = query
+                break
             found = [doc_ids[int(i)] for i in deterministic_top_indices(bm25.get_scores(bm25_tokenize(query)), 2)]
             selected = list(dict.fromkeys(selected + found))[:15]
             context = '\n'.join(f"TITLE: {chunks[c]['document_title']}\nTEXT: {chunks[c]['chunk_text']}" for c in selected)
@@ -115,7 +122,9 @@ def main():
             raw = generate(prompt, 96)
             thought = first_sentence(raw)
             if not thought:
-                raise RuntimeError('Empty reasoning output')
+                stop_reason = 'invalid_empty_reasoning'
+                invalid_query = ''
+                break
             trace.append(dict(round=step + 1, query=query, retrieved_ids=found, reasoning=thought, raw_output=raw))
             history.append(thought)
             if 'answer is:' in thought.lower():
@@ -129,7 +138,8 @@ def main():
             answer_f1=token_f1_score(answer, q['answer']), retrieval_rounds=len(trace), retrieved_chunks=len(selected),
             total_llm_calls=calls, input_tokens=input_tokens, output_tokens=output_tokens,
             total_tokens=input_tokens + output_tokens, total_latency_ms=(time.perf_counter()-start)*1000,
-            stop_reason=stop_reason, trace=trace, final_prompt_truncated=truncated,
+            stop_reason=stop_reason, invalid_query=invalid_query,
+            valid_iterative_trace=not stop_reason.startswith('invalid_'), trace=trace, final_prompt_truncated=truncated,
             visible_ids=visible, **supporting_fact_metrics(selected, chunks, q['gold_supporting_facts']))
         records.append(row)
         with (out / 'predictions.jsonl').open('a', encoding='utf-8') as f:
@@ -140,6 +150,10 @@ def main():
     summary = {k: sum(r[k] for r in records)/len(records) for k in keys}
     summary.update(status='SMOKE_COMPLETE_NOT_FORMAL_COMPARISON', questions=len(records),
                    changed_query_rounds=sum(len(r['trace'])-1 for r in records),
+                   valid_iterative_questions=sum(r['valid_iterative_trace'] for r in records),
+                   valid_iterative_rate=sum(r['valid_iterative_trace'] for r in records)/len(records),
+                   stop_reason_counts={reason: sum(r['stop_reason'] == reason for r in records)
+                                       for reason in sorted({r['stop_reason'] for r in records})},
                    latency_limitation='shared GPU and possible CPU offload; not comparable to frozen latency')
     (out / 'summary.json').write_text(json.dumps(summary, indent=2), encoding='utf-8')
 

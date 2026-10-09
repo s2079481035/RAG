@@ -18,7 +18,7 @@ Tokenizer 加载代码假定 checkpoint 路径后有 `_tokenizer` sibling，而 
 
 新增 `scripts/run_recent_rag_dev.py` 为 inspired implementation：使用冻结共享 BM25 索引、原 Qwen generator 与最终 answer evaluator；每次产生一个推理句，并将该句实际用于下轮检索。保留 query、retrieved IDs、reasoning、calls、tokens、latency。最大 8 轮、top2、最多15累计 chunks。显式 adaptation 是 zero-shot 提示与 sentence chunks，不能称官方复现。
 
-Dev ID 按固定前缀 SHA-256 排序，32 为预先冻结100的前缀。脚本拒绝重复 continuation query 和超预算 prompt，失败不得当作成功 smoke。未运行前只可宣称机制已实现，不可宣称有效、结果可靠或增强 QA。
+Dev ID 按固定前缀 SHA-256 排序，32 为预先冻结100的前缀。脚本将重复/空 continuation query 明确记为 invalid 并结束该题检索，汇总有效轨迹率；超预算 prompt 仍直接失败。失败不得当作成功 smoke。未完成运行前只可宣称机制已实现，不可宣称有效、结果可靠或增强 QA。
 
 ## 服务器与资源
 

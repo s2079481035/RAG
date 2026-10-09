@@ -47,7 +47,7 @@ python3.12 scripts/run_recent_rag_dev.py \
   --gpu-memory-gib 12
 ```
 
-Inspect every `trace`: after the first round, `query` must equal the previous generated reasoning sentence and must not equal the original question by construction. Any empty/repeated query stops the run instead of silently becoming repeated fixed-query retrieval.
+Inspect every `trace`: after the first round, `query` must equal the previous generated reasoning sentence and must not equal the original question by construction. An empty/repeated query marks that question invalid and stops its retrieval loop instead of silently becoming repeated fixed-query retrieval. The batch continues so the smoke test can report the valid-trajectory rate.
 
 Only after the 32-row output is complete and valid:
 
