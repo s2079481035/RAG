@@ -25,7 +25,9 @@ def main():
             'https://aclanthology.org/2024.naacl-long.389.pdf','Table 2; setup section 4.4',7,dataset,em,f1,
             retriever='BM25',generator='FLAN-T5-XL',decision_model='T5-Large',sample_count=500,
             corpus='IRCoT preprocessed dataset-specific corpus',evaluation_split='paper test subset following IRCoT',
-            cost=f'{steps} retrieval-generation steps; {relative} relative time (single-step=1)',training_cost='silver outcome labels + dataset bias; GPU hours NR')
+            cost=f'{steps} retrieval-generation steps; {relative} relative time (single-step=1)',
+            training_cost='silver outcome labels + dataset bias; T5-Large best validation checkpoint within 100 training iterations; GPU hours NR',
+            trained_inference_release='PARTIAL: code/data/predictions released; README requires training T5-Large classifier; trained classifier checkpoint not identified')
     for dataset, em, f1, size in [('HotpotQA',49.3,60.7,5233329),('2WikiMultiHopQA',57.7,68.0,430225)]:
         add('IRCoT','Interleaving Retrieval with Chain-of-Thought Reasoning for Knowledge-Intensive Multi-Step Questions',2023,'ACL',
             'https://aclanthology.org/2023.acl-long.557.pdf','Table 3; Appendix A; sections 3-4',14,dataset,em,f1,
@@ -33,6 +35,7 @@ def main():
             corpus='Hotpot Wikipedia / 2Wiki contexts pooled across splits',corpus_size=size,
             evaluation_split='500 sampled official dev; disjoint 100 tuning',sample_count=500,max_rounds=8,
             top_k='dev-selected from 2/4/6/8; max 15 accumulated paragraphs',training_cost='20 manually written CoTs; 3 demonstration sets; no finetuning')
+        rows[-1]['trained_inference_release']='code released; no task-trained checkpoint needed for prompting method; proprietary GPT3 or local FLAN-T5 base model still required'
     for generator, values in [('Llama3-8B',[(32.7,43.3),(34.1,40.2)]),('GPT-4',[(39.8,52.2),(46.1,54.6)])]:
         for dataset,(em,f1) in zip(['HotpotQA','2WikiMultiHopQA'],values):
             add('SIM-RAG full',"Knowing You Don't Know: Learning When to Continue Search in Multi-round RAG through Self-Practicing",2025,'SIGIR',
