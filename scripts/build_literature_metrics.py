@@ -41,7 +41,7 @@ def main():
             add('SIM-RAG full',"Knowing You Don't Know: Learning When to Continue Search in Multi-round RAG through Self-Practicing",2025,'SIGIR',
                 'https://arxiv.org/pdf/2505.02811v2','Table 1; section 4.2',7,dataset,em,f1,retriever='BM25',generator=generator,
                 decision_model='Flan-T5-2.85B',corpus='dataset Wikimedia dumps',training_cost='self-practice trajectories + critic fine-tuning; pipeline 2x3090; GPU hours NR',
-                trained_inference_release='yes; author-linked checkpoints; local inference not yet verified')
+                trained_inference_release='yes; author-linked checkpoints; general-purpose Critic runtime verified in adapted Dev32 smoke; original Table 1 protocol not reproduced')
     for retriever, values in [('BM25',[(43.3,56.5),(41.7,48.6)]),('E5-base-v2',[(42.0,53.5),(39.0,45.3)])]:
         for dataset,(em,f1) in zip(['HotpotQA','2WikiMultiHopQA'],values):
             add('S2G-RAG','S2G-RAG: Structured Sufficiency and Gap Judging for Iterative Retrieval-Augmented QA',2026,'ACL',

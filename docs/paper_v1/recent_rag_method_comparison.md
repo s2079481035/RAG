@@ -1,6 +1,6 @@
 # 六类 Adaptive / Iterative RAG 定量与方法对位
 
-审计：2026-10-09。该文件是补充实验工作记录，不表示新增 GPU 实验已完成。冻结主实验不变。
+审计：2026-10-10。文献表、冻结统一环境表与两个 adapted Dev32 smoke 均已完成；冻结主实验不变。
 
 ## Table 1 — LITERATURE-REPORTED, NON-COMPARABLE PROTOCOLS
 
@@ -44,15 +44,23 @@
 
 Answer EM、SF Recall、tokens、calls 与风险见 CSV。Frozen latency 是原有组件测量的组合，不能当作新增共享 GPU 环境 wall-clock。Judge total tokens 加上单独记录的 Judge 输入/输出；Router 的 T5 classifier 不是生成式 LLM 调用，其 latency 已在原表中计入。std 行不将边际标准差简单相加。
 
-当前只有既有统一环境方法可横向比较。六篇原论文均不得与 Ours 直接计算提升百分比。SURE verification F1 与 Answer F1 分列；其 risk 不等于 FSR。SIM-RAG 与 IRCoT 新实验暂未加入正式结果表。
+当前只有既有统一环境方法可作正式横向比较。六篇原论文均不得与 Ours 直接计算提升百分比。SURE verification F1 与 Answer F1 分列；其 risk 不等于 FSR。SIM-RAG 与 IRCoT smoke 使用相同 Dev32 IDs，但实现忠实度与正式 heldout 表不同，单列如下。
 
-## 仍需完成的工作
+## Table 3 — ADAPTED DEV32 SMOKE, NOT ORIGINAL-PAPER REPRODUCTION
 
-1. SIM-RAG checkpoint 下载与 32-question Dev smoke；若 32 条通过质量闸门才扩到 100，并审计训练集重叠和完整调用成本。
-2. IRCoT-inspired Dev32 已执行：真实发生 50 个 reasoning-conditioned continuation rounds，但仅 15/32 题形成无重复的有效轨迹，Answer F1=0.0625；停止，不扩到 100，也不进入正式 Table 2。
-3. 新增方法若进入 Table 2，需在同一冻结问题集合上取得全部 comparator 结果；不能把 Dev smoke 接到 12576-question heldout 表。
-4. CSV 已将未报告或尚不能从原文定位的字段记为 NR；在声称最终 ready 前仍需完成剩余来源核对与 SIM-RAG 可运行性结论。
+机器可读表：`results/paper_v1/adapted_smoke_comparison.csv`。两行使用完全相同的冻结 2Wiki Dev32 IDs 与共享 BM25 sentence-chunk corpus；仍只能回答实现可运行性和小样本行为，不能替代原论文协议。
 
-QUANTITATIVE_COMPARISON_READY = NO
+| Adapted method | Answer EM | Answer F1 | SF recall | Complete coverage | Avg retrieval rounds | Avg calls | Avg tokens | Stop summary |
+|---|---:|---:|---:|---:|---:|---:|---:|---|
+| IRCoT-inspired | 0.0625 | 0.0625 | 0.53125 | 0.15625 | 2.5625 | 3.5625 | 1545.09375 | 15 answer marker; 17 repeated query |
+| SIM-RAG adapted | 0.53125 | 0.546875 | 0.5078125 | 0.21875 | 1.84375 | 7.8125 | 2571.65625 | 22 critic accept; 9 invalid query; 1 horizon |
 
-NO_MORE_EXPERIMENTS_RECOMMENDED = NO
+SIM-RAG 使用官方 general-purpose Flan-T5 2.85B critic（HF commit `0e1cc45ab595543557837b237020ebcd16aeb357`），三个权重分片与本地下载逐一 SHA-256 一致。32 题中实际发生 59 个非重复检索 query，30 题至少检索一次，18 题 F1 非零。91 次 critic 判断为 22 个 `1` 和 69 个空解码；后者来自 T5 将 `0` 分成 `['▁','0']` 而官方 weighted 分支只生成一个 token，因此空解码按官方 `response == '1'` 规则等价于 Reject 前缀。该 runner 保留 question/context + candidate answer + rationale 门控，但换用了 Qwen reasoner、共享语料和 zero-shot query prompt，所以是成功的 adapted runtime smoke，不是 Table 1 复现。
+
+IRCoT-inspired 真实发生 50 个 reasoning-conditioned continuation rounds，但仅 15/32 题形成无重复的有效轨迹，17/32 题最终重复 query，Answer F1=0.0625。它证明了迭代检索机制存在，但没有形成可靠 baseline。
+
+两项均停止在 32 条，不扩到 100 或 heldout。新增方法若进入正式 Table 2，需在相同冻结 heldout 集合上取得全部 comparator 结果；不能把 Dev smoke 接到 12576-question heldout 表。当前补充已经足以回答导师的定量与方法对位问题，继续扩跑会增加 post-hoc 适配而不提高原论文可比性。
+
+QUANTITATIVE_COMPARISON_READY = YES
+
+NO_MORE_EXPERIMENTS_RECOMMENDED = YES

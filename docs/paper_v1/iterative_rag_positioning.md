@@ -1,6 +1,6 @@
 # Adaptive / iterative RAG 方法对位
 
-审计日期：2026-10-09。主实验 Phase 1–4 冻结；本阶段只新增外部对照与文献审计。
+审计日期：2026-10-10。主实验 Phase 1–4 冻结；本阶段只新增外部对照、文献审计与两个 Dev32 smoke。
 
 | Method | Decision Input | Decision Time | Decision Objective | Continue Action | Cost/Risk Model |
 |---|---|---|---|---|---|
@@ -27,6 +27,8 @@ SIM-RAG 与 S2G-RAG 已直接研究 sufficiency-guided stopping；Stop-RAG 已�
 每项新增方法投入上限两个工作日，无法跑通时记录具体证据；不能把未运行写成零分。IRCoT-inspired 必须记录每轮生成推理及其实际用于检索的 query，不能重复原问题增加 K。
 
 IRCoT-inspired Dev32 的 trace 证实 post-first-round query 来自上一轮推理，共有 50 个 changed-query continuation rounds；但 17/32 题最终重复 query，只有 15/32 是无重复有效轨迹，Answer F1 为 0.0625。因此“形成了真实迭代机制”成立，“形成了可靠统一环境 baseline”不成立。
+
+SIM-RAG adapted Dev32 使用官方 general-purpose critic，保留 candidate answer/rationale 条件门控，并产生 59 个 changed-query retrieval rounds。Answer F1 为 0.546875，22/32 题由 critic 接受；但 9/32 因 query 无效停止，且 reasoner、语料、prompt、split 与论文 Table 1 不同。因此“官方 critic 可运行且能驱动多轮检索”成立，“已复现 SIM-RAG 论文分数”不成立。该结果也进一步削弱“首次使用 evidence sufficiency 决定继续检索”的表述。
 
 ## Sources
 

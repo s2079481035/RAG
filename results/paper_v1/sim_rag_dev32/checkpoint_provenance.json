@@ -1,0 +1,15 @@
+{
+  "repository": "dyang39/SIM-RAG-Llama3-2B",
+  "revision": "0e1cc45ab595543557837b237020ebcd16aeb357",
+  "architecture": "T5ForConditionalGeneration",
+  "published_total_weight_bytes": 11399028736,
+  "server_download_endpoint": "https://hf-mirror.com",
+  "local_server_hash_match": true,
+  "sha256": {
+    "model-00001-of-00003.safetensors": "47e51c675b4bfa4a838cf4a706c053e2b0fbbbcb100a706ad6a567a8fd304fd8",
+    "model-00002-of-00003.safetensors": "72628625a8400cb33a81e9d6283d197aa945a84d778b80ddf9c7a00e064b2604",
+    "model-00003-of-00003.safetensors": "81a1d0a434072d1e7ea2804c67c6df51ddfd42a69be41bed7baab6c4ae1c66a4",
+    "model.safetensors.index.json": "bc663873ca2bacd34ec94fbedc6e709255241547fc6707f58f9865a6aca87227"
+  },
+  "single_token_decision_note": "The released tokenizer encodes '0' as [3, 632] = ['▁', '0'] and '1' as [209] = ['▁1']. With the official weighted branch's max_new_tokens=1, a reject can decode as blank and still correctly fails the response == '1' acceptance test."
+}

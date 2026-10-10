@@ -1,0 +1,14 @@
+{
+  "source_sha256": {
+    "results\\paper_v1\\ircot_inspired_dev32_v2\\manifest.json": "4dca26f0c11b0535a33de708755b33c702a818282482812554685f2c74d69f63",
+    "results\\paper_v1\\ircot_inspired_dev32_v2\\predictions.jsonl": "a32b3fc9bb0652dd82d9e118c3622e7abf675412d695e3ea18ee2aebc72c5092",
+    "results\\paper_v1\\ircot_inspired_dev32_v2\\summary.json": "7e04fb3a2546abd0cffac7a1c9175d951301795ff108c1dab0b4abc6b1da8fd2",
+    "results\\paper_v1\\sim_rag_dev32\\manifest.json": "cb62a3c375231eee4241fa8c6224aa6e4ee5ecd1273a11c736c8c55cb8dab250",
+    "results\\paper_v1\\sim_rag_dev32\\predictions.jsonl": "6bef1782b47b6fe5e50ab78558543fe3df554134f93dd202daa6699658b810f5",
+    "results\\paper_v1\\sim_rag_dev32\\summary.json": "62fe987fc5176c2f0c09fb3af2b78ff2de071865f6de7ddeb08b707d57465cda",
+    "results\\paper_v1\\sim_rag_dev32\\checkpoint_provenance.json": "88e8c98bbe85bc1d822cfcc2eda2941b5680404fa3e45095251a9d4a01993c1f"
+  },
+  "rows": 2,
+  "shared_dev32_ids_sha256": "65c61e34eae37c9bd12027177ae62d3345fc580d77d8251222c33d7b183aecff",
+  "note": "Same frozen Dev32 IDs and corpus, but adapted method implementations. Latency is diagnostic and these rows must not be merged with heldout or original-paper results."
+}

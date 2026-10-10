@@ -1,0 +1,21 @@
+{
+  "answer_em": 0.53125,
+  "answer_f1": 0.546875,
+  "supporting_fact_recall": 0.5078125,
+  "complete_evidence_coverage": 0.21875,
+  "retrieval_rounds": 1.84375,
+  "retrieved_chunks": 3.28125,
+  "reasoner_calls": 4.96875,
+  "critic_calls": 2.84375,
+  "total_llm_calls": 7.8125,
+  "total_tokens": 2571.65625,
+  "total_latency_ms": 141563.67813986435,
+  "status": "SMOKE_COMPLETE_NOT_FORMAL_COMPARISON",
+  "questions": 32,
+  "stop_reason_counts": {
+    "critic_accept": 22,
+    "invalid_query": 9,
+    "forced_horizon": 1
+  },
+  "latency_limitation": "shared GPU, CPU critic, and possible reasoner CPU offload; diagnostic only"
+}

@@ -77,7 +77,7 @@ Use the author-linked general-purpose checkpoint. The script preserves its answe
 ```bash
 python3.12 scripts/run_sim_rag_dev.py \
   --reasoner "$LLM_MODEL_PATH" \
-  --critic dyang39/SIM-RAG-Llama3-2B \
+  --critic /home/sunjb/RAG/models/SIM-RAG-Llama3-2B \
   --n 32 \
   --output results/paper_v1/sim_rag_dev32_preflight \
   --preflight
@@ -88,10 +88,12 @@ Then run the 32-question smoke in a new directory:
 ```bash
 python3.12 scripts/run_sim_rag_dev.py \
   --reasoner "$LLM_MODEL_PATH" \
-  --critic dyang39/SIM-RAG-Llama3-2B \
+  --critic /home/sunjb/RAG/models/SIM-RAG-Llama3-2B \
   --n 32 \
   --output results/paper_v1/sim_rag_dev32 \
   --reasoner-gpu-memory-gib 10
 ```
 
 The HF model name contains `Llama3-2B`, but its published config identifies a 24+24-layer T5 with d_model 2048. Do not describe the Critic architecture from the repository name. This is an adapted reproduction because the reasoner, query prompt, chunk granularity, and corpus differ from the paper setting.
+
+Completed run: commit `33b82bf57e3fe72180d5d0e7431f92c3df38e8cb`, 32/32 rows, output `results/paper_v1/sim_rag_dev32/`. The official snapshot was pinned to `0e1cc45ab595543557837b237020ebcd16aeb357`; local and server SHA-256 values matched for all three weight shards and the index. Do not run 100: the Dev32 smoke already found 9 invalid-query stops and is sufficient for the adapted-runtime conclusion.
